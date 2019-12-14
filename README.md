@@ -1,4 +1,4 @@
-
+```bash
 .
 ├─colorui      // colorui
 ├─pages
@@ -7,3 +7,4 @@
 ├─template
 │  └─render    // 通用模板集合
 └─utils
+```
