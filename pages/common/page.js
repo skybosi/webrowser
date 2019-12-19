@@ -1,8 +1,16 @@
 const app = getApp();
 import render from '../../template/render/render.js'
 
+let originPage = Page
+
 export default function(context = {}) {
-  Object.assign(context, render);
+  Object.assign(context, render)
+  let originOnLoad = context.onLoad
+  context.onLoad = function(option) {
+    const self = this
+    console.log("onload common page")
+    originOnLoad && originOnLoad.call(self, option)
+  }
   return Page({
     props: {
       _touchTime: 0, // 时间记录，用于滑动时且时间小于1s则执行左右滑动
@@ -30,8 +38,8 @@ export default function(context = {}) {
      */
     onShareAppMessage() {
       return {
-        title: '墨鱼儿-服务于人们的小社区',
-        imageUrl: 'https://mp.weixin.qq.com/wxopen/basicprofile?action=get_headimg&token=1226266756&t=20191020103312',
+        title: 'weapp browser',
+        imageUrl: 'https://mp.weixin.qq.com/wxopen/basicprofile?action=get_headimg&token=491084062&t=1576763992863',
         path: '/pages/index/index'
       }
     },

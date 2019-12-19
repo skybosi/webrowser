@@ -237,6 +237,7 @@
     </view>
   </view>
 </template>
+
 <template name="menu2">
   <view class="cu-list menu" catchtap="clickMenu2" bindlongpress="longclickMenu2">
     <view class="cu-item">
@@ -246,7 +247,7 @@
       </view>
       <view class="action">
         <view class="cu-avatar-group">
-          <view class="cu-avatar round sm" wx:for="{{image}}" style="background-image:url({{item}});"></view>
+          <view class="cu-avatar round sm" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});"></view>
         </view>
         <text class="text-grey text-sm">4 人</text>
       </view>
