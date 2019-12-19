@@ -3023,6 +3023,41 @@ scroll-view.cu-steps .cu-item {
 	width: 20%;
 }
 
+/* 正方形宫格 */
+.grid.col-square-1>view {
+  width: 100%;
+  height: 100vw;
+}
+
+.grid.col-square-2>view {
+  width: 50%;
+  height: 50vw;
+}
+
+.grid.col-square-3>view {
+  width: 33.33%;
+  height: 33.33vw;
+}
+
+.grid.col-square-4>view {
+  width: 25%;
+  height: 25vw;
+}
+
+.grid.col-square-5>view {
+  width: 20%;
+  height: 20vw;
+}
+
+[class*="col-square-"] >.cu-item {
+  position: relative;
+  display: flex;
+  padding: 4rpx !important;
+  transition-duration: 0s;
+  flex-direction: column;
+  justify-content: center;
+}
+
 /*  -- 内外边距 -- */
 
 .margin-0 {

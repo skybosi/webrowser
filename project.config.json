@@ -9,13 +9,14 @@
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
+		"autoAudits": true,
+		"checkInvalidKey": true,
 		"coverView": true
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.4",
-	"appid": "wx6009d61d459e4541",
-	"projectname": "template_driven",
+	"appid": "wx6a87444e31b7997a",
+	"projectname": "webrowser",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

@@ -1,66 +1,40 @@
 // template/render/render.js
-export default {
+import item from './item/item.js'
+import shower from './shower/shower.js'
+import interactive from './interactive/interactive.js'
+
+export default Object.assign({
   render(ctx) {
     console.log(this)
   },
-  clickMessage(e) {
-    wx.showModal({
-      title: '点击了',
-      content: '你点击了Message',
-    })
-  },
-  longclickMessage(e) {
-    wx.showModal({
-      title: '长按了',
-      content: '你长按了Message',
-    })
-  },
-  clickGrid(e) {
-    wx.showModal({
-      title: '点击了',
-      content: '你点击了Grid',
-    })
-  },
-  longclickGrid(e) {
-    wx.showModal({
-      title: '长按了',
-      content: '你长按了Grid',
-    })
-  },
-  clickMenu(e) {
-    wx.showModal({
-      title: '点击了',
-      content: '你点击了Menu',
-    })
-  },
-  longclickMenu(e) {
-    wx.showModal({
-      title: '长按了',
-      content: '你长按了Menu',
-    })
-  },
-  clickMenu2(e) {
-    wx.showModal({
-      title: '点击了',
-      content: '你点击了Menu2',
-    })
-  },
-  longclickMenu2(e) {
-    wx.showModal({
-      title: '长按了',
-      content: '你长按了Menu2',
-    })
-  },
-  clickCard(e) {
-    wx.showModal({
-      title: '点击了',
-      content: '你点击了Card',
-    })
-  },
-  longclickCard(e) {
-    wx.showModal({
-      title: '长按了',
-      content: '你长按了Card',
-    })
-  },
-}
+  checkAuth() {
+    return new Promise((resolver, reject) => {
+      wx.getSetting({
+        success: (res) => {
+          /*
+           * res.authSetting = {
+           *   "scope.userInfo": true,
+           *   "scope.userLocation": true
+           * }
+           */
+          var hasUserInfo = wx.getStorageSync('hasUserInfo') || false
+          var authConfig = wx.getStorageSync('layout').authConfig || {
+            authStatus: 1,
+            title: "微信授权",
+            content: "请确是否授权？"
+          }
+          if (authConfig.authStatus == 2 || !res.authSetting['scope.userInfo'] || !hasUserInfo) {
+            resolver({
+              authConfig: authConfig
+            })
+          }
+        },
+        fail(e) {
+          reject(e)
+        }
+      })
+    }).catch((e) => {
+      console.log(e)
+    });
+  }
+}, interactive, shower, item)

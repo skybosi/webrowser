@@ -1,0 +1,324 @@
+<wxs src="../render.wxs" module="render"></wxs>
+
+<template name="collapse">
+  <van-collapse value="0" data-key="0" bind:change="onChange" accordion>
+    <van-collapse-item title="{{title}}" name="0">
+      <block wx:for="{{list}}" wx:key="{{index}}">
+        <template is="{{item.type}}" data="{{... item}}"></template>
+      </block>
+    </van-collapse-item>
+  </van-collapse>
+</template>
+
+<template name="modal">
+  <view class="cu-modal {{modalstatus?'show':''}} modal-display">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">{{title}}</view>
+        <view class="action" data-chose="ignore" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">{{content}}</view>
+      <view class="cu-bar bg-white justify-around">
+        <view class="action">
+          <button class="cu-btn line-green text-green" data-chose="cancel" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{cancel?cancel:'取消'}}</button>
+          <button class="cu-btn bg-green margin-left" data-chose="ok" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{ok?ok:'确定'}}</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="grid-icon">
+  <view class="cuIcon-{{icon}} text-{{color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
+    <view class="cu-tag badge" wx:if="{{badge!=0}}">
+      <block wx:if="{{badge!=1}}">{{badge>99?"99+":badge}}</block>
+    </view>
+    <text>{{name}}</text>
+  </view>
+</template>
+
+<template name="grid-image">
+  <view class="bg-img" style="background-image:url({{image[0]}});" data-id='{{id}}' bindtap="itemClick"></view>
+</template>
+
+<template name="grid">
+  <view class="cu-list grid col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}}">
+    <view class="cu-item" wx:for="{{list}}" wx:key="{{index}}" hover-class="hover" wx:if="{{index<(gridCol?gridCol:4)*2}}">
+      <template is="{{item.type}}" data="{{...item}}"></template>
+    </view>
+  </view>
+</template>
+
+<!-- {
+  id: 详情id
+  type: case 案例类型
+  swiper_type: 轮播图类型 screen card
+  image: [ 轮播图
+    {
+          url: 资源链接
+          type: 资源类型 image video
+          tag: 标签
+          summary: 概述
+    }
+  ]
+  tag: 类型标签 比如: 广告
+  avatar: 发布者头像
+  name: 发布者名字
+  time: 发布时间
+  read_count: 阅读数
+  thumbup_count: 点赞数
+  comment_count: 评论数
+} -->
+<template name="ad">
+  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom padding-bottom-xs">
+    <view class="cu-item margin-lr-xs">
+      <swiper wx:if="{{swiper_type=='screen' || swiper_type=='' || swiper_type==undefined}}" class="screen-swiper square-dot" vertical="{{vertical?true:false}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3"
+        indicator-active-color="#0081ff">
+        <swiper-item wx:for="{{image}}" wx:key="index">
+          <view class="image">
+            <image src="{{item.url}}" mode="widthFix" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item.url}}" data-urls="{{image}}"></image>
+            <view class="cu-tag bg-blue">{{item.tag}}</view>
+            <view class="cu-bar bg-shadeBottom">
+              <text class="text-cut">{{item.summary}}</text>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+      <swiper wx:if="{{swiper_type=='card'}}" class="card-swiper square-dot" vertical="{{vertical?true:false}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff" bindchange="cardSwiper">
+        <swiper-item wx:for="{{image}}" wx:key class="{{cardCur==index?'cur':''}}">
+          <view class="swiper-item" wx:if="{{item.type=='image'}}">
+            <image src="{{item.url}}" mode="aspectFill" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item.url}}" data-urls="{{image}}"></image>
+            <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+          </view>
+        </swiper-item>
+      </swiper>
+      <view class="content padding padding-top-xs margin-lr-xs flex justify-between align-center">
+        <view class="flex justify-start align-center" style="width:calc(60%)">
+          <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-xs">{{tag}}</view>
+          <text class="text-grey text-df text-cut">{{name}}</text>
+        </view>
+        <view class="text-gray text-sm">
+          <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
+          <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
+          <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<!-- {
+  id: 详情id
+  type: dynamic 动态类型
+  isCard:  是否是卡片
+  avatar: 发布者头像
+  name: 发布者名字
+  tag: 标签 比如: top
+  time: 发布时间
+  summary: 简述
+  image: 动态相关图列表
+  read_count: 阅读数
+  thumbup_count: 点赞数
+  comment_count: 评论数
+} -->
+<template name="dynamic">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom padding-bottom-xs" hover-class="hover">
+    <view class="cu-item">
+      <view class="cu-list menu-avatar">
+        <view class="cu-item">
+          <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
+          <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
+          <view class="content flex-sub">
+            <view class="flex justify-start align-center">
+              <text class="text-black text-bold text-lg text-cut">{{name}}</text>
+              <view wx:if="{{tag}}" class="cu-tag radius bg-red sm margin-right-xs">{{tag}}</view>
+            </view>
+            <view class="text-gray text-sm flex justify-between">
+              {{time}}
+            </view>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{summary}}" class="text-content">{{summary}}</view>
+      <view wx:if="{{image}}">
+        <!-- <view calss="grid flex-sub padding-lr col-3 grid-square">
+              <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});"></view>
+            </view> -->
+        <view class="grid flex-sub padding-lr col-3 grid-square">
+          <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+        </view>
+      </view>
+      <view class="text-gray text-sm text-right padding">
+        <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
+        <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
+        <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
+      </view>
+    </view>
+  </view>
+  <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
+</template>
+<!-- {
+  id: 详情id
+  type: article 文章类型
+  isCard:  是否是卡片
+  title: 文章标题
+  image: 相关图片
+  name: 发布者名字
+  time: 发布时间
+  summary: 内容
+  tag: 类型标签 比如: 置顶
+  tags: [ 相关标签
+    {
+      color: 颜色
+      tag: 标签
+    }
+  ]
+  read_count: 阅读数
+  thumbup_count: 点赞数
+  comment_count: 评论数
+} -->
+<template name="article">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-bottom-xs">
+    <view class="cu-item shadow" hover-class="hover">
+      <view class="title">
+        <view class="flex justify-start align-center">
+          <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
+          <text wx:if="{{title}}" class="text-cut">{{title}}</text>
+          <text wx:else class="padding"></text>
+        </view>
+      </view>
+      <view class="content">
+        <image wx:if="{{image[0]}}" src="{{image[0]}}" mode="aspectFill" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{image[0]}}"></image>
+        <view class="desc">
+          <view class="text-content" style="height:auto;max-height:4.8em">{{summary}}</view>
+          <view>
+            <view class="cu-tag bg-{{item.color}} light sm round" wx:for="{{tags}}" wx:key="{{index}}">{{item.tag}}</view>
+            <view class="text-gray text-sm text-right">
+              <text class="cuIcon-attentionfill margin-lr-xs"></text>{{read_count}}
+              <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
+              <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
+</template>
+<!-- {
+  id: 详情id
+  type: comment 评论类型
+  avatar: 发送者头像
+  tag: 类型标签 比如: 置顶
+  name: 发送者名字
+  summary: 内容
+  image: 内容相关图片
+  time: 发布时间
+  read_count: 阅读数
+  thumbup_count: 点赞数
+  comment_count: 评论数
+} -->
+<template name="comment">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom padding-bottom-xs">
+    <view class="cu-item">
+      <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
+      <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
+      <view class="content padding-left">
+        <view class="flex justify-start align-center margin-bottom-xs">
+          <text class="text-black text-bold text-lg text-cut">{{name}}</text>
+          <view wx:if="{{tag}}" class="cu-tag radius bg-red sm margin-right-xs">{{tag}}</view>
+        </view>
+        <view class="text-grey text-content text-df">
+          {{summary}}
+        </view>
+        <view>
+          <view wx:if="{{image && image[0]}}" class="padding-top-xs">
+            <!-- <view calss="grid flex-sub padding-lr col-3 grid-square">
+              <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});"></view>
+            </view> -->
+            <view class="grid flex-sub col-3 grid-square">
+              <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+            </view>
+          </view>
+        </view>
+        <view class="flex justify-between">
+          <view class="text-gray text-df">{{time}}</view>
+          <view class="text-gray text-sm">
+            <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
+            <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
+            <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
+</template>
+<!-- {
+  id: 详情id
+  type: notice 通告类型
+  title: 内容标题
+  summary: 内容
+  tag: 类型标签 比如: 置顶
+  time: 发布时间
+} -->
+<template name="notice">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-bottom-xs">
+    <view class="cu-item shadow">
+      <view class="flex justify-start align-center padding padding-bottom-sm">
+        <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
+        <text class="text-black text-bold text-lg text-cut">{{title}}</text>
+      </view>
+      <view class="content">
+        <view class="desc">
+          <view class="text-grey text-content" style="text-align: justify;">{{summary}}</view>
+          <view class="flex justify-end">
+            <view class="text-gray text-df">{{time}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
+</template>
+<!-- {
+  id: 详情id
+  type: message 消息类型
+  catchtap: 绑定点击事件
+  id: 唯一id
+  avatar: 发送者头像
+  tag: 标签
+  name: 发送者名字
+  summary: 内容
+  time: 发送时间
+  count: 消息条数
+  status: 消息接收状态
+} -->
+<template name="message">
+  <view data-myid="{{id||myID}}" catchlongpress="{{render.longclickItem}}" data-openid="{{openID}}" class="cu-list menu-avatar margin-top-0" catchtap="getUserInfo">
+    <view class="cu-item solid-bottom" hover-class="hover">
+      <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
+      <view wx:else class="cu-avatar round lg bg-black">wb</view>
+      <view class="content">
+        <view class="text-grey">
+          <text class="text-cut">{{name}}</text>
+          <view wx:if="{{tag}}" class="cu-tag round bg-orange sm">{{tag}}</view>
+        </view>
+        <view class="text-gray text-sm flex">
+          <text class="text-cut"><text class="margin-right-xs"></text>{{summary?summary:''}}
+          </text>
+        </view>
+      </view>
+      <view class="action">
+        <view class="text-grey text-xs">{{time}}</view>
+        <view wx:if="{{count}}" class="cu-tag round bg-red sm">
+          <block wx:if="{{count>99}}">99+</block>
+          <block wx:else>{{count}}</block>
+        </view>
+        <view wx:if="{{status=='off'}}" class="cuIcon-notice_forbid_fill text-gray"></view>
+      </view>
+    </view>
+  </view>
+  <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
+</template>

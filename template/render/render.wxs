@@ -1,0 +1,71 @@
+/**
+ * 处理数据使其返回数组
+ */
+var toArray = function(array) {
+  console.log(array)
+  if (!array) {
+    return ['请输入关键字...']
+  } else if (array.constructor === 'Array') {
+    return array
+  } else if (array) {
+    return [array]
+  } else {
+    return ['请输入关键字...']
+  }
+}
+
+/**
+ * 切换轮播自动播放
+ */
+var switchAutoplay = function(event, ins) {
+  console.log('get data', JSON.stringify(ins.selectComponent('.swiper')))
+  ins.callMethod('updateAutoplay', event)
+}
+
+/**
+ * 长按item 处理函数
+ */
+var longclickItem = function(event, ins) {
+  console.log('get data', JSON.stringify(ins.selectComponent('.modal-display')))
+  ins.selectComponent('.modal-display').addClass('show')
+}
+
+/**
+ * 长按item 处理函数
+ */
+var longclickItemHandle = function(event, ins) {
+  console.log('get data', JSON.stringify(ins.selectComponent('.modal-display')))
+  ins.selectComponent('.modal-display').removeClass('show')
+  console.log(JSON.stringify(event))
+}
+
+/**
+ * 是否显示授权弹框
+ */
+var authDisplay = function (event, ins) {
+  console.log('get data', JSON.stringify(event))
+  ins.selectComponent('.auth-display').removeClass('show')
+}
+
+/**
+ * 是否显示搜索过滤条件
+ */
+var switchSearchBar = function (event, ins) {
+  console.log('get data', JSON.stringify(event))
+  var chose = event.currentTarget.dataset.target
+  if ('show' === chose) {
+    ins.selectComponent('.search-bar-filter').addClass('show')
+  }else {
+    ins.selectComponent('.search-bar-filter').removeClass('show')
+  }
+  return this
+}
+
+
+// module.exports.updateAutoplay = updateAutoplay;
+module.exports.toArray = toArray;
+module.exports.authDisplay = authDisplay;
+module.exports.longclickItem = longclickItem;
+module.exports.switchAutoplay = switchAutoplay;
+module.exports.switchSearchBar = switchSearchBar;
+module.exports.longclickItemHandle = longclickItemHandle;

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<import src="/template/render/render.wxml" />
+<include src="/template/render/render.wxml" />
 <view class="padding-sm">
   <block wx:for="{{templateList}}" wx:key="{{index}}">
     <template is="{{item.type}}" data="{{...item}}"></template>

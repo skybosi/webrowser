@@ -8,7 +8,7 @@ Page({
     templateList: [{
         type: "message",
         image: "https://ossweb-img.qq.com/images/lol/web201310/skin/big81007.jpg",
-        name: "伊泽瑞尔",
+      name: "webrowser",
         tag: "1",
         status_tag: "在线",
         content: " 等我回来一个打十个",
@@ -16,56 +16,66 @@ Page({
       }, {
         type: "grid",
         gridCol: 3,
-        iconList: [{
+        list: [{
           icon: 'cardboardfill',
           color: 'red',
           badge: 120,
-          name: 'VR'
+          name: 'VR',
+          type: 'grid-icon'
         }, {
           icon: 'recordfill',
           color: 'orange',
           badge: 1,
-          name: '录像'
+          name: '录像',
+          type: 'grid-icon'
         }, {
           icon: 'picfill',
           color: 'yellow',
           badge: 0,
-          name: '图像'
+          name: '图像',
+          type: 'grid-icon'
         }, {
           icon: 'noticefill',
           color: 'olive',
           badge: 22,
-          name: '通知'
+          name: '通知',
+          type: 'grid-icon'
         }, {
           icon: 'upstagefill',
           color: 'cyan',
           badge: 0,
-          name: '排行榜'
+          name: '排行榜',
+          type: 'grid-icon'
         }, {
           icon: 'clothesfill',
           color: 'blue',
           badge: 0,
-          name: '皮肤'
+          name: '皮肤',
+          type: 'grid-icon'
         }, {
           icon: 'discoverfill',
           color: 'purple',
           badge: 0,
-          name: '发现'
+          name: '发现',
+          type: 'grid-icon'
         }, {
           icon: 'questionfill',
           color: 'mauve',
           badge: 0,
-          name: '帮助'
+          name: '帮助',
+          type: 'grid-icon'
         }, {
           icon: 'commandfill',
           color: 'purple',
           badge: 0,
-          name: '问答'
+          name: '问答',
+          type: 'grid-icon'
         }, {
           icon: 'brandfill',
           color: 'mauve',
           badge: 0,
-          name: '版权'
+          name: '版权',
+          type: 'grid-icon'
         }]
       }, {
         type: "menu1",

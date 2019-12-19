@@ -1,0 +1,284 @@
+<wxs src="../render.wxs" module="render"></wxs>
+
+<!-- 标题 -->
+<template name="title">
+  <view bindtap='clickTitle' bindlongpress='longclickTitle' wx:if="{{text}}" class='text-center margin-bottom text-xl text-grey'>
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h1标签 -->
+<template name="h1">
+  <view bindtap='clickH1' bindlongpress='longclickH1' wx:if="{{text}}" class="margin-tb-sm text-sl text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h2标签 -->
+<template name="h2">
+  <view bindtap='clickH2' bindlongpress='longclickH2' wx:if="{{text}}" class="margin-tb-sm text-xxl text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h3标签 -->
+<template name="h3">
+  <view bindtap='clickH3' bindlongpress='longclickH3' wx:if="{{text}}" class="margin-tb-sm text-xl text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h4标签 -->
+<template name="h4">
+  <view bindtap='clickH4' bindlongpress='longclickH4' wx:if="{{text}}" class="margin-tb-sm text-lg text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h5标签 -->
+<template name="h5">
+  <view bindtap='clickH5' bindlongpress='longclickH5' wx:if="{{text}}" class="margin-tb-sm text-df text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- h标签 默认是h4 -->
+<template name="h">
+  <view bindtap='clickH' bindlongpress='longclickH' wx:if="{{text}}" class="margin-tb-sm text-lg text-black text-bold">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- 文段 -->
+<template name="p">
+  <view bindtap='clickP' bindlongpress='longclickP' wx:if="{{text}}" class="margin-tb-sm text-black text-{{weight?weight:'normal'}}" style="text-indent:2em;">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- 结语文段 -->
+<template name="pe">
+  <view bindtap='clickPe' bindlongpress='longclickPe' class="text-center solid-bottom padding-top">
+    <view wx:if="{{text}}" class="margin-tb-sm text-gray text-{{weight?weight:'normal'}}">
+      <text selectable='true'>{{text}}</text>
+    </view>
+  </view>
+</template>
+
+<!-- 列表 -->
+<template name="li">
+  <view bindtap='clickLi' bindlongpress='longclickLi' wx:if="{{text}}" class="cu-bar justify-start align-start text-{{weight}}" style="min-height:60rpx">
+    <text selectable='true' class="cuIcon-title text-{{licolor}} padding-right-sm"></text>{{text}}
+  </view>
+</template>
+
+<!-- 标签贴 -->
+<template name="label">
+  <view class='cu-bar solid-bottom bg-white'>
+    <view class='action'>
+      <text class='cuIcon-title text-green'></text>{{text}}
+    </view>
+  </view>
+</template>
+
+<!-- 图片 -->
+<template name="img">
+  <view catchtap="viewImage" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs" data-url="{{url}}" data-urls="{{urls}}">
+    <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
+      <view class="image" style="height:375rpx">
+        <image src="{{url}}" mode="widthFix"></image>
+        <view class="cu-tag bg-{{tagcolor?tagcolor:'blue'}}">{{tag}}</view>
+        <view class="cu-bar bg-shadeBottom">
+          <text class="text-cut">{{summary}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 轮播图 -->
+<template name="swiper">
+  <swiper bindtap='clickSwiper' bindlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper square-dot margin-tb padding-top" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
+    <swiper-item class="grid col-4 grid-square radius" wx:for="{{list}}" wx:key="{index}">
+      <image src="{{item.url}}" mode="widthFix" wx:if="{{item.type=='image'}}" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item.url}}" data-urls="{{item.urls}}"></image>
+      <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
+    </swiper-item>
+  </swiper>
+</template>
+
+<!-- 视频 -->
+<template name="video">
+  <video bindtap='clickVideo' bindlongpress='longclickVideo' src="{{url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover"></video>
+</template>
+
+<template name="item-title">
+  <view wx:if="{{title}}" class="cu-bar bg-white solids-top solid-bottom">
+    <view class='action'>
+      <text class='cuIcon-titles text-orange'></text>{{title}}
+    </view>
+  </view>
+</template>
+
+<template name="interval">
+  <view class="bg-white solid-bottom margin-top"></view>
+</template>
+
+<template name="noticebar">
+  <van-notice-bar wx:if="{{content}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{content}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" />
+</template>
+
+<template name="stepper">
+  <van-cell center title="{{title}}">
+    <van-stepper value="{{start?start:0}}" step="{{step?step:1}}" decimal-length="{{step<1?2:''}}" min="{{min?min:0}}" max="{{max?max:100}}" />
+  </van-cell>
+</template>
+
+<template name="rate">
+  <van-rate custom-class="van-rate" data-key="{{value?value:0}}" value="{{value?value:0}}" size="{{size?size:25}}" allow-half color="{{color?color:'#ee0a24'}}" count="{{count?count:5}}" void-color="grey" void-icon="star" touchable="{{ false }}" bind:change="onChange"
+  />
+</template>
+
+<template name="tag">
+  <block wx:for="{{tags}}" wx:key="{{index}}">
+    <van-tag wx:if="{{item.type?true:false}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="primary" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
+  </block>
+</template>
+
+<!--{
+  date: '昨天',
+  record: [
+    level: normal, notice, warn, error
+    log: [
+      {
+        time: 时间点
+        content: 内容
+      }
+    ]
+  ],
+}-->
+<template name='timeline'>
+  <view class="cu-timeline">
+    <view class="cu-time">{{date}}</view>
+    <block wx:for="{{record}}" wx:key="index">
+      <view wx:if="{{item.level=='notice'}}" class="cu-item cur cuIcon-noticefill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-green shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag line-yellow">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='error'}}" class="cu-item text-red cuIcon-attentionforbidfill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-red shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag line-black">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='normal'}}" class="cu-item text-grey cuIcon-evaluate_fill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-grey shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-yellow">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='warn'}}" class="cu-item text-blue">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="bg-blue content">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-red">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='none'}}" class="cu-item">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-gray">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<template name="message">
+  <view class="cu-list menu-avatar" catchtap="clickMessage" bindlongpress="longclickMessage">
+    <view class="cu-item cur">
+      <view class="cu-avatar round lg" style="background-image:url({{image}});">
+        <view class="cu-tag badge">{{tag}}</view>
+      </view>
+      <view class="content">
+        <view>
+          <text class="text-cut">{{name}}</text>
+          <view class="cu-tag round bg-orange sm">{{status_tag}}</view>
+        </view>
+        <view class="text-gray text-sm flex">
+          <text class="text-cut">{{content}}</text>
+        </view>
+      </view>
+      <view class="action">
+        <view class="text-grey text-xs">{{time}}</view>
+        <view class="cuIcon-notice_forbid_fill text-gray"></view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="menu1">
+  <view class="cu-list menu" catchtap="clickMenu" bindlongpress="longclickMenu">
+    <view class="cu-item arrow">
+      <view class="content">
+        <text class="cuIcon-{{icon}} text-grey"></text>
+        <text class="text-grey">{{title}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="menu2">
+  <view class="cu-list menu" catchtap="clickMenu2" bindlongpress="longclickMenu2">
+    <view class="cu-item">
+      <view class="content">
+        <text class="cuIcon-emojiflashfill text-pink"></text>
+        <text class="text-grey">头像组</text>
+      </view>
+      <view class="action">
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" wx:for="{{image}}" style="background-image:url({{item}});"></view>
+        </view>
+        <text class="text-grey text-sm">4 人</text>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="card">
+  <view class="cu-card case no-card padding-tb" catchtap="clickCard" bindlongpress="longclickCard">
+    <view class="cu-item shadow">
+      <view class="image">
+        <image src="{{image}}" mode="widthFix"></image>
+        <view class="cu-tag bg-blue">{{tag}}</view>
+        <view class="cu-bar bg-shadeBottom">
+          <text class="text-cut">{{summary}}</text>
+        </view>
+      </view>
+      <view class="cu-list menu-avatar">
+        <view class="cu-item">
+          <view class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
+          <view class="content flex-sub">
+            <view class="text-grey">{{name}}</view>
+            <view class="text-gray text-sm flex justify-between">
+              {{time}}
+              <view class="text-gray text-sm">
+                <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
+                <text class="cuIcon-appreciatefill margin-lr-xs"></text> {{like_count}}
+                <text class="cuIcon-messagefill margin-lr-xs"></text> {{comment_count}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

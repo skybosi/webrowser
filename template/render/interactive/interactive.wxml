@@ -1,0 +1,107 @@
+<!-- 用户信息 -->
+<wxs src="../render.wxs" module="render"></wxs>
+<template name="user">
+  <view data-myid="{{id||myID}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" catchtap="getUserInfo">
+    <view class="cu-item">
+      <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
+      <view wx:elif="{{name}}" class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
+      <view class="content padding-left">
+        <view class="flex justify-start align-center margin-bottom-xs">
+          <text class="text-black text-bold text-lg text-cut">{{name}}</text>
+          <view wx:if="{{tag}}" class="cu-tag radius bg-red sm margin-right-xs">{{tag}}</view>
+        </view>
+        <view>
+          <view wx:if="{{image && image[0]}}" class="padding-top-xs">
+            <view class="grid flex-sub col-3 grid-square">
+              <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+            </view>
+          </view>
+        </view>
+        <view class="flex justify-between">
+          <view class="text-gray text-df">{{time}}</view>
+          <view class="text-gray text-sm">
+            <text class="cuIcon-attentionfill margin-lr-xs"></text> {{view_count}}
+            <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{like_count}}
+            <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="flex">
+      <view class="flex-sub padding-sm text-center">关注</view>
+      <view class="flex-sub padding-sm text-center" data-myid="{{myID}}" data-openid="{{openID}}" catchtap="contactUser">联系</view>
+    </view>
+  </view>
+  <view class="padding-bottom-sm"></view>
+</template>
+
+<!-- {
+  placeholder: "搜索最新公告消息"
+} -->
+<template name="search">
+  <view class="cu-bar search bg-white fixed" style="top:{{CustomBar}}px;">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" placeholder="{{placeholder}}" confirm-type="search"></input>
+    </view>
+  </view>
+</template>
+
+<!-- {
+  pic: 是否使用引导标图
+  pic_url: 引导标图
+  placeholder: hint提示文字
+} -->
+<template name="search-bar">
+  <view class="cu-bar search bg-white fixed" style="top:{{Top}}px;">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input">
+        <swiper-item wx:for="{{render.toArray(placeholder)}}" wx:key="{{index}}" class="flex align-center text-black">
+          <input type="text" placeholder="{{item}}" confirm-type="search" bindfocus="{{render.switchAutoplay}}" bindblur="{{render.switchAutoplay}}"></input>
+        </swiper-item>
+      </swiper>
+    </view>
+    <view class="action" bindtap="{{render.switchSearchBar}}" data-target="show">
+      <text>筛选</text>
+      <text class="cuIcon-triangledownfill"></text>
+    </view>
+  </view>
+  <view class="action">
+    <view class="cu-modal drawer-modal justify-top search-bar-filter" bindtap="{{render.switchSearchBar}}" data-target="">
+      <view class="cu-dialog padding" catchtap style="position: absolute;height:60%;width:100%;top:{{Top}}px">
+        <slot id="filter" name="content"></slot>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="index-bar">
+  <van-index-bar index-list="{{ indexList }}" scroll-top="{{ scrollTop }}">
+    <view wx:for="{{ itemList }}" wx:key="index">
+      <van-index-anchor use-slot index="{{ item.name }}">
+        <template is="message" data="{{...item}}"></template>
+      </van-index-anchor>
+    </view>
+  </van-index-bar>
+</template>
+
+<template name="auth">
+  <view class="cu-modal {{authStatus?'show':''}} auth-display">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">{{title}}</view>
+        <view class="action" data-chose="ignore" bindtap="{{render.authDisplay}}">
+          <text class="cuIcon-roundclosefill text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">{{content}}</view>
+      <view class="cu-bar bg-white justify-around">
+        <view class="action">
+          <button class="cu-btn line-blue text-green margin-right" data-chose="cancel" bindtap="{{render.authDisplay}}">取消</button>
+          <button class="cu-btn bg-green margin-left" bindtap="{{render.authDisplay}}" data-chose="ok" open-type="getUserInfo" bindgetuserinfo="getRegister">确定</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
