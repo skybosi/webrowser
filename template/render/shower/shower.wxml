@@ -63,7 +63,7 @@
   <view class="content">
     <view class="bg-black padding-sm radius" style="white-space: pre-wrap;">
       <view class="flex">
-        <view class="flex-sub">{{text}}</view>
+        <view class="flex-sub">{{render.Json(text)}}</view>
       </view>
     </view>
   </view>
@@ -129,8 +129,8 @@
 </template>
 
 <template name="card-swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{shower.cardSwiper}}" indicator-color="#8799a3"
-    indicator-active-color="#0081ff">
+  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{shower.cardSwiper}}"
+    indicator-color="#8799a3" indicator-active-color="#0081ff">
     <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
       <view class="swiper-item" data-index="{{index}}">
         <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
@@ -143,15 +143,7 @@
 <!-- 视频 -->
 <template name="video">
   <view class="flex justify-center align-center padding-sm">
-    <video bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true"/>
-  </view>
-</template>
-
-<template name="item-title">
-  <view wx:if="{{title}}" class="cu-bar bg-white solids-top solid-bottom">
-    <view class='action'>
-      <text class='cuIcon-titles text-orange'></text>{{title}}
-    </view>
+    <video bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
 
@@ -160,7 +152,7 @@
 </template>
 
 <template name="noticebar">
-  <van-notice-bar wx:if="{{content}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{content}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" />
+  <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" />
 </template>
 
 <template name="stepper">
@@ -176,7 +168,7 @@
 
 <template name="tag">
   <block wx:for="{{tags}}" wx:key="{{index}}">
-    <van-tag wx:if="{{item.type?true:false}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="primary" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
+    <van-tag wx:if="{{item.type?item.type:'success'}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="{{item.type?item.type:'success'}}" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
   </block>
 </template>
 

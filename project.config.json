@@ -88,6 +88,13 @@
 					"pathName": "pages/index/index",
 					"query": "path=/content",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "tools",
+					"pathName": "pages/index/index",
+					"query": "path=/tools",
+					"scene": null
 				}
 			]
 		}

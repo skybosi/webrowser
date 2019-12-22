@@ -1,5 +1,5 @@
 var list = [{
-    text: `{ "list": [{type: "image", "url": "..."},...],  "type": "swiper" }`,
+    text: `{ "list": [{"type": "image", "url": "..."}],  "type": "swiper" }`,
     type: "code"
   }, {
     type: "swiper",
@@ -22,7 +22,7 @@ var list = [{
     ]
   },
   {
-    text: `{ "list": [{type: "image", "url": "..."},...],  "type": "card-swiper" }`,
+    text: `{ "list": [{"type": "image", "url": "..."}],  "type": "card-swiper" }`,
     type: "code"
   }, {
     type: "card-swiper",
@@ -45,7 +45,7 @@ var list = [{
     ]
   },
   {
-    text: `{ "url": "...", tag: "...", "type": "img" }`,
+    text: `{ "url": "...", "tag": "...", "type": "img" }`,
     type: "code"
   },
   {

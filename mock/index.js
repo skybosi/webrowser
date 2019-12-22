@@ -77,11 +77,12 @@ var list = [{
         type: 'grid-icon',
         path: '/form'
       }, {
-        icon: 'questionfill',
+        icon: 'settingsfill',
         color: 'mauve',
         badge: 0,
-        name: '帮助',
-        type: 'grid-icon'
+        name: '工具',
+        type: 'grid-icon',
+        path: '/tools'
       }
     ]
   },
