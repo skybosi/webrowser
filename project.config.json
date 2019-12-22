@@ -32,13 +32,64 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"gamePlugin": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "path=/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "text",
+					"pathName": "pages/index/index",
+					"query": "path=/text",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "image",
+					"pathName": "pages/index/index",
+					"query": "path=/image",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "card",
+					"pathName": "pages/index/index",
+					"query": "path=/card",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "video",
+					"pathName": "pages/index/index",
+					"query": "path=/video",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "content",
+					"pathName": "pages/index/index",
+					"query": "path=/content",
+					"scene": null
+				}
+			]
 		}
 	}
 }

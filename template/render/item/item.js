@@ -7,15 +7,15 @@ export default {
     let index = e.currentTarget.dataset.index
     let path = e.currentTarget.dataset.path
     let id = e.currentTarget.dataset.id
-    if (!path && id) {
-      path = '/template/content/content?id=' + id
-    }
-    if ('' != path) {
+    if ('' != path && undefined != path) {
       wx.navigateTo({
-        url: path
+        url: '/pages/index/index?path=' + path
       })
     } else {
       console.log("path is empty!")
+      wx.showToast({
+        title: '无效跳转！',
+      })
     }
   },
   /**

@@ -45,4 +45,17 @@ export default ({
       })
     }
   },
+  getSearchPage(e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    let path = e.currentTarget.dataset.path
+    let id = e.currentTarget.dataset.id
+    if ('' != path) {
+      wx.navigateTo({
+        url: '/pages/index/index?path=' + path
+      })
+    } else {
+      console.log("path is empty!")
+    }
+  },
 })

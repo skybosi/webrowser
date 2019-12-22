@@ -53,12 +53,12 @@
   placeholder: hint提示文字
 } -->
 <template name="search-bar">
-  <view class="cu-bar search bg-white fixed" style="top:{{Top}}px;">
+  <view class="cu-bar search bg-white fixed solid-top" style="left:0;top:{{Top}}px;">
     <view class="search-form round">
       <text class="cuIcon-search"></text>
-      <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input">
+      <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
         <swiper-item wx:for="{{render.toArray(placeholder)}}" wx:key="{{index}}" class="flex align-center text-black">
-          <input type="text" placeholder="{{item}}" confirm-type="search" bindfocus="{{render.switchAutoplay}}" bindblur="{{render.switchAutoplay}}"></input>
+          <input type="text" placeholder="{{item}}" confirm-type="search" data-path="{{path}}" bindfocus="getSearchPage" bindblur="{{render.switchAutoplay}}"></input>
         </swiper-item>
       </swiper>
     </view>
@@ -67,6 +67,7 @@
       <text class="cuIcon-triangledownfill"></text>
     </view>
   </view>
+  <view class="cu-bar"></view>
   <view class="action">
     <view class="cu-modal drawer-modal justify-top search-bar-filter" bindtap="{{render.switchSearchBar}}" data-target="">
       <view class="cu-dialog padding" catchtap style="position: absolute;height:60%;width:100%;top:{{Top}}px">

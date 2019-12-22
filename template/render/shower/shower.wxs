@@ -1,0 +1,34 @@
+/**
+ * 处理数据使其返回数组
+ */
+var TextClassMap = {
+  title: "text-center margin-tb-xs text-xl text-grey",
+  h1: "margin-tb-xs text-sl text-black text-bold",
+  h2: "margin-tb-xs text-xxl text-black text-bold",
+  h3: "margin-tb-xs text-xl text-black text-bold",
+  h4: "margin-tb-xs text-lg text-black text-bold",
+  h5: "margin-tb-xs text-df text-black text-bold",
+  h: "margin-tb-xs text-lg text-black text-bold",
+}
+
+var template = function(name) {
+  console.log(name, TextClassMap[name])
+  return TextClassMap[name]
+}
+
+/**
+ * 控制card 轮播的样式变化，perfect
+ */
+var cardSwiper = function(event, ins) {
+  var current = event.detail.current
+  console.log('cardSwiper', JSON.stringify())
+  var all = ins.selectAllComponents('#card-swiper')
+  for(var i=0; i < all.length; ++i){
+    all[i].removeClass('cur')
+  }
+  ins.selectComponent('.show-swiper-' + current).addClass('cur')
+  return false
+}
+
+module.exports.template = template;
+module.exports.cardSwiper = cardSwiper;

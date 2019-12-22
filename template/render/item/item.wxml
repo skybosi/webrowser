@@ -31,7 +31,7 @@
 </template>
 
 <template name="grid-icon">
-  <view class="cuIcon-{{icon}} text-{{color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
+  <view class="cuIcon-{{icon}} text-{{!path?'gray':color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
     <view class="cu-tag badge" wx:if="{{badge!=0}}">
       <block wx:if="{{badge!=1}}">{{badge>99?"99+":badge}}</block>
     </view>
@@ -44,8 +44,8 @@
 </template>
 
 <template name="grid">
-  <view class="cu-list grid col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}}">
-    <view class="cu-item" wx:for="{{list}}" wx:key="{{index}}" hover-class="hover" wx:if="{{index<(gridCol?gridCol:4)*2}}">
+  <view class="cu-list grid solid-bottom col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}}" style="margin:0">
+    <view class="cu-item" wx:for="{{list}}" wx:key="{{index}}" hover-class="hover">
       <template is="{{item.type}}" data="{{...item}}"></template>
     </view>
   </view>
@@ -72,13 +72,12 @@
   comment_count: 评论数
 } -->
 <template name="ad">
-  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom padding-bottom-xs">
-    <view class="cu-item margin-lr-xs">
-      <swiper wx:if="{{swiper_type=='screen' || swiper_type=='' || swiper_type==undefined}}" class="screen-swiper square-dot" vertical="{{vertical?true:false}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3"
-        indicator-active-color="#0081ff">
+  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom">
+    <view class="cu-item shadow margin-lr-xs">
+      <swiper wx:if="{{swiper_type=='screen'||!swiper_type}}" class="screen-swiper {{image.length>1?'square-dot':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{image.length>1?'true':false}}" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
         <swiper-item wx:for="{{image}}" wx:key="index">
           <view class="image">
-            <image src="{{item.url}}" mode="widthFix" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item.url}}" data-urls="{{image}}"></image>
+            <image src="{{item.url}}" mode="widthFix"></image>
             <view class="cu-tag bg-blue">{{item.tag}}</view>
             <view class="cu-bar bg-shadeBottom">
               <text class="text-cut">{{item.summary}}</text>
@@ -94,14 +93,14 @@
           </view>
         </swiper-item>
       </swiper>
-      <view class="content padding padding-top-xs margin-lr-xs flex justify-between align-center">
+      <view class="content padding padding-top-xs padding-left-xs margin-lr-xs flex justify-between align-center">
         <view class="flex justify-start align-center" style="width:calc(60%)">
           <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-xs">{{tag}}</view>
           <text class="text-grey text-df text-cut">{{name}}</text>
         </view>
         <view class="text-gray text-sm">
           <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
-          <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
+          <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{like_count}}
           <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
         </view>
       </view>
@@ -220,19 +219,19 @@
   comment_count: 评论数
 } -->
 <template name="comment">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom padding-bottom-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
       <view class="content padding-left">
-        <view class="flex justify-start align-center margin-bottom-xs">
+        <view wx:if="{{name}}" class="flex justify-start align-center margin-bottom-xs">
           <text class="text-black text-bold text-lg text-cut">{{name}}</text>
           <view wx:if="{{tag}}" class="cu-tag radius bg-red sm margin-right-xs">{{tag}}</view>
         </view>
         <view class="text-grey text-content text-df">
           {{summary}}
         </view>
-        <view>
+        <block>
           <view wx:if="{{image && image[0]}}" class="padding-top-xs">
             <!-- <view calss="grid flex-sub padding-lr col-3 grid-square">
               <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});"></view>
@@ -241,8 +240,23 @@
               <view class="bg-img" wx:for="{{image}}" wx:key="{{index}}" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
             </view>
           </view>
-        </view>
-        <view class="flex justify-between">
+          <view wx:if="{{comment}}" class="bg-gray padding-xs radius text-sm">
+            <block wx:for="{{comment}}" wx:key="index">
+              <view class="flex">
+                <view class="text-blue">{{item.from}}</view>
+                <view wx:if="{{item.to}}">回复
+                  <text class="text-blue">{{item.to}}</text>
+                </view>
+                <view class="flex-sub">: {{item.content}}</view>
+              </view>
+            </block>
+            <view wx:if="{{comment.total}}" catchtap="getMoreComment" catchlongpress="copyMoreComment" class="text-blue text-bold padding-tb-sm">
+              {{comment.total}}条回复
+              <text class="cuIcon-right"></text>
+            </view>
+          </view>
+        </block>
+        <view class="flex justify-between padding-top-sm">
           <view class="text-gray text-df">{{time}}</view>
           <view class="text-gray text-sm">
             <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}

@@ -28,6 +28,12 @@ export default {
       })
     }
   },
+  clickText(e) {
+    console.log(e)
+  },
+  longclickText(e) {
+    console.log(e)
+  },
   clickP(e) {
     console.log(e)
   },
