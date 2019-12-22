@@ -3,13 +3,8 @@
 @import "colorui/icon.wxss";
 
 .container {
+  width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 200rpx 0;
-  box-sizing: border-box;
 }
 
 .active {
@@ -19,6 +14,11 @@
 
 .hover {
   background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.href-active {
+  color: purple;
+  text-decoration: none;
 }
 
 .hover-color {

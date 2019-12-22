@@ -1,7 +1,7 @@
 var list = [{
     type: "search-bar",
     autoplay: 1,
-    placeholder: ["webrowser", "weapp browser"],
+    placeholder: ["webrowser", "weapp browser", "小程序"],
     path: "/search"
   },
   {

@@ -34,6 +34,25 @@ export default {
   longclickText(e) {
     console.log(e)
   },
+  clickA(e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    let path = e.currentTarget.dataset.href || e.target.dataset.href
+    let id = e.currentTarget.dataset.id
+    if ('' != path && undefined != path) {
+      wx.navigateTo({
+        url: '/pages/index/index?path=' + path
+      })
+    } else {
+      console.log("path is empty!")
+      wx.showToast({
+        title: '无效跳转！',
+      })
+    }
+  },
+  longclickA(e) {
+    console.log(e)
+  },
   clickP(e) {
     console.log(e)
   },

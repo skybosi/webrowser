@@ -79,7 +79,7 @@ var Json = function(json, options) {
  * 切换轮播自动播放
  */
 var switchAutoplay = function(event, ins) {
-  console.log('get data', JSON.stringify(ins.selectComponent('.swiper')))
+  console.log('switchAutoplay:', JSON.stringify(ins.selectComponent('.swiper')))
   ins.callMethod('updateAutoplay', event)
 }
 
@@ -87,7 +87,7 @@ var switchAutoplay = function(event, ins) {
  * 长按item 处理函数
  */
 var longclickItem = function(event, ins) {
-  console.log('get data', JSON.stringify(ins.selectComponent('.modal-display')))
+  console.log('longclickItem:', JSON.stringify(ins.selectComponent('.modal-display')))
   ins.selectComponent('.modal-display').addClass('show')
 }
 
@@ -95,7 +95,7 @@ var longclickItem = function(event, ins) {
  * 长按item 处理函数
  */
 var longclickItemHandle = function(event, ins) {
-  console.log('get data', JSON.stringify(ins.selectComponent('.modal-display')))
+  console.log('longclickItemHandle:', JSON.stringify(ins.selectComponent('.modal-display')))
   ins.selectComponent('.modal-display').removeClass('show')
   console.log(JSON.stringify(event))
 }
@@ -104,7 +104,7 @@ var longclickItemHandle = function(event, ins) {
  * 是否显示授权弹框
  */
 var authDisplay = function(event, ins) {
-  console.log('get data', JSON.stringify(event))
+  console.log('authDisplay:', JSON.stringify(event))
   ins.selectComponent('.auth-display').removeClass('show')
 }
 
@@ -112,7 +112,7 @@ var authDisplay = function(event, ins) {
  * 是否显示搜索过滤条件
  */
 var switchSearchBar = function(event, ins) {
-  console.log('get data', JSON.stringify(event))
+  console.log('switchSearchBar:', JSON.stringify(event))
   var chose = event.currentTarget.dataset.target
   if ('show' === chose) {
     ins.selectComponent('.search-bar-filter').addClass('show')
@@ -122,10 +122,23 @@ var switchSearchBar = function(event, ins) {
   return this
 }
 
+/**
+ * 控制card 轮播的样式变化，perfect
+ */
+var cardSwiper = function (event, ins) {
+  var current = event.detail.current
+  var all = ins.selectAllComponents('#card-swiper')
+  for (var i = 0; i < all.length; ++i) {
+    all[i].removeClass('cur')
+  }
+  ins.selectComponent('.show-swiper-' + current).addClass('cur')
+  return false
+}
 
 // module.exports.updateAutoplay = updateAutoplay;
 module.exports.Json = Json;
 module.exports.toArray = toArray;
+module.exports.cardSwiper = cardSwiper;
 module.exports.authDisplay = authDisplay;
 module.exports.longclickItem = longclickItem;
 module.exports.switchAutoplay = switchAutoplay;

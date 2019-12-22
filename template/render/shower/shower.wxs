@@ -17,18 +17,23 @@ var template = function(name) {
 }
 
 /**
- * 控制card 轮播的样式变化，perfect
+ * 更新a标签的访问状态的样式
  */
-var cardSwiper = function(event, ins) {
-  var current = event.detail.current
-  console.log('cardSwiper', JSON.stringify())
-  var all = ins.selectAllComponents('#card-swiper')
-  for(var i=0; i < all.length; ++i){
-    all[i].removeClass('cur')
+var clickA = function(event, ins) {
+  var st = event.instance.getState()
+  var clicked = st.clicked || 0
+  console.log('clickA', JSON.stringify(st))
+  if (!clicked) {
+    ins.selectComponent('.a-link').removeClass('text-blue').setStyle({
+      'color': 'purple',
+      'text-decoration': 'none'
+    })
   }
-  ins.selectComponent('.show-swiper-' + current).addClass('cur')
+  st.clicked = clicked + 1
+  // 调用预先定义的js 逻辑层的方法
+  ins.callMethod("clickA", event)
   return false
 }
 
+module.exports.clickA = clickA;
 module.exports.template = template;
-module.exports.cardSwiper = cardSwiper;

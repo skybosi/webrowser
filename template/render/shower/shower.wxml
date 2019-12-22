@@ -3,8 +3,14 @@
 
 <!-- 标题 -->
 <template name="text">
-  <view bindtap='clickText' catchlongpress='longclickText' wx:if="{{text}}" data-type="{{name}}" class="{{shower.template(name)}}">
+  <view bindtap='clickText' catchlongpress='longclickText' wx:if="{{text}}" data-path="{{path}}" data-type="{{name}}" class="{{shower.template(name)}}">
     <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<template name="a">
+  <view wx:if="{{text}}" class="margin-tb-sm">
+    <text selectable='true' bindtap='{{shower.clickA}}' catchlongpress='longclickA' class="a-link text-blue" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
   </view>
 </template>
 
@@ -86,7 +92,7 @@
 </template> -->
 
 <template name="label">
-  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:10rpx" data-path="{{path}}">
+  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:0rpx" data-path="{{path}}">
     <view class="cu-item {{path?'arrow':''}}" style="padding-left:0;margin:0" hover-class="hover">
       <view class="content">
         <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:'green'}}"></text>
@@ -129,7 +135,7 @@
 </template>
 
 <template name="card-swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{shower.cardSwiper}}"
+  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{render.cardSwiper}}"
     indicator-color="#8799a3" indicator-active-color="#0081ff">
     <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
       <view class="swiper-item" data-index="{{index}}">
@@ -142,8 +148,8 @@
 
 <!-- 视频 -->
 <template name="video">
-  <view class="flex justify-center align-center padding-sm">
-    <video bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
+  <view class="flex justify-center align-center padding-tb-sm">
+    <video style="width:100%" bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
 

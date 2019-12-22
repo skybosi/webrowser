@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <include src="/template/render/render.wxml" />
-<view class='bg-white padding-lr'>
+<view class='container bg-white padding' bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
   <block wx:for="{{list}}" wx:key="{{index}}">
     <template is="{{item.type}}" data="{{...item}}"></template>
   </block>

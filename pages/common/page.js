@@ -15,8 +15,8 @@ export default function(context = {}) {
     props: {
       _touchTime: 0, // 时间记录，用于滑动时且时间小于1s则执行左右滑动
       _interval: "", // 记录/清理时间记录
-      _touchStartX: 0, //触摸时的原点
-      _touchStartY: 0, //触摸时的原点
+      _touchStartX: -1, //触摸时的原点
+      _touchStartY: -1, //触摸时的原点
       _touchMoveX: 0, // x轴方向移动的距离
       _touchMoveY: 0, // y轴方向移动的距离
       _reachBottom: false,
@@ -55,11 +55,31 @@ export default function(context = {}) {
     onPageScroll: function(e) {
       this.props._pageScroll = e.scrollTop
     },
+    /**
+     * 触摸滑动事件
+     */
+    pageEventObserver(e) {
+      console.log(e)
+      switch (e.type) {
+        case 'leftedge':
+        case 'rightedge':
+          wx.navigateBack({
+            delta: -1
+          })
+          break;
+        default:
+          wx.showToast({
+            title: '滑动type:' + e.type,
+          })
+          break
+      }
+    },
     // 触摸开始事件
     touchStart: function(e) {
       let self = this
       this.props._touchStartX = e.touches[0].pageX; // 获取触摸时的原点
       this.props._touchStartY = e.touches[0].pageY; // 获取触摸时的原点
+      console.log("touchStart:", this.props)
       // 使用js计时器记录时间
       this.props._interval = setInterval(function() {
         self.props._touchTime++;
@@ -83,35 +103,41 @@ export default function(context = {}) {
       if (moveX <= moveY) { // 上下
         // 向上滑动
         if (this.props._touchMoveY - this.props._touchStartY <= -60 && this.props._touchTime > 2) {
-          console.log("向上滑动")
           e.type = "up"
           // 上拉到底
           if (this.props._reachBottom) {
             e.type = "upbottom"
           }
+          console.log("向上滑动", e)
           this.pageEventObserver ? this.pageEventObserver(e) : null
         }
         // 向下滑动
         if (this.props._touchMoveY - this.props._touchStartY >= 60 && this.props._touchTime > 2) {
-          console.log("向下滑动")
           e.type = "down"
           // 下拉到顶
           if (this.props._pageScroll == 0) {
             e.type = "downtop"
           }
+          console.log("向下滑动", e)
           this.pageEventObserver ? this.pageEventObserver(e) : null
         }
       } else { // 左右
         // 向左滑动
         if (this.props._touchMoveX - this.props._touchStartX <= -40 && this.props._touchTime > 2) {
-          console.log("左滑页面")
           e.type = "left"
+          if (this.data.ScreenWidth - this.props._touchStartX < 10) {
+            e.type = "leftedge"
+          }
+          console.log("左滑页面", e)
           this.pageEventObserver ? this.pageEventObserver(e) : null
         }
         // 向右滑动
         if (this.props._touchMoveX - this.props._touchStartX >= 40 && this.props._touchTime > 2) {
-          console.log('向右滑动')
           e.type = "right"
+          if (this.props._touchStartX < 10) {
+            e.type = "rightedge"
+          }
+          console.log('向右滑动', e)
           this.pageEventObserver ? this.pageEventObserver(e) : null
         }
       }

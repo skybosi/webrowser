@@ -14,6 +14,15 @@ var list = [{
     type: "p"
   },
   {
+    text: `{ "text": "...",  "type": "a" }`,
+    type: "code"
+  },
+  {
+    text: "a-link: /index",
+    type: "a",
+    href: "/index"
+  },
+  {
     text: `{ "text": "...",  "type": "h" }`,
     type: "code"
   },
@@ -54,7 +63,7 @@ var list = [{
     type: "h1"
   },
   {
-    text: `{ "text": "...",  "type": "li" }`,
+    text: `{ "text": "...",  "type": "li", "color": "red" }`,
     type: "code"
   },
   {

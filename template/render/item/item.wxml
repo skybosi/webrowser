@@ -74,7 +74,8 @@
 <template name="ad">
   <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom">
     <view class="cu-item shadow margin-lr-xs">
-      <swiper wx:if="{{swiper_type=='screen'||!swiper_type}}" class="screen-swiper {{image.length>1?'square-dot':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{image.length>1?'true':false}}" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff">
+      <swiper wx:if="{{swiper_type=='screen'||!swiper_type}}" class="screen-swiper {{image.length>1?'square-dot':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{image.length>1?'true':false}}" circular="true" autoplay="true" interval="5000" duration="500"
+        indicator-color="#8799a3" indicator-active-color="#0081ff">
         <swiper-item wx:for="{{image}}" wx:key="index">
           <view class="image">
             <image src="{{item.url}}" mode="widthFix"></image>
@@ -85,18 +86,27 @@
           </view>
         </swiper-item>
       </swiper>
-      <swiper wx:if="{{swiper_type=='card'}}" class="card-swiper square-dot" vertical="{{vertical?true:false}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff" bindchange="cardSwiper">
+      <!-- <swiper wx:if="{{swiper_type=='card'}}" class="card-swiper square-dot" vertical="{{vertical?true:false}}" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" indicator-color="#8799a3" indicator-active-color="#0081ff" bindchange="cardSwiper">
         <swiper-item wx:for="{{image}}" wx:key class="{{cardCur==index?'cur':''}}">
           <view class="swiper-item" wx:if="{{item.type=='image'}}">
             <image src="{{item.url}}" mode="aspectFill" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item.url}}" data-urls="{{image}}"></image>
             <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
           </view>
         </swiper-item>
+      </swiper> -->
+      <swiper wx:if="{{swiper_type=='card'}}" wx:if="{{image}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{render.cardSwiper}}"
+        indicator-color="#8799a3" indicator-active-color="#0081ff">
+        <swiper-item id="card-swiper" wx:for="{{image}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
+          <view class="swiper-item" data-index="{{index}}">
+            <image src="{{item.url}}" mode="aspectFill"></image>
+          </view>
+        </swiper-item>
       </swiper>
+
       <view class="content padding padding-top-xs padding-left-xs margin-lr-xs flex justify-between align-center">
         <view class="flex justify-start align-center" style="width:calc(60%)">
           <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-xs">{{tag}}</view>
-          <text class="text-grey text-df text-cut">{{name}}</text>
+          <text class="text-grey text-cut">{{name}}</text>
         </view>
         <view class="text-gray text-sm">
           <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
@@ -122,7 +132,7 @@
   comment_count: 评论数
 } -->
 <template name="dynamic">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom padding-bottom-xs" hover-class="hover">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom" hover-class="hover">
     <view class="cu-item">
       <view class="cu-list menu-avatar">
         <view class="cu-item">
@@ -178,7 +188,7 @@
   comment_count: 评论数
 } -->
 <template name="article">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-bottom-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow" hover-class="hover">
       <view class="title">
         <view class="flex justify-start align-center">
@@ -190,10 +200,10 @@
       <view class="content">
         <image wx:if="{{image[0]}}" src="{{image[0]}}" mode="aspectFill" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{image[0]}}"></image>
         <view class="desc">
-          <view class="text-content" style="height:auto;max-height:4.8em">{{summary}}</view>
+          <view class="text-content padding-left-xs text-justify" style="height:auto;max-height:4.8em">{{summary}}</view>
           <view>
             <view class="cu-tag bg-{{item.color}} light sm round" wx:for="{{tags}}" wx:key="{{index}}">{{item.tag}}</view>
-            <view class="text-gray text-sm text-right">
+            <view class="text-grey text-sm text-right">
               <text class="cuIcon-attentionfill margin-lr-xs"></text>{{read_count}}
               <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
               <text class="cuIcon-messagefill margin-lr-xs"></text>{{comment_count}}
@@ -228,7 +238,7 @@
           <text class="text-black text-bold text-lg text-cut">{{name}}</text>
           <view wx:if="{{tag}}" class="cu-tag radius bg-red sm margin-right-xs">{{tag}}</view>
         </view>
-        <view class="text-grey text-content text-df">
+        <view class="text-gray text-content">
           {{summary}}
         </view>
         <block>
@@ -257,7 +267,7 @@
           </view>
         </block>
         <view class="flex justify-between padding-top-sm">
-          <view class="text-gray text-df">{{time}}</view>
+          <view class="text-gray">{{time}}</view>
           <view class="text-gray text-sm">
             <text class="cuIcon-attentionfill margin-lr-xs"></text> {{read_count}}
             <text class="cuIcon-appreciatefill margin-lr-xs"></text>{{thumbup_count}}
@@ -278,7 +288,7 @@
   time: 发布时间
 } -->
 <template name="notice">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-bottom-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow">
       <view class="flex justify-start align-center padding padding-bottom-sm">
         <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
@@ -288,7 +298,7 @@
         <view class="desc">
           <view class="text-grey text-content" style="text-align: justify;">{{summary}}</view>
           <view class="flex justify-end">
-            <view class="text-gray text-df">{{time}}</view>
+            <view class="text-gray">{{time}}</view>
           </view>
         </view>
       </view>
