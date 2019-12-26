@@ -2,7 +2,7 @@
  * 处理数据使其返回数组
  */
 var toArray = function(array) {
-  console.log(array)
+  // console.log(array)
   if (!array) {
     return ['请输入关键字...']
   } else if (array.constructor === 'Array') {
@@ -12,6 +12,30 @@ var toArray = function(array) {
   } else {
     return ['请输入关键字...']
   }
+}
+
+var COLOR = [
+  "red", "orange", "yellow", "olive", "green", "cyan",
+  "blue", "purple", "mauve", "pink", "brown", "grey",
+  "black", "darkGray", "gray",
+  // "ghostWhite", "white",
+  /* 浅色 */
+  // "redLight", "orangeLight", "yellowLight", "oliveLight",
+  // "greenLight", "cyanLight", "blueLight", "purpleLight",
+  // "mauveLight", "pinkLight", "brownLight", "greyLight",
+  /* 渐变色 */
+  // "gradualRed", "gradualOrange", "gradualGreen", "gradualPurple",
+  // "gradualPink", "gradualBlue",
+  /* 阴影透明色 */
+  // "ShadowSize", "redShadow", "orangeShadow", "yellowShadow",
+  // "oliveShadow", "greenShadow", "cyanShadow", "blueShadow",
+  // "purpleShadow", "mauveShadow", "pinkShadow", "brownShadow",
+  // "greyShadow", "grayShadow", "blackShadow",
+]
+
+var color = function() {
+  var index = Math.floor(Math.random() * COLOR.length)
+  return COLOR[index];
 }
 
 /**
@@ -125,7 +149,7 @@ var switchSearchBar = function(event, ins) {
 /**
  * 控制card 轮播的样式变化，perfect
  */
-var cardSwiper = function (event, ins) {
+var cardSwiper = function(event, ins) {
   var current = event.detail.current
   var all = ins.selectAllComponents('#card-swiper')
   for (var i = 0; i < all.length; ++i) {
@@ -137,6 +161,7 @@ var cardSwiper = function (event, ins) {
 
 // module.exports.updateAutoplay = updateAutoplay;
 module.exports.Json = Json;
+module.exports.color = color;
 module.exports.toArray = toArray;
 module.exports.cardSwiper = cardSwiper;
 module.exports.authDisplay = authDisplay;

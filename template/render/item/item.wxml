@@ -31,11 +31,11 @@
 </template>
 
 <template name="grid-icon">
-  <view class="cuIcon-{{icon}} text-{{!path?'gray':color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
-    <view class="cu-tag badge" wx:if="{{badge!=0}}">
+  <view class="cuIcon-{{icon}} text-{{(!path||!color)?render.color():color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
+    <view class="cu-tag badge" wx:if="{{badge&&badge!=0}}">
       <block wx:if="{{badge!=1}}">{{badge>99?"99+":badge}}</block>
     </view>
-    <text>{{name}}</text>
+    <text wx:if="{{name}}" class="text-cut">{{name}}</text>
   </view>
 </template>
 
@@ -94,8 +94,8 @@
           </view>
         </swiper-item>
       </swiper> -->
-      <swiper wx:if="{{swiper_type=='card'}}" wx:if="{{image}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{render.cardSwiper}}"
-        indicator-color="#8799a3" indicator-active-color="#0081ff">
+      <swiper wx:if="{{swiper_type=='card'}}" wx:if="{{image}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{render.cardSwiper}}" indicator-color="#8799a3"
+        indicator-active-color="#0081ff">
         <swiper-item id="card-swiper" wx:for="{{image}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
           <view class="swiper-item" data-index="{{index}}">
             <image src="{{item.url}}" mode="aspectFill"></image>

@@ -77,8 +77,8 @@
 
 <!-- 列表 -->
 <template name="li">
-  <view bindtap='clickLi' catchlongpress='longclickLi' wx:if="{{text}}" class="cu-bar justify-start align-center text-{{weight?weight:'normal'}}" style="min-height:55rpx">
-    <text selectable='true' class="cuIcon-title text-{{color}} padding-right-xs"></text>{{text}}
+  <view bindtap='clickLi' catchlongpress='longclickLi' wx:if="{{text}}" class="cu-bar justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
+    <text selectable='true' class="cuIcon-title text-{{color?color:render.color()}} padding-right-xs"></text>{{text}}
   </view>
 </template>
 
@@ -95,7 +95,7 @@
   <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:0rpx" data-path="{{path}}">
     <view class="cu-item {{path?'arrow':''}}" style="padding-left:0;margin:0" hover-class="hover">
       <view class="content">
-        <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:'green'}}"></text>
+        <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
         <text class="text-grey">{{text}}</text>
       </view>
       <view class="action">

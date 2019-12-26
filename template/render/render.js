@@ -1,6 +1,8 @@
 // template/render/render.js
 import item from './item/item.js'
+import form from './form/form.js'
 import shower from './shower/shower.js'
+import button from './button/button.js'
 import interactive from './interactive/interactive.js'
 
 export default Object.assign({
@@ -37,4 +39,4 @@ export default Object.assign({
       console.log(e)
     });
   }
-}, interactive, shower, item)
+}, interactive, shower, item, form, button)

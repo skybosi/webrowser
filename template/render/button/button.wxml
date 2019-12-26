@@ -1,0 +1,12 @@
+<wxs src="../render.wxs" module="render"></wxs>
+
+<template name="button">
+  <block class="margin">
+    <button wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
+    </button>
+    <button wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
+    </button>
+  </block>
+</template>

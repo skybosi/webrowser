@@ -1,7 +1,10 @@
 <!--index.wxml-->
+<wxs src="../common/page.wxs" module="page"></wxs>
 <include src="/template/render/render.wxml" />
-<view class='container bg-white padding' bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+<view class="cu-load pull-down text-gray"></view>
+<view class='container bg-white padding page-top' data-width="{{ScreenHeight}}" bindtouchmove="{{page.touchMove}}" bindtouchend="{{page.touchEnd}}" bindtouchstart="{{page.touchStart}}" style="transform:translateY(0px)">
   <block wx:for="{{list}}" wx:key="{{index}}">
-    <template is="{{item.type}}" data="{{...item}}"></template>
+    <template is="{{item.type}}" data="{{...item, tidx: index}}"></template>
   </block>
 </view>
+<view class="cu-load pull-up text-gray"></view>

@@ -26,7 +26,9 @@ Page({
     var query = options.query
     mock.getMockData(path, query).then(res => {
       this.setData({
-        list: res.list
+        list: res.list,
+        path: path,
+        query: query
       })
     })
   },
@@ -65,4 +67,27 @@ Page({
   onPullDownRefresh: function() {
 
   },
+
+  /**
+   * 处理触屏事件函数
+   */
+  onPageEvent: function(e) {
+    var that = this
+    switch (e.direction) {
+      case 'down':
+      case 'up':
+        var path = that.data.path
+        var query = that.data.query
+        mock.getMockData(path, query).then(res => {
+          this.setData({
+            list: res.list,
+            path: path,
+            query: query
+          })
+        })
+        break;
+      default:
+        break
+    }
+  }
 })

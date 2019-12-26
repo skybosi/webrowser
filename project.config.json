@@ -95,6 +95,27 @@
 					"pathName": "pages/index/index",
 					"query": "path=/tools",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "form",
+					"pathName": "pages/index/index",
+					"query": "path=/form",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "icon",
+					"pathName": "pages/index/index",
+					"query": "path=/icon",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "button",
+					"pathName": "pages/index/index",
+					"query": "path=/button",
+					"scene": null
 				}
 			]
 		}

@@ -11,14 +11,29 @@ export default function(context = {}) {
     console.log("onload common page")
     originOnLoad && originOnLoad.call(self, option)
   }
+  /**
+   * 触摸滑动事件后
+   */
+  let originonPageEvent = context.onPageEvent
+  context.onPageEvent = function(e) {
+    const self = this
+    switch (e.direction) {
+      case 'leftedge':
+      case 'rightedge':
+        wx.navigateBack({
+          delta: -1
+        })
+        break;
+      default:
+        wx.showToast({
+          title: '滑动type:' + e.direction,
+        })
+        break
+    }
+    originonPageEvent && originonPageEvent.call(self, e)
+  }
   return Page({
     props: {
-      _touchTime: 0, // 时间记录，用于滑动时且时间小于1s则执行左右滑动
-      _interval: "", // 记录/清理时间记录
-      _touchStartX: -1, //触摸时的原点
-      _touchStartY: -1, //触摸时的原点
-      _touchMoveX: 0, // x轴方向移动的距离
-      _touchMoveY: 0, // y轴方向移动的距离
       _reachBottom: false,
       _pageScroll: 0
     },
@@ -42,107 +57,6 @@ export default function(context = {}) {
         imageUrl: 'https://mp.weixin.qq.com/wxopen/basicprofile?action=get_headimg&token=491084062&t=1576763992863',
         path: '/pages/index/index'
       }
-    },
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function() {
-      this.props._reachBottom = true
-    },
-    /**
-     * 页面滚动事件的处理函数
-     */
-    onPageScroll: function(e) {
-      this.props._pageScroll = e.scrollTop
-    },
-    /**
-     * 触摸滑动事件
-     */
-    pageEventObserver(e) {
-      console.log(e)
-      switch (e.type) {
-        case 'leftedge':
-        case 'rightedge':
-          wx.navigateBack({
-            delta: -1
-          })
-          break;
-        default:
-          wx.showToast({
-            title: '滑动type:' + e.type,
-          })
-          break
-      }
-    },
-    // 触摸开始事件
-    touchStart: function(e) {
-      let self = this
-      this.props._touchStartX = e.touches[0].pageX; // 获取触摸时的原点
-      this.props._touchStartY = e.touches[0].pageY; // 获取触摸时的原点
-      console.log("touchStart:", this.props)
-      // 使用js计时器记录时间
-      this.props._interval = setInterval(function() {
-        self.props._touchTime++;
-      }, 100);
-    },
-    // 触摸移动事件
-    touchMove: function(e) {
-      this.props._touchMoveX = e.touches[0].pageX;
-      this.props._touchMoveY = e.touches[0].pageY;
-    },
-    // 触摸结束事件
-    touchEnd: function(e) {
-      var moveX = this.props._touchMoveX - this.props._touchStartX
-      var moveY = this.props._touchMoveY - this.props._touchStartY
-      if (Math.sign(moveX) == -1) {
-        moveX = -moveX
-      }
-      if (Math.sign(moveY) == -1) {
-        moveY = -moveY
-      }
-      if (moveX <= moveY) { // 上下
-        // 向上滑动
-        if (this.props._touchMoveY - this.props._touchStartY <= -60 && this.props._touchTime > 2) {
-          e.type = "up"
-          // 上拉到底
-          if (this.props._reachBottom) {
-            e.type = "upbottom"
-          }
-          console.log("向上滑动", e)
-          this.pageEventObserver ? this.pageEventObserver(e) : null
-        }
-        // 向下滑动
-        if (this.props._touchMoveY - this.props._touchStartY >= 60 && this.props._touchTime > 2) {
-          e.type = "down"
-          // 下拉到顶
-          if (this.props._pageScroll == 0) {
-            e.type = "downtop"
-          }
-          console.log("向下滑动", e)
-          this.pageEventObserver ? this.pageEventObserver(e) : null
-        }
-      } else { // 左右
-        // 向左滑动
-        if (this.props._touchMoveX - this.props._touchStartX <= -40 && this.props._touchTime > 2) {
-          e.type = "left"
-          if (this.data.ScreenWidth - this.props._touchStartX < 10) {
-            e.type = "leftedge"
-          }
-          console.log("左滑页面", e)
-          this.pageEventObserver ? this.pageEventObserver(e) : null
-        }
-        // 向右滑动
-        if (this.props._touchMoveX - this.props._touchStartX >= 40 && this.props._touchTime > 2) {
-          e.type = "right"
-          if (this.props._touchStartX < 10) {
-            e.type = "rightedge"
-          }
-          console.log('向右滑动', e)
-          this.pageEventObserver ? this.pageEventObserver(e) : null
-        }
-      }
-      clearInterval(this.props._interval); // 清除setInterval
-      this.props._touchTime = 0;
     },
     ...context
   });

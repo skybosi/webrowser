@@ -11,7 +11,6 @@ var list = [{
     path: "/content"
   },
   {
-    color: "red",
     type: "label",
     text: "常用模板",
     icon: "explorefill",
@@ -26,29 +25,25 @@ var list = [{
     gridCol: 4,
     list: [{
         icon: 'text',
-        color: 'orange',
         badge: 10,
         name: '文本',
         type: 'grid-icon',
         path: '/text'
       }, {
         icon: 'square',
-        color: 'orange',
         badge: 1,
         name: '按钮',
         type: 'grid-icon',
-        path: '/index'
+        path: '/button'
       },
       {
         icon: 'picfill',
-        color: 'yellow',
         badge: 3,
         name: '图片',
         type: 'grid-icon',
         path: '/image'
       }, {
         icon: 'videofill',
-        color: 'red',
         badge: 1,
         name: '视频',
         type: 'grid-icon',
@@ -56,7 +51,6 @@ var list = [{
       },
       {
         icon: 'card',
-        color: 'purple',
         badge: 6,
         name: '卡片',
         type: 'grid-icon',
@@ -64,30 +58,33 @@ var list = [{
       },
       {
         icon: 'list',
-        color: 'cyan',
         badge: 0,
         name: '表格',
         type: 'grid-icon',
         path: '/table'
       }, {
         icon: 'form',
-        color: 'blue',
-        badge: 0,
+        badge: 3,
         name: '表单',
         type: 'grid-icon',
         path: '/form'
       }, {
         icon: 'settingsfill',
-        color: 'mauve',
-        badge: 0,
+        badge: 6,
         name: '工具',
         type: 'grid-icon',
         path: '/tools'
+      },
+      {
+        icon: 'icon',
+        badge: 1,
+        name: '图标',
+        type: 'grid-icon',
+        path: '/icon'
       }
     ]
   },
   {
-    color: "green",
     type: "label",
     text: "综合demo",
     icon: "discoverfill",

@@ -12,7 +12,7 @@ var TextClassMap = {
 }
 
 var template = function(name) {
-  console.log(name, TextClassMap[name])
+  // console.log(name, TextClassMap[name])
   return TextClassMap[name]
 }
 

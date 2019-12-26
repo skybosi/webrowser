@@ -1,0 +1,104 @@
+var newmarkY = startmarkY = 0
+var newmarkX = startmarkX = 0
+
+/**
+ * 触摸事件开始，初始化触点
+ */
+function touchstart(e, ins) {
+  startmarkX = newmarkX = (e.touches[0] || e.changedTouches[0]).pageX
+  startmarkY = newmarkY = (e.touches[0] || e.changedTouches[0]).pageY
+}
+
+/**
+ * 触摸事件结束，处理视图层变化，并回调事件处理函数
+ */
+function touchmove(e, ins) {
+  var pageX = (e.touches[0] || e.changedTouches[0]).pageX
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  newmarkX = pageX
+  newmarkY = pageY
+  var width = e.target.dataset.width || e.currentTarget.dataset.width
+  var pullDownWidth = width * 0.05
+  var moveX = Math.abs(pageX - startmarkX)
+  var moveY = Math.abs(pageY - startmarkY)
+  if (moveX <= moveY) { // 上下
+    if (startmarkY < pageY) {
+      e.direction = "down"
+      // console.log("下:" + startmarkY + " " + pageY)
+      console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
+      if (pullDownWidth > Math.abs(newmarkY - startmarkY)) {
+        ins.selectComponent('.page-top').setStyle({
+          transform: 'translateY(' + Math.min(pullDownWidth, newmarkY - startmarkY) + 'px)'
+        })
+      }
+      ins.selectComponent('.pull-down').addClass("loading")
+    }
+    if (startmarkY > pageY) {
+      e.direction = "up"
+      // console.log("上:" + startmarkY + " " + pageY)
+      ins.selectComponent('.page-top').setStyle({
+        transform: 'translateY(-' + Math.max(0, (newmarkY - startmarkY)) + 'px)'
+      })
+      ins.selectComponent('.pull-up').addClass("loading")
+    }
+  } else {
+    if (startmarkX < pageX) {
+      e.direction = "right"
+      // console.log("右:" + startmarkX + " " + pageX)
+    }
+    if (startmarkX > pageX) {
+      e.direction = "left"
+      // console.log("左:" + startmarkX + " " + pageX)
+    }
+  }
+  // 是否需要触发触摸过程中的事件
+  ins.callMethod('pageEventObserver', e)
+}
+
+/**
+ * 触摸事件结束，处理视图层，并回调事件处理函数
+ */
+function touchend(e, ins) {
+  var pageX = (e.touches[0] || e.changedTouches[0]).pageX
+  var pageY = (e.touches[0] || e.changedTouches[0]).pageY
+  newmarkX = pageX
+  newmarkY = pageY
+  var width = e.target.dataset.width || e.currentTarget.dataset.width
+  var pullDownWidth = width * 0.05
+  var moveX = Math.abs(pageX - startmarkX)
+  var moveY = Math.abs(pageY - startmarkY)
+  if (moveX <= moveY) { // 上下
+    if (startmarkY < pageY) {
+      console.log("下:" + startmarkY + " " + pageY)
+      e.direction = "down"
+      ins.selectComponent('.page-top').setStyle({
+        transform: 'translateY(0px)'
+      })
+      ins.selectComponent('.pull-down').removeClass("loading")
+    }
+    if (startmarkY > newmarkY) {
+      console.log("上:" + startmarkY + " " + pageY)
+      e.direction = "up"
+      ins.selectComponent('.page-top').setStyle({
+        transform: 'translateY(0px)'
+      })
+      ins.selectComponent('.pull-up').removeClass("loading")
+    }
+  } else {
+    if (startmarkX < pageX) {
+      e.direction = "right"
+      // console.log("右:" + startmarkX + " " + pageX)
+    }
+    if (startmarkX > pageX) {
+      e.direction = "left"
+      // console.log("左:" + startmarkX + " " + pageX)
+    }
+  }
+  ins.callMethod('onPageEvent', e)
+}
+
+module.exports = {
+  touchStart: touchstart,
+  touchMove: touchmove,
+  touchEnd: touchend
+}
