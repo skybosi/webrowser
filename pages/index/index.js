@@ -24,11 +24,11 @@ Page({
   onLoad: function(options) {
     var path = options.path || "/index"
     var query = options.query
+    this.data.path = path
+    this.data.query = query
     mock.getMockData(path, query).then(res => {
       this.setData({
         list: res.list,
-        path: path,
-        query: query
       })
     })
   },
@@ -79,10 +79,10 @@ Page({
         var path = that.data.path
         var query = that.data.query
         mock.getMockData(path, query).then(res => {
+          this.data.path = path
+          this.data.query = query
           this.setData({
-            list: res.list,
-            path: path,
-            query: query
+            list: res.list
           })
         })
         break;

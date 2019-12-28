@@ -1,0 +1,91 @@
+<wxs src="../render.wxs" module="render"></wxs>
+<wxs src="./chat.wxs" module="chat"></wxs>
+
+<template name="chat-self">
+  <view class="cu-item self">
+    <view class="main">
+      <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content bg-green shadow">
+        <text bindlongtap="longTapText">{{summary}}</text>
+      </view>
+      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="ViewImage" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
+      <view wx:if="{{msg_type=='sound'}}" class="action text-bold text-grey">{{duration}}</view>
+      <view wx:if="{{msg_type=='sound'}}" class="content shadow">
+        <text class="cuIcon-sound text-xxl padding-right-xl"></text>
+      </view>
+      <view wx:if="{{msg_type=='location'}}" class="action">
+        <text class="cuIcon-locationfill text-orange text-xxl"></text>
+      </view>
+      <view wx:if="{{msg_type=='location'}}" class="content shadow">
+        {{location}}
+      </view>
+    </view>
+    <view wx:if="{{avatar!='' && avatar!=undefined}}" class="cu-avatar round" style="background-image:url({{avatar}});"></view>
+    <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
+    <view class="date">{{time}}</view>
+  </view>
+</template>
+
+<template name="chat-other">
+  <view class="cu-item">
+    <view wx:if="{{avatar!='' && avatar!=undefined}} " class="cu-avatar round" style="background-image:url({{avatar}}); "></view>
+    <view wx:else class="cu-avatar round lg bg-cyan ">{{fromName[0]}}</view>
+    <view class="main">
+      <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content shadow">
+        <text>{{summary}}</text>
+      </view>
+      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix"></image>
+      <view wx:if="{{msg_type=='sound'}}" class="content shadow">
+        <text class="cuIcon-sound text-xxl padding-right-xl"></text>
+      </view>
+      <view wx:if="{{msg_type=='sound'}}" class="action text-bold text-grey">{{duration}}</view>
+      <view wx:if="{{msg_type=='location'}}" class="content shadow">
+        {{location}}
+      </view>
+      <view wx:if="{{msg_type=='location'}}" class="action">
+        <text class="cuIcon-locationfill text-orange text-xxl"></text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="chat-info">
+  <view class="cu-info">
+    <view wx:if="{{level=='normal'}}" class="round">{{summary}}</view>
+    <view wx:elif="{{level=='warn'}}">
+      {{summary}}
+      <text class="text-blue">{{notice}}</text>
+    </view>
+    <view wx:elif="{{level=='error'}}">
+      <text class="cuIcon-roundclosefill text-red"></text>{{summary}}
+    </view>
+    <view wx:else class="round">{{summary}}</view>
+  </view>
+</template>
+
+<template name="comment-input">
+  <view class="cu-tabbar-height"></view>
+  <view class="cu-bar input foot input-bottom {{InputBottom!=0?'cur':''}}" style="bottom:{{InputBottom}}px">
+    <view class='flex-direction' style="width:100%">
+      <view class="cu-bar">
+        <view class="action">
+          <text class="cuIcon-sound text-grey" style="font-size:60rpx"></text>
+        </view>
+        <input class="solid-bottom" bindfocus="{{chat.inputFocus}}" bindblur="{{chat.inputBlur}}" adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" bindinput="commentInput" value="{{inputValue}}"></input>
+        <view class="action">
+          <!-- <text class="cuIcon-emojifill text-grey"></text> -->
+          <text wx:if="{{!inputValue}}" class="cuIcon-roundaddfill text-grey" style="font-size:60rpx" bindtap="switchModal"></text>
+        </view>
+        <button wx:if="{{inputValue}}" class="cu-btn bg-green shadow-blur" data-id="{{id}}" data-utype="{{utype}}" bindtap="sendMessage">发送</button>
+      </view>
+    </view>
+  </view>
+</template>
+
+<template name="chat">
+  <view wx:for="{{list}}" wx:key="index" bindtap="hideModal" style="background-color:rgba(0,0,0,0.1)">
+    <view class="cu-chat">
+      <template is="chat-{{item.from_type}}" data="{{...item}}"></template>
+    </view>
+  </view>
+  <template is="comment-input"></template>
+</template>

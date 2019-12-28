@@ -2,13 +2,13 @@
  * 处理数据使其返回数组
  */
 var TextClassMap = {
-  title: "text-center margin-tb-xs text-xl text-grey",
-  h1: "margin-tb-xs text-sl text-black text-bold",
-  h2: "margin-tb-xs text-xxl text-black text-bold",
-  h3: "margin-tb-xs text-xl text-black text-bold",
-  h4: "margin-tb-xs text-lg text-black text-bold",
-  h5: "margin-tb-xs text-df text-black text-bold",
-  h: "margin-tb-xs text-lg text-black text-bold",
+  title: "text-center margin-tb-xs padding-lr text-xl text-grey",
+  h1: "margin-tb-xs padding-lr text-sl text-black text-bold",
+  h2: "margin-tb-xs padding-lr text-xxl text-black text-bold",
+  h3: "margin-tb-xs padding-lr text-xl text-black text-bold",
+  h4: "margin-tb-xs padding-lr text-lg text-black text-bold",
+  h5: "margin-tb-xs padding-lr text-df text-black text-bold",
+  h: "margin-tb-xs padding-lr text-lg text-black text-bold",
 }
 
 var template = function(name) {

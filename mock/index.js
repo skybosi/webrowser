@@ -81,6 +81,13 @@ var list = [{
         name: '图标',
         type: 'grid-icon',
         path: '/icon'
+      },
+      {
+        icon: 'messagefill',
+        badge: 0,
+        name: '聊天',
+        type: 'grid-icon',
+        path: '/chat'
       }
     ]
   },

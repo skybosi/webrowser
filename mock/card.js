@@ -28,6 +28,32 @@ var list = [{
     comment_count: 3
   },
   {
+    id: "2",
+    type: "ad",
+    swiper_type: "screen",
+    image: [{
+      url: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10004.jpg",
+      tag: "广告",
+      summary: "等我回来打十个！"
+    }, {
+      url: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10005.jpg",
+      tag: "广告2",
+      summary: "我已天理为凭，踏入这片荒芜"
+    }, {
+      url: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg",
+      tag: "广告3",
+      summary: "不再受凡人的枷锁遏制"
+    }],
+    tag: "史诗",
+    summary: "我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。",
+    avatar: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10007.jpg",
+    name: "正义天使 凯尔",
+    time: "十天前",
+    read_count: 1,
+    like_count: 2,
+    comment_count: 3
+  },
+  {
     text: `{"id":"详情id","type":"dynamic 动态类型","isCard":"是否是卡片","avatar":"发布者头像","name":"发布者名字","tag":"类型标签 比如: 广告","time":"发布时间","summary":"简述","image":"动态相关图列表","read_count":"阅读数","thumbup_count":"点赞数","comment_count":"评论数"}`,
     type: "code"
   },

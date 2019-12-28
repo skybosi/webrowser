@@ -116,6 +116,13 @@
 					"pathName": "pages/index/index",
 					"query": "path=/button",
 					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "chat",
+					"pathName": "pages/index/index",
+					"query": "path=/chat",
+					"scene": null
 				}
 			]
 		}

@@ -10,7 +10,7 @@
 
 <template name="a">
   <view wx:if="{{text}}" class="margin-tb-sm">
-    <text selectable='true' bindtap='{{shower.clickA}}' catchlongpress='longclickA' class="a-link text-blue" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
+    <text selectable='true' bindtap='{{shower.clickA}}' catchlongpress='longclickA' class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
   </view>
 </template>
 
@@ -51,14 +51,14 @@
 
 <!-- 文段 -->
 <template name="p">
-  <view bindtap='clickP' catchlongpress='longclickP' wx:if="{{text}}" class="margin-tb-sm text-black text-{{weight?weight:'normal'}} text-indent text-justify">
+  <view bindtap='clickP' catchlongpress='longclickP' wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
 
 <!-- 结语文段 -->
 <template name="pe">
-  <view bindtap='clickPe' catchlongpress='longclickPe' class="text-center solid-bottom padding-sm">
+  <view bindtap='clickPe' catchlongpress='longclickPe' class="text-center padding-lr solid-bottom padding-sm">
     <view wx:if="{{text}}" class="margin-tb-sm text-gray text-{{weight?weight:'normal'}}">
       <text selectable='true'>{{text}}</text>
     </view>
@@ -66,7 +66,7 @@
 </template>
 
 <template name="code">
-  <view class="content">
+  <view class="content padding-lr">
     <view class="bg-black padding-sm radius" style="white-space: pre-wrap;">
       <view class="flex">
         <view class="flex-sub">{{render.Json(text)}}</view>
@@ -77,7 +77,7 @@
 
 <!-- 列表 -->
 <template name="li">
-  <view bindtap='clickLi' catchlongpress='longclickLi' wx:if="{{text}}" class="cu-bar justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
+  <view bindtap='clickLi' catchlongpress='longclickLi' wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
     <text selectable='true' class="cuIcon-title text-{{color?color:render.color()}} padding-right-xs"></text>{{text}}
   </view>
 </template>
@@ -92,7 +92,7 @@
 </template> -->
 
 <template name="label">
-  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:0rpx" data-path="{{path}}">
+  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu padding-lr solid-bottom" style="margin:0rpx" data-path="{{path}}">
     <view class="cu-item {{path?'arrow':''}}" style="padding-left:0;margin:0" hover-class="hover">
       <view class="content">
         <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -111,7 +111,7 @@
 
 <!-- 图片 -->
 <template name="img">
-  <view catchtap="viewImage" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs" data-url="{{url}}" data-urls="{{urls}}">
+  <view catchtap="viewImage" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
     <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
       <view class="image" style="height:375rpx">
         <image src="{{url}}" mode="widthFix"></image>
@@ -124,31 +124,9 @@
   </view>
 </template>
 
-<!-- 轮播图 -->
-<template name="swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500">
-    <swiper-item class="grid col-4 grid-square radius" wx:for="{{list}}" wx:key="key">
-      <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-      <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
-    </swiper-item>
-  </swiper>
-</template>
-
-<template name="card-swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper square-dot margin-tb-sm" indicator-dots="true" circular="true" autoplay="true" interval="3000" duration="500" previous-margin="-28rpx" bindchange="{{render.cardSwiper}}"
-    indicator-color="#8799a3" indicator-active-color="#0081ff">
-    <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
-      <view class="swiper-item" data-index="{{index}}">
-        <image src="{{item.url}}" mode="aspectFill" wx:if="{{item.type=='image'}}"></image>
-        <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
-      </view>
-    </swiper-item>
-  </swiper>
-</template>
-
 <!-- 视频 -->
 <template name="video">
-  <view class="flex justify-center align-center padding-tb-sm">
+  <view class="flex justify-center align-center padding-tb-sm padding-lr">
     <video style="width:100%" bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
@@ -168,14 +146,18 @@
 </template>
 
 <template name="rate">
-  <van-rate custom-class="van-rate" data-key="{{value?value:0}}" value="{{value?value:0}}" size="{{size?size:25}}" allow-half color="{{color?color:'#ee0a24'}}" count="{{count?count:5}}" void-color="grey" void-icon="star" touchable="{{ false }}" bind:change="onChange"
-  />
+  <view class="padding-lr">
+    <van-rate custom-class="van-rate" data-key="{{value?value:0}}" value="{{value?value:0}}" size="{{size?size:25}}" allow-half color="{{color?color:'#ee0a24'}}" count="{{count?count:5}}" void-color="grey" void-icon="star" touchable="{{ false }}" bind:change="onChange"
+    />
+  </view>
 </template>
 
 <template name="tag">
-  <block wx:for="{{tags}}" wx:key="{{index}}">
-    <van-tag wx:if="{{item.type?item.type:'success'}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="{{item.type?item.type:'success'}}" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
-  </block>
+  <view class="padding-lr">
+    <block wx:for="{{tags}}" wx:key="index">
+      <van-tag wx:if="{{item.type?item.type:'success'}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="{{item.type?item.type:'success'}}" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
+    </block>
+  </view>
 </template>
 
 <!--{

@@ -1,0 +1,18 @@
+var inputFocus = function(event, ins) {
+  console.log('inputFocus:', JSON.stringify(event))
+  ins.selectComponent('.input-bottom').addClass('cur').setStyle({
+    bottom: event.detail.height + 'px'
+  })
+  return false
+}
+
+var inputBlur = function(event, ins) {
+  console.log('inputBlur:', JSON.stringify(event))
+  ins.selectComponent('.input-bottom').removeClass('cur').setStyle({
+    bottom: 0
+  })
+  return false
+}
+
+module.exports.inputBlur = inputBlur;
+module.exports.inputFocus = inputFocus;

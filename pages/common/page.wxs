@@ -1,6 +1,17 @@
 var newmarkY = startmarkY = 0
 var newmarkX = startmarkX = 0
-
+/** 页面统计信息
+ * 
+ * scrollTop  页面滚动位置
+ * reachBottom 页面是否触底
+ * custom 页面自定义状态栏 信息
+ * customBar 页面自定义状态栏高度
+ * statusBar 状态栏高度
+ * screenWidth 屏幕宽度
+ * screenHeight 屏幕高度
+ * 
+ */
+var pageStats = {}
 /**
  * 触摸事件开始，初始化触点
  */
@@ -13,19 +24,24 @@ function touchstart(e, ins) {
  * 触摸事件结束，处理视图层变化，并回调事件处理函数
  */
 function touchmove(e, ins) {
+  // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知
+  if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
+    console.log(JSON.stringify(pageStats))
+    return
+  }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
   var pageY = (e.touches[0] || e.changedTouches[0]).pageY
   newmarkX = pageX
   newmarkY = pageY
   var width = e.target.dataset.width || e.currentTarget.dataset.width
-  var pullDownWidth = width * 0.05
+  var pullDownWidth = pageStats.screenHeight * 0.05
   var moveX = Math.abs(pageX - startmarkX)
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
       e.direction = "down"
       // console.log("下:" + startmarkY + " " + pageY)
-      console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
+      // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
       if (pullDownWidth > Math.abs(newmarkY - startmarkY)) {
         ins.selectComponent('.page-top').setStyle({
           transform: 'translateY(' + Math.min(pullDownWidth, newmarkY - startmarkY) + 'px)'
@@ -35,9 +51,9 @@ function touchmove(e, ins) {
     }
     if (startmarkY > pageY) {
       e.direction = "up"
-      // console.log("上:" + startmarkY + " " + pageY)
+      // console.log("上:" + newmarkY + " " + startmarkY)
       ins.selectComponent('.page-top').setStyle({
-        transform: 'translateY(-' + Math.max(0, (newmarkY - startmarkY)) + 'px)'
+        transform: 'translateY(-' + Math.min(pullDownWidth, (startmarkY - newmarkY)) + 'px)'
       })
       ins.selectComponent('.pull-up').addClass("loading")
     }
@@ -59,12 +75,21 @@ function touchmove(e, ins) {
  * 触摸事件结束，处理视图层，并回调事件处理函数
  */
 function touchend(e, ins) {
+  /**
+   * 删除可能存在的动画
+   */
+  ins.selectComponent('.pull-up').removeClass("loading")
+  ins.selectComponent('.pull-down').removeClass("loading")
+  // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知    
+  if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
+    return
+  }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
   var pageY = (e.touches[0] || e.changedTouches[0]).pageY
   newmarkX = pageX
   newmarkY = pageY
   var width = e.target.dataset.width || e.currentTarget.dataset.width
-  var pullDownWidth = width * 0.05
+  var pullDownWidth = pageStats.screenHeight * 0.05
   var moveX = Math.abs(pageX - startmarkX)
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
@@ -74,7 +99,6 @@ function touchend(e, ins) {
       ins.selectComponent('.page-top').setStyle({
         transform: 'translateY(0px)'
       })
-      ins.selectComponent('.pull-down').removeClass("loading")
     }
     if (startmarkY > newmarkY) {
       console.log("上:" + startmarkY + " " + pageY)
@@ -82,7 +106,7 @@ function touchend(e, ins) {
       ins.selectComponent('.page-top').setStyle({
         transform: 'translateY(0px)'
       })
-      ins.selectComponent('.pull-up').removeClass("loading")
+
     }
   } else {
     if (startmarkX < pageX) {
@@ -97,8 +121,17 @@ function touchend(e, ins) {
   ins.callMethod('onPageEvent', e)
 }
 
+/**
+ * 监控数据js层变化
+ */
+function propObserver(newValue, oldValue, ownerInstance, instance) {
+  pageStats = newValue
+  console.log(JSON.stringify(pageStats))
+}
+
 module.exports = {
   touchStart: touchstart,
   touchMove: touchmove,
-  touchEnd: touchend
+  touchEnd: touchend,
+  propObserver: propObserver
 }
