@@ -75,5 +75,6 @@ var list = [{
 ]
 
 module.exports = {
-  list: list
+  list: list,
+  title: '按钮'
 }

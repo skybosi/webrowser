@@ -165,5 +165,6 @@ var list = [{
 ]
 
 module.exports = {
-  list: list
+  list: list,
+  title: '卡片'
 }

@@ -7,5 +7,6 @@ var list = [{
 }, ]
 
 module.exports = {
-  list: list
+  list: list,
+  title: '视频'
 }

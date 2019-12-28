@@ -27,9 +27,8 @@ Page({
     this.data.path = path
     this.data.query = query
     mock.getMockData(path, query).then(res => {
-      this.setData({
-        list: res.list,
-      })
+      res.path = path
+      this.setData(res)
     })
   },
 
@@ -81,9 +80,7 @@ Page({
         mock.getMockData(path, query).then(res => {
           this.data.path = path
           this.data.query = query
-          this.setData({
-            list: res.list
-          })
+          this.setData(res)
         })
         break;
       default:

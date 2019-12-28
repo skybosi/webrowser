@@ -1,5 +1,7 @@
 <!-- 用户信息 -->
 <wxs src="../render.wxs" module="render"></wxs>
+<wxs src="../../../pages/common/page.wxs" module="page"></wxs>
+
 <template name="user">
   <view data-myid="{{id||myID}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" catchtap="getUserInfo">
     <view class="cu-item">
@@ -53,7 +55,7 @@
   placeholder: hint提示文字
 } -->
 <template name="search-bar">
-  <view class="cu-bar search bg-white fixed solid-top" style="left:0;top:{{Top}}px;">
+  <view class="cu-bar search bg-white fixed solid-top" style="left:0;top:{{customBar}}px;">
     <view class="search-form round">
       <text class="cuIcon-search"></text>
       <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
@@ -67,7 +69,7 @@
       <text class="cuIcon-triangledownfill"></text>
     </view>
   </view>
-  <view class="cu-bar"></view>
+  <view class="cu-bar bg-gray"></view>
   <view class="action">
     <view class="cu-modal drawer-modal justify-top search-bar-filter" bindtap="{{render.switchSearchBar}}" data-target="">
       <view class="cu-dialog padding" catchtap style="position: absolute;height:60%;width:100%;top:{{Top}}px">

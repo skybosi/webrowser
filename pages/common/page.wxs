@@ -12,6 +12,32 @@ var newmarkX = startmarkX = 0
  * 
  */
 var pageStats = {}
+
+/**
+ * 处理fixed 样式的view
+ */
+function _handleFixedView(ins, type) {
+  var all = ins.selectAllComponents('.fixed')
+  switch (type) {
+    case 'clean': // 清除fixed的top属性
+      for (var i = 0; i < all.length; ++i) {
+        all[i].setStyle({
+          top: '0px'
+        })
+      }
+      break
+    case 'recover': // 回复fixed的top属性
+      for (var i = 0; i < all.length; ++i) {
+        all[i].setStyle({
+          top: pageStats.customBar + 'px'
+        })
+      }
+      break
+    default:
+      break
+  }
+}
+
 /**
  * 触摸事件开始，初始化触点
  */
@@ -26,7 +52,6 @@ function touchstart(e, ins) {
 function touchmove(e, ins) {
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知
   if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
-    console.log(JSON.stringify(pageStats))
     return
   }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
@@ -39,18 +64,24 @@ function touchmove(e, ins) {
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
+      // 下拉清除fixed
+      _handleFixedView(ins, 'clean')
       e.direction = "down"
       // console.log("下:" + startmarkY + " " + pageY)
       // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
-      if (pullDownWidth > Math.abs(newmarkY - startmarkY)) {
+      // 满足下拉条件，且开启了下拉刷新的使用才触发动画
+      if (pullDownWidth > Math.abs(newmarkY - startmarkY) && ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh')) {
         ins.selectComponent('.page-top').setStyle({
           transform: 'translateY(' + Math.min(pullDownWidth, newmarkY - startmarkY) + 'px)'
         })
+        ins.selectComponent('.pull-down').addClass("loading")
       }
-      ins.selectComponent('.pull-down').addClass("loading")
     }
-    if (startmarkY > pageY) {
+    // 满足上拉条件，且开启了上拉刷新的使用才触发动画
+    if (startmarkY > pageY && ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh')) {
       e.direction = "up"
+      // 考虑到布局问题，和下拉清除fixed相关属性有些条件区别，这个是调试后的结果
+      _handleFixedView(ins, 'clean')
       // console.log("上:" + newmarkY + " " + startmarkY)
       ins.selectComponent('.page-top').setStyle({
         transform: 'translateY(-' + Math.min(pullDownWidth, (startmarkY - newmarkY)) + 'px)'
@@ -75,6 +106,7 @@ function touchmove(e, ins) {
  * 触摸事件结束，处理视图层，并回调事件处理函数
  */
 function touchend(e, ins) {
+  _handleFixedView(ins, 'recover')
   /**
    * 删除可能存在的动画
    */
@@ -97,14 +129,14 @@ function touchend(e, ins) {
       console.log("下:" + startmarkY + " " + pageY)
       e.direction = "down"
       ins.selectComponent('.page-top').setStyle({
-        transform: 'translateY(0px)'
+        transform: ''
       })
     }
     if (startmarkY > newmarkY) {
       console.log("上:" + startmarkY + " " + pageY)
       e.direction = "up"
       ins.selectComponent('.page-top').setStyle({
-        transform: 'translateY(0px)'
+        transform: ''
       })
 
     }
@@ -126,12 +158,21 @@ function touchend(e, ins) {
  */
 function propObserver(newValue, oldValue, ownerInstance, instance) {
   pageStats = newValue
-  console.log(JSON.stringify(pageStats))
+  // console.log(JSON.stringify(pageStats))
+}
+
+/**
+ * 获取pagestatas 中的数据
+ */
+function getPageStats(key) {
+  console.log(JSON.stringify(pageStats) + " " + key)
+  return pageStats[key] || pageStats
 }
 
 module.exports = {
   touchStart: touchstart,
   touchMove: touchmove,
   touchEnd: touchend,
-  propObserver: propObserver
+  propObserver: propObserver,
+  getPageStats: getPageStats
 }

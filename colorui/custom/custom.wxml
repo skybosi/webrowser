@@ -1,0 +1,15 @@
+<!--colorui/custom/custom.wxml-->
+<view class="cu-custom" style="height:{{CustomBar}}px">
+  <view class="cu-bar fixed {{bgImage!=''?'none-bg text-white bg-img':''}} {{bgColor}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage+')':''}}" bindtap="toTop">
+    <view class="action border-custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px)">
+      <text wx:if="{{isBack}}" class="cuIcon-back" bindtap="BackPage"></text>
+      <text wx:else class="cuIcon-cameraadd" bindtap="toChooseImage"></text>
+      <text wx:if="{{!isHome}}" class="cuIcon-homefill" bindtap="toHome"></text>
+      <text wx:else class="cuIcon-roundadd" bindtap="toChooseImage"></text>
+    </view>
+    <view class="content" style="top:{{StatusBar}}px">
+      <slot name="content"></slot>
+    </view>
+    <slot name="right"></slot>
+  </view>
+</view>

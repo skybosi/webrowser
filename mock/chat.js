@@ -98,5 +98,7 @@ var list = [{
 ]
 
 module.exports = {
-  list: list
+  list: list,
+  title: '聊天',
+  enablePullDownRefresh: true
 }

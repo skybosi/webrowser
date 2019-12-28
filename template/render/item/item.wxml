@@ -53,7 +53,7 @@
 
 <!-- 轮播图 -->
 <template name="swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper {{list.length>1?'square-dot':''}} {{!nopadding?'padding-lr':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true"
+  <swiper catchtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper {{list.length>1?'square-dot':''}} {{!nopadding?'padding-lr':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true"
     autoplay="true" interval="3000" duration="500">
     <swiper-item wx:for="{{list}}" wx:key="key">
       <view class="image">
@@ -68,7 +68,7 @@
 </template>
 
 <template name="card-swiper">
-  <swiper bindtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper {{list.length>1?'square-dot':''}} margin-tb-sm" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true" autoplay="true"
+  <swiper catchtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper {{list.length>1?'square-dot':''}} margin-tb-sm" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true" autoplay="true"
     interval="3000" duration="500" bindchange="{{render.cardSwiper}}" indicator-color="#8799a3" indicator-active-color="#0081ff">
     <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
       <view class="swiper-item" data-index="index">
@@ -102,7 +102,7 @@
 <template name="ad">
   <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom">
     <view class="cu-item shadow">
-      <block wx:if="{{swiper_type=='screen'}}">
+      <block wx:if="{{!swiper_type||swiper_type=='screen'}}">
         <template is="swiper" data='{{ list:image, nopadding: 1 }}'></template>
       </block>
       <block wx:if="{{swiper_type=='card'}}">

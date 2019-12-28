@@ -1,10 +1,14 @@
 <!--index.wxml-->
 <wxs src="../common/page.wxs" module="page"></wxs>
 <include src="/template/render/render.wxml" />
-<view class="cu-load pull-down text-gray"></view>
+<custom bgColor="bg-gradual-blue" isHome="{{path=='/index'?true:false}}" isBack="{{path!='/index'?true:false}}">
+  <view slot="backText">{{backText||'返回'}}</view>
+  <view slot="content">{{title}}</view>
+</custom>
+<view class="cu-load pull-down text-gray {{enablePullDownRefresh?'enablePullDownRefresh':''}}"></view>
 <view class='container page-top' data-width="{{ScreenHeight}}" bindtouchmove="{{page.touchMove}}" bindtouchend="{{page.touchEnd}}" bindtouchstart="{{page.touchStart}}" change:prop="{{page.propObserver}}" prop="{{pageStats}}">
   <block wx:for="{{list}}" wx:key="index">
-    <template is="{{item.type}}" data="{{...item, tidx: index}}"></template>
+    <template is="{{item.type}}" data="{{...item, tidx: index, customBar:CustomBar, statusBar:StatusBar,screenWidth:ScreenWidth,screenHeight:ScreenHeight}}"></template>
   </block>
 </view>
-<view class="cu-load pull-up text-gray"></view>
+<view class="cu-load pull-up text-gray {{enablePullUpRefresh?'enablePullUpRefresh':''}}"></view>
