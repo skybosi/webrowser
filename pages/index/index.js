@@ -27,7 +27,7 @@ Page({
     this.data.path = path
     this.data.query = query
     mock.getMockData(path, query).then(res => {
-      res.path = path
+      this.lru.set(path, res)
       this.setData(res)
     })
   },
@@ -78,9 +78,9 @@ Page({
         var path = that.data.path
         var query = that.data.query
         mock.getMockData(path, query).then(res => {
+          this.setData(res)
           this.data.path = path
           this.data.query = query
-          this.setData(res)
         })
         break;
       default:

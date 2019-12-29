@@ -1,5 +1,7 @@
 const app = getApp();
 import render from '../../template/render/render.js'
+const LRUMap = require('../../libs/lru/lru.js').LRUMap
+const lru = new LRUMap()
 
 let originPage = Page
 
@@ -7,7 +9,9 @@ export default function(context = {}) {
   /**
    * merge 渲染层的功能到Page中
    */
-  Object.assign(context, render)
+  Object.assign(context, render, {
+    lru: lru
+  })
   /**
    * 页面加载函数重写
    */
@@ -50,13 +54,15 @@ export default function(context = {}) {
     pageStats.scrollTop = e.scrollTop
     if (scrollTop < pageStats.maxScrollTop) {
       pageStats.reachBottom = false
-    }else{
+    } else {
       pageStats.reachBottom = true
     }
     if (pageStats.reachBottom) {
       pageStats.maxScrollTop = scrollTop
     }
-    this.setData({ pageStats })
+    this.setData({
+      pageStats
+    })
     originonPageScroll && originonPageScroll.call(self, e)
   }
 
@@ -68,7 +74,9 @@ export default function(context = {}) {
     const self = this
     let pageStats = this.data.pageStats;
     pageStats.reachBottom = true
-    this.setData({ pageStats })
+    this.setData({
+      pageStats
+    })
     originonReachBottom && originonReachBottom.call(self)
   }
   return Page({
