@@ -51,14 +51,14 @@ function _diff(current, pre, path, result) {
         const preType = type(preValue)
         if (currentType != ARRAYTYPE && currentType != OBJECTTYPE) {
           if (currentValue != pre[key]) {
-            setResult(result, (path == '' ? '' : path + ".") + key, currentValue)
+            setResult(result, (path == '' ? '' : path + ".") + key, currentValue || pre[key])
           }
         } else if (currentType == ARRAYTYPE) {
           if (preType != ARRAYTYPE) {
-            setResult(result, (path == '' ? '' : path + ".") + key, currentValue)
+            setResult(result, (path == '' ? '' : path + ".") + key, currentValue || pre[key])
           } else {
             if (currentValue.length < preValue.length) {
-              setResult(result, (path == '' ? '' : path + ".") + key, currentValue)
+              setResult(result, (path == '' ? '' : path + ".") + key, currentValue || pre[key])
             } else {
               currentValue.forEach((item, index) => {
                 _diff(item, preValue[index], (path == '' ? '' : path + ".") + key + '[' + index + ']', result)

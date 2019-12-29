@@ -1,4 +1,5 @@
 const app = getApp();
+import diff from '../../libs/diff.js'
 import render from '../../template/render/render.js'
 const LRUMap = require('../../libs/lru/lru.js').LRUMap
 const lru = new LRUMap()
@@ -10,7 +11,7 @@ export default function(context = {}) {
    * merge 渲染层的功能到Page中
    */
   Object.assign(context, render, {
-    lru: lru
+    lru: lru, diff: diff
   })
   /**
    * 页面加载函数重写

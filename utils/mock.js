@@ -18,15 +18,7 @@ const getMockData = function(path, args, body) {
   return new Promise((resolver, reject) => {
     var res = require("../mock/" + path)
     res.path = path
-    var originData = lru.get(path)
-    res.diff = 0
-    var diffD = diff(originData, res) || {}
-    console.log(diffD)
-    res.diff = 1
-    lru.set(path, clone(res))
-    if (0 != Object.keys(diffD).length) {
-      resolver(diffD)
-    }
+    resolver(res)
   }).catch((e) => {
     console.log(e)
   });
