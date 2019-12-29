@@ -1,6 +1,6 @@
 //index.js
 import Page from '../common/page';
-var mock = require("../../utils/mock.js")
+
 
 //获取应用实例
 const app = getApp()
@@ -26,9 +26,8 @@ Page({
     var query = options.query
     this.data.path = path
     this.data.query = query
-    mock.getMockData(path, query).then(res => {
+    this.mock.get(path, query).then(res => {
       this.setData(res)
-      this.lru.set(path, this.data)
     })
   },
 
@@ -77,11 +76,10 @@ Page({
       case 'up':
         var path = that.data.path
         var query = that.data.query
-        mock.getMockData(path, query).then(res => {
+        this.mock.get(path, query).then(res => {
           this.setData(res)
           this.data.path = path
           this.data.query = query
-          this.lru.set(path, this.data)
         })
         break;
       default:

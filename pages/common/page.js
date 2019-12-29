@@ -3,6 +3,8 @@ import diff from '../../libs/diff.js'
 import render from '../../template/render/render.js'
 const LRUMap = require('../../libs/lru/lru.js').LRUMap
 const lru = new LRUMap()
+const Mock = require('../../libs/net/mock.js').Mock
+app.lru = lru
 
 let originPage = Page
 
@@ -13,6 +15,10 @@ export default function(context = {}) {
   Object.assign(context, render, {
     lru: lru,
     diff: diff
+  })
+  const mock = new Mock(context, "../../mock/")
+  Object.assign(context, render, {
+    mock: mock
   })
   /**
    * 页面加载函数重写
