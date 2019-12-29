@@ -112,6 +112,9 @@ function touchend(e, ins) {
    */
   ins.selectComponent('.pull-up').removeClass("loading")
   ins.selectComponent('.pull-down').removeClass("loading")
+  ins.selectComponent('.page-top').setStyle({
+    transform: ''
+  })
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知    
   if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
     return
@@ -126,19 +129,12 @@ function touchend(e, ins) {
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
-      console.log("下:" + startmarkY + " " + pageY)
       e.direction = "down"
-      ins.selectComponent('.page-top').setStyle({
-        transform: ''
-      })
+      // console.log("下:" + startmarkY + " " + pageY) 
     }
     if (startmarkY > newmarkY) {
-      console.log("上:" + startmarkY + " " + pageY)
       e.direction = "up"
-      ins.selectComponent('.page-top').setStyle({
-        transform: ''
-      })
-
+      // console.log("上:" + startmarkY + " " + pageY)
     }
   } else {
     if (startmarkX < pageX) {

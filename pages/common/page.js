@@ -11,16 +11,19 @@ export default function(context = {}) {
    * merge 渲染层的功能到Page中
    */
   Object.assign(context, render, {
-    lru: lru, diff: diff
+    lru: lru,
+    diff: diff
   })
   /**
    * 页面加载函数重写
    */
   let originOnLoad = context.onLoad
-  context.onLoad = function(option) {
+  context.onLoad = function(options) {
     const self = this
+    Object.assign(this.data, this.lru.get(options.path || "/index"))
     console.log("onload common page")
-    originOnLoad && originOnLoad.call(self, option)
+    this.setData(this.data)
+    originOnLoad && originOnLoad.call(self, options)
   }
   /**
    * 触摸滑动事件后
