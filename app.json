@@ -6,7 +6,11 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "webrowser",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "usingComponents": {
+    "custom": "/colorui/custom/custom"
   },
   "sitemapLocation": "sitemap.json"
 }
