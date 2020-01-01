@@ -58,4 +58,41 @@ export default ({
       console.log("path is empty!")
     }
   },
+  tabSelect(e, ins) {
+    this.renderData(e, {
+      TabCur: e.currentTarget.dataset.id,
+      MainCur: e.currentTarget.dataset.id,
+      VerticalNavTop: (e.currentTarget.dataset.id - 1) * 50
+    })
+  },
+  VerticalMain(e) {
+    let that = this;
+    let list = this.getData(e, "list");
+    let tabHeight = 0;
+    if (!this.getData(e, "load")) {
+      for (let i = 0; i < list.length; i++) {
+        let view = wx.createSelectorQuery().select("#main-" + i);
+        view.fields({
+          size: true
+        }, data => {
+          list[i].top = tabHeight;
+          tabHeight = tabHeight + data.height;
+          list[i].bottom = tabHeight;
+        }).exec();
+      }
+      this.renderData(e, {
+        list: list, load: true
+      })
+    }
+    let scrollTop = e.detail.scrollTop + 20;
+    for (let i = 0; i < list.length; i++) {
+      if (scrollTop > list[i].top && scrollTop < list[i].bottom) {
+        this.renderData(e, {
+          TabCur: i,
+          VerticalNavTop: (i - 1) * 50
+        })
+        return false
+      }
+    }
+  }
 })

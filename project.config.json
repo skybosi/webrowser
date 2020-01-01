@@ -123,6 +123,13 @@
 					"pathName": "pages/index/index",
 					"query": "path=/chat",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "tree",
+					"pathName": "pages/index/index",
+					"query": "path=/tree",
+					"scene": null
 				}
 			]
 		}

@@ -50,6 +50,8 @@ function touchstart(e, ins) {
  * 触摸事件结束，处理视图层变化，并回调事件处理函数
  */
 function touchmove(e, ins) {
+  var enablePullDownRefresh = ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh') || false
+  var enablePullUpRefresh = ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh') || false
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知
   if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
     return
@@ -70,7 +72,7 @@ function touchmove(e, ins) {
       // console.log("下:" + startmarkY + " " + pageY)
       // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
       // 满足下拉条件，且开启了下拉刷新的使用才触发动画
-      if (pullDownWidth > Math.abs(newmarkY - startmarkY) && ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh')) {
+      if (pullDownWidth > Math.abs(newmarkY - startmarkY) && enablePullDownRefresh) {
         ins.selectComponent('.page-top').setStyle({
           transform: 'translateY(' + Math.min(pullDownWidth, newmarkY - startmarkY) + 'px)'
         })
@@ -78,7 +80,7 @@ function touchmove(e, ins) {
       }
     }
     // 满足上拉条件，且开启了上拉刷新的使用才触发动画
-    if (startmarkY > pageY && ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh')) {
+    if (startmarkY > pageY && enablePullUpRefresh) {
       e.direction = "up"
       // 考虑到布局问题，和下拉清除fixed相关属性有些条件区别，这个是调试后的结果
       _handleFixedView(ins, 'clean')
@@ -107,6 +109,8 @@ function touchmove(e, ins) {
  */
 function touchend(e, ins) {
   _handleFixedView(ins, 'recover')
+  var enablePullDownRefresh = ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh') || false
+  var enablePullUpRefresh = ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh') || false
   /**
    * 删除可能存在的动画
    */
@@ -131,22 +135,29 @@ function touchend(e, ins) {
     if (startmarkY < pageY) {
       e.direction = "down"
       // console.log("下:" + startmarkY + " " + pageY) 
+      if (enablePullDownRefresh) {
+        ins.callMethod('onPageEvent', e)
+      }
     }
     if (startmarkY > newmarkY) {
       e.direction = "up"
       // console.log("上:" + startmarkY + " " + pageY)
+      if (enablePullUpRefresh) {
+        ins.callMethod('onPageEvent', e)
+      }
     }
   } else {
     if (startmarkX < pageX) {
       e.direction = "right"
       // console.log("右:" + startmarkX + " " + pageX)
+      ins.callMethod('onPageEvent', e)
     }
     if (startmarkX > pageX) {
       e.direction = "left"
       // console.log("左:" + startmarkX + " " + pageX)
+      ins.callMethod('onPageEvent', e)
     }
   }
-  ins.callMethod('onPageEvent', e)
 }
 
 /**

@@ -38,5 +38,18 @@ export default Object.assign({
     }).catch((e) => {
       console.log(e)
     });
+  },
+  renderData(e, data) {
+    console.log('renderData:', JSON.stringify(e))
+    var tidx = e.mark.tindex
+    var list = {}
+    for (var item in data) {
+      list["list[" + tidx + "]." + item] = data[item]
+    }
+    this.setData(list)
+  },
+  getData(e, key) {
+    var tidx = e.mark.tindex
+    return this.data.list[tidx][key]
   }
 }, interactive, shower, item, form, button)

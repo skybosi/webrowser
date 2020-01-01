@@ -56,13 +56,13 @@
   </view>
   <view class="cu-form-group">
     <view class="grid col-{{column||4}} grid-square flex-sub">
-      <view class="bg-img" wx:for="{{imgList}}" wx:key="index" data-tidx="{{tidx}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+      <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-url="{{imgList[index]}}">
         <image src='{{imgList[index]}}' mode='aspectFill'></image>
-        <view class="cu-tag bg-red" catchtap="DelImg" data-tidx="{{tidx}}" data-index="index">
+        <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
           <text class="cuIcon-close"></text>
         </view>
       </view>
-      <view class="solids" data-tidx="{{tidx}}" bindtap="ChooseImage" wx:if="{{!imgList.length||imgList.length<(size||9)}}">
+      <view class="solids" bindtap="ChooseImage" wx:if="{{!imgList.length||imgList.length<(size||9)}}">
         <text class="cuIcon-cameraadd"></text>
       </view>
     </view>

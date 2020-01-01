@@ -88,6 +88,20 @@ var list = [{
         name: '聊天',
         type: 'grid-icon',
         path: '/chat'
+      },
+      {
+        icon: 'safe',
+        badge: 0,
+        name: '授权',
+        type: 'grid-icon',
+        path: '/auth'
+      },
+      {
+        icon: 'list',
+        badge: 0,
+        name: '树状',
+        type: 'grid-icon',
+        path: '/tree'
       }
     ]
   },
