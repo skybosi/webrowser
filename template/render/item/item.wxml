@@ -234,7 +234,7 @@
   comment_count: 评论数
 } -->
 <template name="comment">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom padding-lr-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>

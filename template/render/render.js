@@ -40,7 +40,7 @@ export default Object.assign({
     });
   },
   renderData(e, data) {
-    console.log('renderData:', JSON.stringify(e))
+    // console.log('renderData:', JSON.stringify(e))
     var tidx = e.mark.tindex
     var list = {}
     for (var item in data) {

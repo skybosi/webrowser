@@ -1,6 +1,7 @@
 <!-- 用户信息 -->
+<import src="/template/render/item/item.wxml" />
+<import src="/template/render/shower/shower.wxml" />
 <wxs src="../render.wxs" module="render"></wxs>
-<wxs src="./interactive.wxs" module="interactive"></wxs>
 <wxs src="../../../pages/common/page.wxs" module="page"></wxs>
 
 <template name="user">
@@ -112,89 +113,18 @@
 
 <template name="tree">
   <view class="flex">
-    <scroll-view class="VerticalNav nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width: 200rpx;white-space:initial;height:calc(100vh - {{customBar}}px)">
-      <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}}" wx:for="{{list}}" wx:key catchtap='tabSelect' data-id="{{index}}">
-        Tab-{{item.name}}{{customBar}}
+    <scroll-view class="VerticalNav nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width: 200rpx;white-space:initial;height:calc(100vh - {{customBar}}px);-webkit-overflow-scrolling:touch">
+      <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
+        <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:calc(100vh - {{customBar}}px);background-color:#f1f1f1" bindscroll="VerticalMain">
-      <view class="padding-xs tree-item" wx:for="{{list}}" wx:key id="main-{{index}}">
+    <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:calc(100vh - {{customBar}}px);background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
+      <view wx:if="{{item.inner && item.inner.type}}" class="padding-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
-            <text class='cuIcon-title text-green'></text> Tab-{{item.name}} </view>
+            <text class='cuIcon-title text-green'></text>{{item.name}}</view>
         </view>
-        <view class="cu-list menu-avatar">
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-            <view class="content">
-              <view class="text-grey">凯尔</view>
-              <view class="text-gray text-sm flex">
-                <text class="text-cut">
-										<text class="cuIcon-infofill text-red  margin-right-xs"></text> 我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。
-                </text>
-              </view>
-            </view>
-            <view class="action">
-              <view class="text-grey text-xs">22:20</view>
-              <view class="cu-tag round bg-grey sm">5</view>
-            </view>
-          </view>
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png);">
-              <view class="cu-tag badge">99+</view>
-            </view>
-            <view class="content">
-              <view class="text-grey">
-                <text class="text-cut">瓦洛兰之盾-塔里克</text>
-                <view class="cu-tag round bg-orange sm">战士</view>
-              </view>
-              <view class="text-gray text-sm flex">
-                <text class="text-cut">
-										塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。
-									</text>
-              </view>
-            </view>
-            <view class="action">
-              <view class="text-grey text-xs">22:20</view>
-              <view class="cuIcon-notice_forbid_fill text-gray"></view>
-            </view>
-          </view>
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
-            <view class="content">
-              <view class="text-grey">凯尔</view>
-              <view class="text-gray text-sm flex">
-                <text class="text-cut">
-										<text class="cuIcon-infofill text-red  margin-right-xs"></text> 我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。我已天理为凭，踏入这片荒芜，不再受凡人的枷锁遏制。
-                </text>
-              </view>
-            </view>
-            <view class="action">
-              <view class="text-grey text-xs">22:20</view>
-              <view class="cu-tag round bg-grey sm">5</view>
-            </view>
-          </view>
-          <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/img/champion/Taric.png);">
-              <view class="cu-tag badge">99+</view>
-            </view>
-            <view class="content">
-              <view class="text-grey">
-                <text class="text-cut">瓦洛兰之盾-塔里克</text>
-                <view class="cu-tag round bg-orange sm">战士</view>
-              </view>
-              <view class="text-gray text-sm flex">
-                <text class="text-cut">
-										塔里克是保护者星灵，用超乎寻常的力量守护着符文之地的生命、仁爱以及万物之美。塔里克由于渎职而被放逐，离开了祖国德玛西亚，前去攀登巨神峰寻找救赎，但他找到的却是来自星界的更高层的召唤。现在的塔里克与古代巨神族的神力相融合，以瓦洛兰之盾的身份，永不疲倦地警惕着阴险狡诈的虚空腐化之力。
-									</text>
-              </view>
-            </view>
-            <view class="action">
-              <view class="text-grey text-xs">22:20</view>
-              <view class="cuIcon-notice_forbid_fill text-gray"></view>
-            </view>
-          </view>
-        </view>
+        <template wx:if="{{item.inner && item.inner.type}}" is="{{item.inner.type}}" data="{{... item.inner}}"></template>
       </view>
     </scroll-view>
   </view>

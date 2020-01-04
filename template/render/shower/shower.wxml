@@ -126,7 +126,7 @@
 
 <!-- 视频 -->
 <template name="video">
-  <view class="flex justify-center align-center padding-tb-sm padding-lr">
+  <view class="bg-white flex justify-center align-center padding-tb-sm padding-lr">
     <video style="width:100%" bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
