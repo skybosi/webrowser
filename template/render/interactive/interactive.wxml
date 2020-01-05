@@ -2,6 +2,7 @@
 <import src="/template/render/item/item.wxml" />
 <import src="/template/render/shower/shower.wxml" />
 <wxs src="../render.wxs" module="render"></wxs>
+<wxs src="./interactive.wxs" module="interactive"></wxs>
 <wxs src="../../../pages/common/page.wxs" module="page"></wxs>
 
 <template name="user">
@@ -112,13 +113,14 @@
 </template>
 
 <template name="tree">
+  <view class="tab-tool cuIcon-roundright text-blue" style="width:64rpx;height:64rpx;position:fixed;top:{{customBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em" catchtap="{{interactive.tabWidth}}" />
   <view class="flex">
-    <scroll-view class="VerticalNav nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width: 200rpx;white-space:initial;height:calc(100vh - {{customBar}}px);-webkit-overflow-scrolling:touch">
+    <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{screenHeight}}px;-webkit-overflow-scrolling:touch">
       <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
         <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:calc(100vh - {{customBar}}px);background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
+    <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:{{screenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
       <view wx:if="{{item.inner && item.inner.type}}" class="padding-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
@@ -148,7 +150,7 @@
         </cover-view>
       </cover-view>
     </cover-view>
-    <cover-view class="cu-avatar lg flex align-ecnter justify-center round" style="position:fixed;bottom:80rpx;right: 60rpx;background:rgba(255, 255, 255, 0.94);" mark:tindex="{{tindex}}" catchtap="currentLocation">
+    <cover-view class="cu-avatar lg flex align-center justify-center round" style="position:fixed;bottom:80rpx;right: 60rpx;background:rgba(255, 255, 255, 0.94);" mark:tindex="{{tindex}}" catchtap="currentLocation">
       <!-- <cover-view class="bg-white cuIcon-focus text-grey" style="width: 64rpx; height: 64rpx;"/> -->
       <cover-image src="/static/image/current.png" style="width: 48rpx; height: 48rpx;"></cover-image>
     </cover-view>

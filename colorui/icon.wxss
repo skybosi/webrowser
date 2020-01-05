@@ -989,6 +989,10 @@
 	content: "\e79e";
 }
 
+.cuIcon-roundleftfill:before {
+	content: "\e79e";
+}
+
 .cuIcon-font:before {
 	content: "\e76a";
 }

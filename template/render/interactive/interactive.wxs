@@ -1,0 +1,40 @@
+var tabSelect = function(event, ins) {
+  console.log('tabSelect:', JSON.stringify(event))
+  var all = ins.selectAllComponents('.tree-item')
+  for (var i = 0; i < all.length; ++i) {
+
+  }
+}
+
+var tabWidth = function(event, ins) {
+  var st = event.instance.getState()
+  var expand = st.expand || 0
+  console.log('tabWidth:', JSON.stringify(event))
+  if (!expand) {
+    st.expand = expand + 1
+    ins.selectComponent('.tree-tab').setStyle({
+      width: '200rpx',
+      transform: 'width 2s'
+    })
+    ins.selectComponent('.tab-tool').setStyle({
+      opacity: 0.5,
+      left: '40rpx',
+      transform: 'left 2s'
+    }).addClass('cuIcon-roundleftfill').removeClass('cuIcon-roundright')
+  } else {
+    ins.selectComponent('.tree-tab').setStyle({
+      width: '0rpx',
+      transform: 'width 2s'
+    })
+    ins.selectComponent('.tab-tool').setStyle({
+      opacity: 0.5,
+      left: '12rpx',
+      transform: 'left 2s'
+    }).addClass('cuIcon-roundright').removeClass('cuIcon-roundleftfill')
+    st.expand = 0
+  }
+  return false
+}
+
+module.exports.tabWidth = tabWidth;
+module.exports.tabSelect = tabSelect;
