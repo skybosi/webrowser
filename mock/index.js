@@ -57,11 +57,11 @@ var list = [{
         path: '/card'
       },
       {
-        icon: 'list',
+        icon: 'locationfill',
         badge: 0,
-        name: '表格',
+        name: '地图定位',
         type: 'grid-icon',
-        path: '/table'
+        path: '/location'
       }, {
         icon: 'form',
         badge: 3,

@@ -129,3 +129,28 @@
     </scroll-view>
   </view>
 </template>
+
+<template name="map-location">
+  <map id="maps" style="height:100%;width:100%" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location bindregionchange="regionchange" data-tindex="{{tindex}}">
+    <cover-image style="position:relative;width:80rpx;height:80rpx;top:50%;left:50%;margin-top:-42px;margin-left:-22px;" src="/static/image/location.png" />
+    <!-- <cover-view style="position:relative;top:50%;left:50%;margin-top:-60rpx;margin-left:-30rpx;">
+      <cover-view class="cuIcon-locationfill text-green" style="background-color:rgba(255, 255, 255, 0);width:96rpx;height:96rpx;font-size:2em"></cover-view>
+    </cover-view> -->
+    <cover-view class="content padding">
+      <cover-view class="flex flex-direction justify-between bg-white radius">
+        <cover-view class="flex align-center padding-sm padding-bottom-xs">
+          <cover-view class="badge"></cover-view>
+          <cover-view class="text-cut">{{address}}</cover-view>
+        </cover-view>
+        <cover-view class="flex align-center padding-sm padding-top-xs">
+          <cover-view class="badge orange"></cover-view>
+          <cover-view class="text-cut"> {{longitude}},{{latitude}}</cover-view>
+        </cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="cu-avatar lg flex align-ecnter justify-center round" style="position:fixed;bottom:80rpx;right: 60rpx;background:rgba(255, 255, 255, 0.94);" mark:tindex="{{tindex}}" catchtap="currentLocation">
+      <!-- <cover-view class="bg-white cuIcon-focus text-grey" style="width: 64rpx; height: 64rpx;"/> -->
+      <cover-image src="/static/image/current.png" style="width: 48rpx; height: 48rpx;"></cover-image>
+    </cover-view>
+  </map>
+</template>

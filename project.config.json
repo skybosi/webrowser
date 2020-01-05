@@ -4,14 +4,21 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"autoAudits": true,
 		"checkInvalidKey": true,
-		"coverView": true
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.4",
@@ -129,6 +136,13 @@
 					"name": "tree",
 					"pathName": "pages/index/index",
 					"query": "path=/tree",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "location",
+					"pathName": "pages/index/index",
+					"query": "path=/location",
 					"scene": null
 				}
 			]

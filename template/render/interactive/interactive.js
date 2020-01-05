@@ -1,3 +1,8 @@
+const QQMapWX = require('../../../libs/map/qqmap-wx-jssdk.min.js')
+let qqmapsdk = qqmapsdk = new QQMapWX({
+  key: 'W4WBZ-TUD65-IDAIR-QPM36-HMFQ5-CGBZP'
+});
+
 const app = getApp()
 
 export default ({
@@ -45,6 +50,9 @@ export default ({
       })
     }
   },
+  /**
+   * search-bar
+   */
   getSearchPage(e) {
     console.log(e)
     let index = e.currentTarget.dataset.index
@@ -58,7 +66,10 @@ export default ({
       console.log("path is empty!")
     }
   },
-  tabSelect(e, ins) {
+  /**
+   * tree
+   */
+  tabSelect(e) {
     this.renderData(e, {
       TabCur: e.currentTarget.dataset.id,
       MainCur: e.currentTarget.dataset.id,
@@ -81,7 +92,8 @@ export default ({
         }).exec();
       }
       this.renderData(e, {
-        list: list, load: true
+        list: list,
+        load: true
       })
     }
     let scrollTop = e.detail.scrollTop + 20;
@@ -94,5 +106,65 @@ export default ({
         return false
       }
     }
+  },
+  /**
+   * map-location
+   */
+  regionchange(e) {
+    e.mark = {
+      tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    }
+    // 地图发生变化的时候，获取中间点，也就是cover-image指定的位置
+    if (e.type == 'end' && (e.causedBy == 'scale' || e.causedBy == 'drag')) {
+      this.renderData(e, {
+        address: "正在获取地址..."
+      })
+      this.mapCtx = wx.createMapContext("maps");
+      this.mapCtx.getCenterLocation({
+        type: 'gcj02',
+        success: (res) => {
+          //console.log(res)
+          this.renderData(e, {
+            latitude: res.latitude,
+            longitude: res.longitude
+          })
+          this.getAddress(e, res.longitude, res.latitude);
+        }
+      })
+    }
+  },
+  getAddress: function(e, lng, lat) {
+    //根据经纬度获取地址信息
+    qqmapsdk.reverseGeocoder({
+      location: {
+        latitude: lat,
+        longitude: lng
+      },
+      success: (res) => {
+        console.log(res)
+        this.renderData(e, {
+          address: res.result.formatted_addresses.recommend //res.result.address
+        })
+      },
+      fail: (res) => {
+        this.renderData(e, {
+          address: "获取位置信息失败"
+        })
+      }
+    })
+  },
+  currentLocation(e) {
+    //当前位置
+    const that = this;
+    wx.getLocation({
+      type: 'gcj02',
+      success(res) {
+        that.renderData(e, {
+          latitude: res.latitude,
+          longitude: res.longitude
+        })
+        //that.getAddress(res.longitude, res.latitude);
+      }
+    })
   }
 })
