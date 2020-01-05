@@ -21,6 +21,10 @@ var tabWidth = function(event, ins) {
       left: '40rpx',
       transform: 'left 2s'
     }).addClass('cuIcon-roundleftfill').removeClass('cuIcon-roundright')
+    var all = ins.selectAllComponents('.tree-item')
+    for (var i = 0; i < all.length; ++i) {
+      all[i].addClass('padding-xs')
+    }
   } else {
     ins.selectComponent('.tree-tab').setStyle({
       width: '0rpx',
@@ -31,6 +35,10 @@ var tabWidth = function(event, ins) {
       left: '12rpx',
       transform: 'left 2s'
     }).addClass('cuIcon-roundright').removeClass('cuIcon-roundleftfill')
+    var all = ins.selectAllComponents('.tree-item')
+    for (var i = 0; i < all.length; ++i) {
+      all[i].removeClass('padding-xs').addClass('padding-bottom-xs')
+    }
     st.expand = 0
   }
   return false

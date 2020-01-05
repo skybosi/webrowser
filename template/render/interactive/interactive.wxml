@@ -113,7 +113,7 @@
 </template>
 
 <template name="tree">
-  <view class="tab-tool cuIcon-roundright text-blue" style="width:64rpx;height:64rpx;position:fixed;top:{{customBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em" catchtap="{{interactive.tabWidth}}" />
+  <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{customBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" catchtap="{{interactive.tabWidth}}" />
   <view class="flex">
     <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{screenHeight}}px;-webkit-overflow-scrolling:touch">
       <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
@@ -121,7 +121,7 @@
       </view>
     </scroll-view>
     <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:{{screenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
-      <view wx:if="{{item.inner && item.inner.type}}" class="padding-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
+      <view wx:if="{{item.inner && item.inner.type}}" class="padding-bottom-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
             <text class='cuIcon-title text-green'></text>{{item.name}}</view>
