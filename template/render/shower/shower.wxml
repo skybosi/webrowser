@@ -92,8 +92,8 @@
 </template> -->
 
 <template name="label">
-  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu padding-lr solid-bottom" style="margin:0rpx" data-path="{{path}}">
-    <view class="cu-item {{path?'arrow':''}}" style="padding-left:0;margin:0" hover-class="hover">
+  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:0rpx" data-path="{{path}}">
+    <view class="cu-item {{path?'arrow':''}} padding-lr" style="margin:0" hover-class="hover">
       <view class="content">
         <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
         <text class="text-grey">{{text}}</text>
@@ -136,7 +136,18 @@
 </template>
 
 <template name="noticebar">
-  <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" />
+  <!-- <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" /> -->
+  <view class="noticebar-{{tindex}} flex align-center content padding-lr padding-sm text-{{color?color:''}}" style="background-color:#fffbe8;line-height:1;">
+    <view class="text-xl">
+      <text class="cuIcon-notification padding-right-xs"></text>
+    </view>
+    <view class="flex-sub text-cut">
+      <view class="wb-animation">{{text}}</view>
+    </view>
+    <view class="text-xl" wx:if="{{closeable}}">
+      <text catchtap="{{shower.closeNoticebar}}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
+    </view>
+  </view>
 </template>
 
 <template name="stepper">

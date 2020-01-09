@@ -132,10 +132,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "tree",
+					"id": 11,
+					"name": "nav",
 					"pathName": "pages/index/index",
-					"query": "path=/tree",
+					"query": "path=/nav",
 					"scene": null
 				},
 				{
@@ -143,6 +143,13 @@
 					"name": "location",
 					"pathName": "pages/index/index",
 					"query": "path=/location",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "navbar",
+					"pathName": "pages/index/index",
+					"query": "path=/navbar",
 					"scene": null
 				}
 			]

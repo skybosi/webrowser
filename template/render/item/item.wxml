@@ -137,7 +137,7 @@
   comment_count: 评论数
 } -->
 <template name="dynamic">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom padding-lr-xs" hover-class="hover">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom" hover-class="hover">
     <view class="cu-item">
       <view class="cu-list menu-avatar">
         <view class="cu-item">
@@ -193,7 +193,7 @@
   comment_count: 评论数
 } -->
 <template name="article">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-lr-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow" hover-class="hover">
       <view class="title">
         <view class="flex justify-start align-center">
@@ -293,7 +293,7 @@
   time: 发布时间
 } -->
 <template name="notice">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom padding-lr-xs">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow">
       <view class="flex justify-start align-center padding padding-bottom-sm">
         <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>

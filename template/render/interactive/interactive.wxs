@@ -1,9 +1,26 @@
-var tabSelect = function(event, ins) {
-  console.log('tabSelect:', JSON.stringify(event))
-  var all = ins.selectAllComponents('.tree-item')
-  for (var i = 0; i < all.length; ++i) {
+var _lastindex = 0
 
+var initTab = function (index) {
+  console.log('initTab:', _lastindex)
+  return _lastindex == index ? 'text-white cur' : ''
+}
+
+var tabSelect = function(event, ins) {
+  var st = ins.getState()
+  var lastindex = st.lastindex || 0
+  console.log('tabSelect:', JSON.stringify(event), JSON.stringify(st), _lastindex)
+  var all = ins.selectAllComponents('#nav-tab')
+  var index = event.currentTarget.dataset.index || event.target.dataset.index
+  st.lastindex = index
+  for (var i = 0; i < all.length; ++i) {
+    if (i != index) {
+      all[i].removeClass("text-white cur")
+    } else {
+      all[i].addClass("text-white cur")
+      _lastindex = i
+    }
   }
+  return false
 }
 
 var tabWidth = function(event, ins) {
@@ -44,5 +61,6 @@ var tabWidth = function(event, ins) {
   return false
 }
 
+module.exports.initTab = initTab;
 module.exports.tabWidth = tabWidth;
 module.exports.tabSelect = tabSelect;

@@ -1,33 +1,11 @@
-var list = [{
-    text: `{"text": "...","type": "noticebar","color":"red"}`,
-    type: "code"
-  }, {
-    type: "noticebar",
-    color: "red",
-    text: "webrowser weapp browser, 这是一个顶部消息提示框，哈哈哈。。。"
-  },
-  {
-    type: "interval",
-  },
-  {
-    text: `{"text": "...","type": "noticebar","wrapable":true,"scrollable": 1}`,
-    type: "code"
-  }, {
-    type: "noticebar",
-    color: "green",
-    wrapable: false,
-    text: "webrowser weapp browser, 这是一个顶部消息提示框，哈哈哈。。。"
-  },
-  {
-    type: "interval",
-  },
+var list = [
   {
     text: `{ "text": "...",  "type": "noticebar", "closeable": 1 }`,
     type: "code"
   }, {
     type: "noticebar",
     closeable: 1,
-    color: "blue",
+    color: "red",
     text: "webrowser weapp browser, 这是一个顶部消息提示框，可以关闭的！"
   },
   {

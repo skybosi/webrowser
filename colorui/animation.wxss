@@ -1,0 +1,24 @@
+.wb-animation {
+  -webkit-animation: wb-rolling 12s linear infinite;
+  animation: wb-rolling 12s linear infinite;
+}
+
+@-webkit-keyframes wb-rolling {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes wb-rolling {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}

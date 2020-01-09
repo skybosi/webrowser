@@ -99,9 +99,9 @@ var list = [{
       {
         icon: 'list',
         badge: 0,
-        name: '树状',
+        name: '导航',
         type: 'grid-icon',
-        path: '/tree'
+        path: '/nav'
       }
     ]
   },

@@ -35,5 +35,21 @@ var clickA = function(event, ins) {
   return false
 }
 
+/**
+ * 处理notice bar 关闭状态
+ */
+var closeNoticebar = function(event, ins) {
+  console.log('closeNoticebar', JSON.stringify(event), JSON.stringify(ins))
+  var id = event.currentTarget.dataset.id || event.target.dataset.id
+  ins.selectComponent('.noticebar-' + id).setStyle({
+    display: 'none'
+  })
+  event.id = id
+  // 调用预先定义的js 逻辑层的方法
+  ins.callMethod("closeNoticebar", event)
+  return false
+}
+
 module.exports.clickA = clickA;
 module.exports.template = template;
+module.exports.closeNoticebar = closeNoticebar;

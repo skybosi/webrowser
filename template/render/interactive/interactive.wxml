@@ -115,12 +115,12 @@
 <template name="tree">
   <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{customBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" catchtap="{{interactive.tabWidth}}" />
   <view class="flex">
-    <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{screenHeight}}px;-webkit-overflow-scrolling:touch">
+    <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation="true" scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{screenHeight}}px;-webkit-overflow-scrolling:touch">
       <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
         <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation scroll-into-view="main-{{MainCur||0}}" style="height:{{screenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
+    <scroll-view class="VerticalMain" scroll-y scroll-with-animation="true" scroll-into-view="main-{{MainCur||0}}" style="height:{{screenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
       <view wx:if="{{item.inner && item.inner.type}}" class="padding-bottom-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
@@ -132,8 +132,21 @@
   </view>
 </template>
 
+<template name="nav">
+  <scroll-view scroll-x class="bg-white nav text-center padding-bottom-xs">
+    <block wx:for="{{list}}" wx:key="index">
+      <view id="nav-tab" class="cu-item nav-tab-{{index}} {{index==(TabCur||0)?'text-green cur':''}}" catchtap="tabSelect" data-id="{{index}}">
+        <text class="cuIcon-{{item.icon}}"></text> {{item.name}}
+      </view>
+    </block>
+  </scroll-view>
+  <view class="padding-top-xs">
+    <template is="{{list[TabCur||0].inner.type}}" data="{{... list[TabCur||0].inner}}"></template>
+  </view>
+</template>
+
 <template name="map-location">
-  <map id="maps" style="height:100%;width:100%" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location bindregionchange="regionchange" data-tindex="{{tindex}}">
+  <map id="maps" style="height:100vh;width:100%" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location bindregionchange="regionchange" data-tindex="{{tindex}}">
     <cover-image style="position:relative;width:80rpx;height:80rpx;top:50%;left:50%;margin-top:-42px;margin-left:-22px;" src="/static/image/location.png" />
     <!-- <cover-view style="position:relative;top:50%;left:50%;margin-top:-60rpx;margin-left:-30rpx;">
       <cover-view class="cuIcon-locationfill text-green" style="background-color:rgba(255, 255, 255, 0);width:96rpx;height:96rpx;font-size:2em"></cover-view>
