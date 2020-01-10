@@ -1,6 +1,4 @@
-Welcome to the webrowser
-
-- [wiki](https://github.com/skybosi/webrowser/wiki)
+Welcome to the webrowser wiki!
 
 ### 目录结构
 
@@ -21,7 +19,7 @@ Welcome to the webrowser
 ```
 
 ## 效果截图
-![Home](./doc/image/Home.jpg)
+![Home](./image/Home.jpg)
 
 ### 引用及参考
 
