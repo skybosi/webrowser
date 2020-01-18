@@ -164,9 +164,16 @@
 </template>
 
 <template name="tag">
-  <view class="padding-lr">
+  <view class="padding-sm flex flex-wrap">
     <block wx:for="{{tags}}" wx:key="index">
-      <van-tag wx:if="{{item.type?item.type:'success'}}" class="padding padding-lr-xs" closeable="{{item.closeable?item.closeable:true}}" type="{{item.type?item.type:'success'}}" size="medium" id="{{item.type}}" bind:close="onClose">{{item.tag}}</van-tag>
+      <view class="tag-{{tindex}}  padding-xs {{item.closeable?'cu-capsule':''}} {{item.shape||'radius'}}">
+        <view class="cu-tag bg-{{item.color||'black'}} {{item.shape||'radius'}} {{item.size||''}}">
+          {{item.tag}}
+        </view>
+        <view wx:if="{{item.closeable}}" class="cu-tag line-{{item.color||'black'}} {{item.size||''}}">
+          <text catchtap="{{shower.closeTag}}" data-id="{{tindex}}" class="cuIcon-close"></text>
+        </view>
+      </view>
     </block>
   </view>
 </template>

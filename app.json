@@ -11,7 +11,6 @@
   },
   "usingComponents": {
     "custom": "/colorui/custom/custom",
-    "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
     "van-info": "/miniprogram_npm/vant-weapp/info/index",
     "van-icon": "/miniprogram_npm/vant-weapp/icon/index",
     "van-cell": "/miniprogram_npm/vant-weapp/cell/index",

@@ -1,0 +1,14 @@
+<import src="/template/render/item/item.wxml" />
+<import src="/template/render/form/form.wxml" />
+<import src="/template/render/chat/chat.wxml" />
+<import src="/template/render/button/button.wxml" />
+<import src="/template/render/shower/shower.wxml" />
+<import src="/template/render/interactive/interactive.wxml" />
+
+<template name="page">
+  <view class='page-top' data-width="{{ScreenHeight}}" bindtouchmove="{{page.touchMove}}" bindtouchend="{{page.touchEnd}}" bindtouchstart="{{page.touchStart}}" change:prop="{{page.propObserver}}" prop="{{pageStats}}">
+    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}">
+      <template is="{{item.type}}" data="{{...item, tindex: index, customBar:CustomBar, statusBar:StatusBar,screenWidth:ScreenWidth,screenHeight:ScreenHeight}}"></template>
+    </view>
+  </view>
+</template>

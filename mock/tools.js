@@ -1,4 +1,26 @@
-var list = [
+var list = [{
+    text: `{ "tags": [{"tag":"xxx", "color":"","closeable":1, "size":""}], "type": "tag" }`,
+    type: "code"
+  }, {
+    type: "tag",
+    tags: [{
+        tag: "标签1",
+        color: "red",
+        closeable: 1,
+      }, {
+        tag: "Tag2",
+        color: "green",
+        shape: 'radius'
+      }, {
+        tag: "标签3",
+        size: 'sm',
+      },
+      {
+        tag: "标签4",
+        shape: 'round'
+      }
+    ]
+  },
   {
     text: `{ "text": "...",  "type": "noticebar", "closeable": 1 }`,
     type: "code"
@@ -34,27 +56,6 @@ var list = [
   },
   {
     type: "interval",
-  },
-  {
-    text: `{ "tags": [{"tag":"xxx", "type":"danger/warning/primary/success"}], "type": "tag" }`,
-    type: "code"
-  }, {
-    type: "tag",
-    tags: [{
-        tag: "标签1",
-        type: "danger"
-      }, {
-        tag: "Tag2",
-        type: "warning"
-      }, {
-        tag: "标签3",
-        type: "primary"
-      },
-      {
-        tag: "标签4",
-        type: "success"
-      }
-    ]
   },
 ]
 

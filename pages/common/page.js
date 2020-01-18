@@ -1,5 +1,6 @@
 const app = getApp();
 import diff from '../../libs/diff.js'
+import parser from '../../libs/parser.js'
 import render from '../../template/render/render.js'
 const LRUMap = require('../../libs/lru/lru.js').LRUMap
 const lru = new LRUMap()
@@ -14,11 +15,8 @@ export default function(context = {}) {
    */
   Object.assign(context, render, {
     lru: lru,
-    diff: diff
-  })
-  const mock = new Mock(context, "../../mock/")
-  Object.assign(context, render, {
-    mock: mock
+    diff: diff,
+    parser: parser
   })
   /**
    * 页面加载函数重写
@@ -26,9 +24,12 @@ export default function(context = {}) {
   let originOnLoad = context.onLoad
   context.onLoad = function(options) {
     const self = this
+    const mock = new Mock(self, "../../mock/")
+    Object.assign(self, {
+      mock: mock
+    })
     Object.assign(this.data, this.lru.get(options.path || "/index"))
-    console.log("onload common page")
-    this.setData(this.data)
+    console.log("onload common page", this.data)
     originOnLoad && originOnLoad.call(self, options)
   }
   /**
@@ -88,6 +89,9 @@ export default function(context = {}) {
       pageStats
     })
     originonReachBottom && originonReachBottom.call(self)
+  }
+  context.getPage = function() {
+    return this.data
   }
   return Page({
     data: Object.assign(context.data, {

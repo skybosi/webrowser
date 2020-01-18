@@ -6,6 +6,7 @@
   }
 })(this, function(exports) {
   const diff = require('../diff.js').default
+  const parser = require('../parser.js').default
 
   function Mock(ctx, root) {
     this.ctx = ctx;
@@ -14,11 +15,30 @@
 
   exports.Mock = Mock;
 
+  function modify(path, value, obj) {
+    const arr = path.split('.')
+    const len = arr.length - 1
+    arr.reduce((cur, key, index) => {
+      if (!(cur[key]))
+        throw `${key} 不存在!`
+      if (index === len) {
+        cur[key] = value
+      }
+      return cur[key]
+    }, obj)
+  }
+
   Mock.prototype.get = function(path, args, body) {
     return new Promise((resolver, reject) => {
+      this.ctx.setData(this.ctx.lru.get(path) || {})
       var res = require(this.root + path)
       res.path = path
-      var originData = this.ctx.lru.get(path)
+      console.log(path, )
+      var parRes = parser(res.list) || []
+      for (let key in parRes) {
+        modify(key, require(this.root + parRes[key]), res.list)
+      }
+      var originData = this.ctx.getPage()
       var diffD = diff(originData, res) || {}
       console.log(diffD)
       this.ctx.lru.set(path, res)

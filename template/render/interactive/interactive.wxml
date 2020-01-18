@@ -1,4 +1,5 @@
 <!-- 用户信息 -->
+<import src="/template/render/page/page.wxml" />
 <import src="/template/render/item/item.wxml" />
 <import src="/template/render/shower/shower.wxml" />
 <wxs src="../render.wxs" module="render"></wxs>
@@ -141,7 +142,7 @@
     </block>
   </scroll-view>
   <view class="padding-top-xs">
-    <template is="{{list[TabCur||0].inner.type}}" data="{{... list[TabCur||0].inner}}"></template>
+    <template is="{{list[TabCur||0].inner.type || 'page'}}" data="{{... list[TabCur||0].inner}}"></template>
   </view>
 </template>
 
