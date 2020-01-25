@@ -1,5 +1,5 @@
 //index.js
-import Page from '../common/page';
+import Page from '../../template/page/page';
 
 
 //获取应用实例

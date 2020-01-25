@@ -41,15 +41,24 @@ export default Object.assign({
   },
   renderData(e, data) {
     // console.log('renderData:', JSON.stringify(e))
-    var tidx = e.mark.tindex
+    var tidx = e.currentTarget.dataset.tindex || e.target.dataset.tindex || e.mark.tindex
+    var zidx = e.currentTarget.dataset.zindex || e.target.dataset.zindex || e.mark.zindex
     var list = {}
+    var index = "list"
+    if (undefined != zidx && '' != zidx) {
+      var zidx2 = zidx.replace(/\.?(\d)/g, '[$1]')
+      index = index + zidx.replace(/\.?(\d)/g, '[$1]') + ".list[" + tidx + "]."
+    }else{
+      index = index + '[' + tidx + "]."
+    }
     for (var item in data) {
-      list["list[" + tidx + "]." + item] = data[item]
+      list[index + item] = data[item]
     }
     this.setData(list)
   },
   getData(e, key) {
-    var tidx = e.mark.tindex
+    var tidx = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var zidx = e.mark.zindex || e.currentTarget.dataset.zindex || e.target.dataset.zindex
     return this.data.list[tidx][key]
   }
 }, interactive, shower, item, form, button)

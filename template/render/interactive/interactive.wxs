@@ -8,7 +8,7 @@ var initTab = function (index) {
 var tabSelect = function(event, ins) {
   var st = ins.getState()
   var lastindex = st.lastindex || 0
-  console.log('tabSelect:', JSON.stringify(event), JSON.stringify(st), _lastindex)
+  // console.log('tabSelect:', JSON.stringify(event), JSON.stringify(st), _lastindex)
   var all = ins.selectAllComponents('#nav-tab')
   var index = event.currentTarget.dataset.index || event.target.dataset.index
   st.lastindex = index

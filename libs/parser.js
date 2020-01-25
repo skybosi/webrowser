@@ -6,7 +6,7 @@ const OBJECTTYPE = '[object Object]'
 const FUNCTIONTYPE = '[object Function]'
 
 export default function parser(data) {
-  console.log("checkGoto", data)
+  // console.log("checkGoto", data)
   let paths = []
   paths['_'] = []
   var curpath = ""

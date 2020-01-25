@@ -122,6 +122,7 @@
     </view>
   </view>
 </template>
+
 <!-- {
   id: 详情id
   type: dynamic 动态类型
@@ -172,6 +173,7 @@
   </view>
   <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
 </template>
+
 <!-- {
   id: 详情id
   type: article 文章类型
@@ -220,6 +222,7 @@
   </view>
   <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
 </template>
+
 <!-- {
   id: 详情id
   type: comment 评论类型
@@ -284,6 +287,7 @@
   </view>
   <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
 </template>
+
 <!-- {
   id: 详情id
   type: notice 通告类型
@@ -311,6 +315,7 @@
   </view>
   <template is="modal" data="{{ ...{ title: '编辑确认', content: '请选择处理方式！？', cancel: '删除', ok: '保留'} }}"></template>
 </template>
+
 <!-- {
   id: 详情id
   type: message 消息类型
@@ -325,7 +330,7 @@
   status: 消息接收状态
 } -->
 <template name="message">
-  <view data-myid="{{id||myID}}" catchlongpress="{{render.longclickItem}}" data-openid="{{openID}}" class="cu-list menu-avatar margin-top-0" catchtap="getUserInfo">
+  <view data-uid="{{uid}}" catchlongpress="{{render.longclickItem}}" data-openid="{{openID}}" class="cu-list menu-avatar margin-top-0" catchtap="getUserInfo">
     <view class="cu-item solid-bottom" hover-class="hover">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-black">wb</view>

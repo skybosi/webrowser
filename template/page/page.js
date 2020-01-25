@@ -1,5 +1,6 @@
 const app = getApp();
 import diff from '../../libs/diff.js'
+import event from '../../libs/event.js'
 import parser from '../../libs/parser.js'
 import render from '../../template/render/render.js'
 const LRUMap = require('../../libs/lru/lru.js').LRUMap
@@ -16,6 +17,7 @@ export default function(context = {}) {
   Object.assign(context, render, {
     lru: lru,
     diff: diff,
+    event: event,
     parser: parser
   })
   /**
@@ -29,7 +31,7 @@ export default function(context = {}) {
       mock: mock
     })
     Object.assign(this.data, this.lru.get(options.path || "/index"))
-    console.log("onload common page", this.data)
+    // console.log("onload common page", this.data)
     originOnLoad && originOnLoad.call(self, options)
   }
   /**
@@ -44,6 +46,10 @@ export default function(context = {}) {
         wx.navigateBack({
           delta: -1
         })
+        break
+      case 'left':
+      case 'right':
+        self.event.emit('tabselect', e);
         break;
       default:
         wx.showToast({

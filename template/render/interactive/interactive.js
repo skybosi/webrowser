@@ -10,20 +10,20 @@ export default ({
    * 进入发布者个人中心
    */
   getUserInfo(e) {
-    var myID = e.currentTarget.dataset.myid
+    var uid = e.currentTarget.dataset.uid
     var openID = e.currentTarget.dataset.openid
     wx.navigateTo({
-      url: '/pages/me/mime/mime?myID=' + myID + '&openID=' + openID,
+      url: '/pages/me/mime/mime?uid=' + uid + '&openID=' + openID,
     })
   },
   /**
    * 联系发布者
    */
   contactUser(e) {
-    var myID = e.currentTarget.dataset.myid
+    var uid = e.currentTarget.dataset.uid
     var openID = e.currentTarget.dataset.openid
     wx.navigateTo({
-      url: '/pages/tiding/chat/chat?id=' + myID + '&openID=' + openID + "&pageId=content",
+      url: '/pages/tiding/chat/chat?id=' + uid + '&openID=' + openID + "&pageId=content",
     })
   },
   hideModal(e) {
@@ -70,6 +70,9 @@ export default ({
    * tree
    */
   tabSelect(e) {
+    wx.pageScrollTo({
+      scrollTop: 0,
+    })
     this.renderData(e, {
       TabCur: e.currentTarget.dataset.id,
       MainCur: e.currentTarget.dataset.id,
@@ -112,7 +115,8 @@ export default ({
    */
   regionchange(e) {
     e.mark = {
-      tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex
+      tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex,
+      zindex: e.currentTarget.dataset.zindex || e.target.dataset.zindex
     }
     // 地图发生变化的时候，获取中间点，也就是cover-image指定的位置
     if (e.type == 'end' && (e.causedBy == 'scale' || e.causedBy == 'drag')) {

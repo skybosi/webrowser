@@ -11,22 +11,30 @@ var newmarkX = startmarkX = 0
  * screenHeight 屏幕高度
  * 
  */
-var pageStats = {}
+var pageStats = {
+  scrollTop: 0, // 页面滚动位置
+  reachBottom: false, // 页面是否触底
+  custom: 0, // 页面自定义状态栏 信息
+  customBar: 0, // 页面自定义状态栏高度
+  statusBar: 0, // 状态栏高度
+  screenWidth: 0, // 屏幕宽度
+  screenHeight: 0 // 屏幕高度
+}
 
 /**
  * 处理fixed 样式的view
  */
-function _handleFixedView(ins, type) {
+function _handleFixedView(e, ins, type) {
   var all = ins.selectAllComponents('.fixed')
   switch (type) {
-    case 'clean': // 清除fixed的top属性
+    case 'remove': // 清除fixed的top属性
       for (var i = 0; i < all.length; ++i) {
         all[i].setStyle({
           top: '0px'
         })
       }
       break
-    case 'recover': // 回复fixed的top属性
+    case 'add': // 回复fixed的top属性
       for (var i = 0; i < all.length; ++i) {
         all[i].setStyle({
           top: pageStats.customBar + 'px'
@@ -36,6 +44,61 @@ function _handleFixedView(ins, type) {
     default:
       break
   }
+}
+
+/**
+ * 处理 sticky 效果
+ */
+function _handleStickyView(e, ins, type) {
+  // console.log("_handleStickyView", JSON.stringify(e))
+  var all = ins.selectAllComponents('.sticky-view')
+  switch (type) {
+    case 'remove': // 清除sticky属性
+      for (var i = 0; i < all.length; ++i) {
+        all[i].setStyle({
+          'top': 'auto',
+          'position': '',
+          'z-index': 0
+        })
+      }
+      break
+    case 'add': // 添加sticky属性
+      for (var i = 0; i < all.length; ++i) {
+        all[i].setStyle({
+          'top': pageStats.customBar + 'px',
+          'position': 'fixed',
+          'z-index': '99999'
+        })
+      }
+      break
+    default:
+      break
+  }
+}
+
+/**
+ * 处理上/下拉事件
+ */
+function _handlePullView(e, ins, type) {
+  var ret = {}
+  switch (type) {
+    case 'remove': // 清除属性
+      ins.selectComponent('.pull-up').removeClass("loading")
+      ins.selectComponent('.pull-down').removeClass("loading")
+      ins.selectComponent('.page-top').setStyle({
+        transform: ''
+      })
+      break
+    case 'add': // 添加属性
+      break
+    case 'check':
+      ret.enablePullDownRefresh = ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh') || false
+      ret.enablePullUpRefresh = ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh') || false
+      break
+    default:
+      break
+  }
+  return ret
 }
 
 /**
@@ -50,10 +113,18 @@ function touchstart(e, ins) {
  * 触摸事件结束，处理视图层变化，并回调事件处理函数
  */
 function touchmove(e, ins) {
-  var enablePullDownRefresh = ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh') || false
-  var enablePullUpRefresh = ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh') || false
+  var pullRet = _handlePullView(ins, 'check')
+  var enablePullUpRefresh = pullRet.enablePullUpRefresh
+  var enablePullDownRefresh = pullRet.enablePullDownRefresh
+  // 处理 Sticky
+  // console.log(JSON.stringify(pageStats))
+  if ((pageStats.scrollTop || 0) > 45) {
+    _handleStickyView(e, ins, 'add')
+  } else {
+    _handleStickyView(e, ins, 'remove')
+  }
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知
-  if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
+  if ((pageStats.scrollTop || 0) > 5 && !pageStats.reachBottom) {
     return
   }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
@@ -67,7 +138,7 @@ function touchmove(e, ins) {
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
       // 下拉清除fixed
-      _handleFixedView(ins, 'clean')
+      _handleFixedView(e, ins, 'remove')
       e.direction = "down"
       // console.log("下:" + startmarkY + " " + pageY)
       // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
@@ -83,7 +154,7 @@ function touchmove(e, ins) {
     if (startmarkY > pageY && enablePullUpRefresh) {
       e.direction = "up"
       // 考虑到布局问题，和下拉清除fixed相关属性有些条件区别，这个是调试后的结果
-      _handleFixedView(ins, 'clean')
+      _handleFixedView(e, ins, 'remove')
       // console.log("上:" + newmarkY + " " + startmarkY)
       ins.selectComponent('.page-top').setStyle({
         transform: 'translateY(-' + Math.min(pullDownWidth, (startmarkY - newmarkY)) + 'px)'
@@ -108,19 +179,15 @@ function touchmove(e, ins) {
  * 触摸事件结束，处理视图层，并回调事件处理函数
  */
 function touchend(e, ins) {
-  _handleFixedView(ins, 'recover')
-  var enablePullDownRefresh = ins.selectComponent('.pull-down').hasClass('enablePullDownRefresh') || false
-  var enablePullUpRefresh = ins.selectComponent('.pull-up').hasClass('enablePullUpRefresh') || false
-  /**
-   * 删除可能存在的动画
-   */
-  ins.selectComponent('.pull-up').removeClass("loading")
-  ins.selectComponent('.pull-down').removeClass("loading")
-  ins.selectComponent('.page-top').setStyle({
-    transform: ''
-  })
+  var pullRet = _handlePullView(ins, 'check')
+  var enablePullUpRefresh = pullRet.enablePullUpRefresh
+  var enablePullDownRefresh = pullRet.enablePullDownRefresh
+  // 处理 添加 fix
+  _handleFixedView(e, ins, 'add')
+  // 删除可能存在的动画
+  _handlePullView(e, ins, 'remove')
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知    
-  if (pageStats.scrollTop > 5 && !pageStats.reachBottom) {
+  if ((pageStats.scrollTop || 0) > 5 && !pageStats.reachBottom) {
     return
   }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
@@ -160,11 +227,15 @@ function touchend(e, ins) {
   }
 }
 
+function touchcancel(e, ins) {
+  console.log(JSON.stringify(e), JSON.stringify(ins))
+}
+
 /**
  * 监控数据js层变化
  */
 function propObserver(newValue, oldValue, ownerInstance, instance) {
-  pageStats = newValue
+  pageStats = newValue || {}
   // console.log(JSON.stringify(pageStats))
 }
 
@@ -180,6 +251,7 @@ module.exports = {
   touchStart: touchstart,
   touchMove: touchmove,
   touchEnd: touchend,
+  touchCancel: touchcancel,
   propObserver: propObserver,
   getPageStats: getPageStats
 }

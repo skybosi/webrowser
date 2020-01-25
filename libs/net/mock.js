@@ -33,17 +33,16 @@
       this.ctx.setData(this.ctx.lru.get(path) || {})
       var res = require(this.root + path)
       res.path = path
-      console.log(path, )
       var parRes = parser(res.list) || []
       for (let key in parRes) {
         modify(key, require(this.root + parRes[key]), res.list)
       }
       var originData = this.ctx.getPage()
-      var diffD = diff(originData, res) || {}
-      console.log(diffD)
+      var delta = diff(originData, res) || {}
+      console.log(delta)
       this.ctx.lru.set(path, res)
-      if (0 != Object.keys(diffD).length) {
-        resolver(diffD)
+      if (0 != Object.keys(delta).length) {
+        resolver(delta)
       }
     }).catch((e) => {
       console.log(e)
