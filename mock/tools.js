@@ -61,5 +61,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '工具'
+  nav: {
+    title: '工具',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

@@ -233,7 +233,11 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '垂直导航',
+  nav: {
+    title: '垂直导航',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
   enablePullDownRefresh: false,
   enablePullUpRefresh: false,
 }

@@ -166,5 +166,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '卡片'
+  nav: {
+    title: '卡片',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  }
 }

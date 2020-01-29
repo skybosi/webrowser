@@ -41,6 +41,19 @@
   <view class="padding-bottom-sm"></view>
 </template>
 
+<template name="head">
+  <view class="flex justify-center flex-direction align-center padding-top {{bgImage?'none-bg text-white bg-img':''}} bg-gradual-{{bgColor||'green'}} shadow" style="z-index:999;{{bgImage?'background-image: url(' + bgImage + ');background-size:cover':''}};height:40vh">
+    <view wx:if="{{icon}}" class="wb-shine cu-avatar round" style="background-image:url({{icon}});width:200rpx;height:200rpx;z-index:999"></view>
+    <view wx:else class="wb-shine cu-avatar round xl cuIcon-people bg-gradual-{{bgColor||'green'}}" style="font-size:4.5em;width:200rpx;height:200rpx;z-index:999"></view>
+    <view class="flex text-xl align-center justify-center padding-top-sm">{{title}}
+      <view wx:if="{{tag}}" class="cu-tag radius line-{{tagcolor}} sm margin-xs">{{tag}}</view>
+    </view>
+    <view class="padding-top-xs">
+      <text>{{subtitle}}</text>
+    </view>
+  </view>
+</template>
+
 <!-- {
   placeholder: "搜索最新公告消息"
 } -->
@@ -59,7 +72,7 @@
   placeholder: hint提示文字
 } -->
 <template name="search-bar">
-  <view class="cu-bar search bg-white fixed solid-top" style="left:0;top:{{customBar}}px;">
+  <view class="cu-bar search bg-white fixed solid-top" style="left:0;top:{{CustomBar}}px;">
     <view class="search-form round">
       <text class="cuIcon-search"></text>
       <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
@@ -114,14 +127,14 @@
 </template>
 
 <template name="tree">
-  <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{customBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" catchtap="{{interactive.tabWidth}}" />
+  <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{CustomBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" catchtap="{{interactive.tabWidth}}" />
   <view class="flex">
-    <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation="true" scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{screenHeight}}px;-webkit-overflow-scrolling:touch">
+    <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation="true" scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{ScreenHeight}}px;-webkit-overflow-scrolling:touch">
       <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
         <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation="true" scroll-into-view="main-{{MainCur||0}}" style="height:{{screenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
+    <scroll-view class="VerticalMain" scroll-y scroll-with-animation="true" scroll-into-view="main-{{MainCur||0}}" style="height:{{ScreenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
       <view wx:if="{{item.inner && item.inner.type}}" class="padding-bottom-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
@@ -169,4 +182,12 @@
       <cover-image src="/static/image/current.png" style="width: 48rpx; height: 48rpx;"></cover-image>
     </cover-view>
   </map>
+</template>
+
+<template name="movable">
+  <view style='position:relative;z-index:1025'>
+    <button bindtouchstart="{{interactive.touchstart}}" bindtouchmove="{{interactive.touchmove}}" bindtouchend='{{interactive.touchmove}}' catchtap="" class="movable cu-btn icon round lg lines-{{color||''}} flex justify-center flex-direction align-center padding-sm margin-sm" style="position:absolute;left:{{left}}px;top:{{top}}px">
+      <text class="cuIcon-{{icon||'roundadd'}}" style="font-size:2em"></text>
+    </button>
+  </view>
 </template>

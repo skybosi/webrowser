@@ -2,10 +2,13 @@
 <wxs src="../../template/page/page.wxs" module="page"></wxs>
 <include src="/template/render/render.wxml" />
 <view class="container">
-  <custom bgColor="bg-gradual-blue" isHome="{{path=='/index'?true:false}}" isBack="{{path!='/index'?true:false}}">
-    <view slot="backText">{{backText||'返回'}}</view>
-    <view slot="content">{{title}}</view>
-  </custom>
+  <block wx:if="{{hideNavigation?false:true}}">
+    <custom bgColor="bg-gradual-blue" isHome="{{path=='/index'?true:false}}" isBack="{{path!='/index'?true:false}}">
+      <view slot="backText">{{backText||'返回'}}</view>
+      <view slot="content">{{nav.title}}</view>
+    </custom>
+    <!-- <template is="cu-custom" data="{{...nav,Custom:Custom,CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight,isHome:true, isBack:false}}"></template> -->
+  </block>
   <view class="cu-load pull-down text-gray {{enablePullDownRefresh?'enablePullDownRefresh':''}}"></view>
   <view class='page-top'
     bindtouchstart="{{page.touchStart}}"
@@ -16,8 +19,9 @@
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
     <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:zindex="{{index}}">
-      <template is="{{item.type}}" data="{{...item, tindex: index, zindex:index, customBar:CustomBar, statusBar:StatusBar,screenWidth:ScreenWidth,screenHeight:ScreenHeight}}"></template>
+      <template is="{{item.type}}" data="{{...item, tindex: index, zindex:index, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
+  <view class="cu-tabbar-height"></view>
   <view class="cu-load pull-up text-gray {{enablePullUpRefresh?'enablePullUpRefresh':''}}"></view>
 </view>

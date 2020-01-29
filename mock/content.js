@@ -1,5 +1,4 @@
-var list = [
-  {
+var list = [{
     "text": "模板驱动的小程序页面动态渲染",
     "type": "title"
   },
@@ -75,5 +74,9 @@ var list = [
 
 module.exports = {
   list: list,
-  title: '原理'
+  nav: {
+    title: '原理',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

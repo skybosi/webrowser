@@ -58,8 +58,8 @@
     <swiper-item wx:for="{{list}}" wx:key="key">
       <view class="image">
         <image src="{{item.url}}" mode="widthFix"></image>
-        <view class="cu-tag bg-blue">{{item.tag}}</view>
-        <view class="cu-bar bg-shadeBottom">
+        <view wx:if="{{item.tag}}" class="cu-tag bg-blue">{{item.tag}}</view>
+        <view wx:if="{{item.summary}}" class="cu-bar bg-shadeBottom">
           <text class="text-cut">{{item.summary}}</text>
         </view>
       </view>
@@ -100,7 +100,7 @@
   comment_count: 评论数
 } -->
 <template name="ad">
-  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" class="cu-card case no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" data-path="{{path}}" class="cu-card case no-card solid-bottom">
     <view class="cu-item shadow">
       <block wx:if="{{!swiper_type||swiper_type=='screen'}}">
         <template is="swiper" data='{{ list:image, nopadding: 1 }}'></template>
@@ -138,7 +138,7 @@
   comment_count: 评论数
 } -->
 <template name="dynamic">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card dynamic no-card solid-bottom" hover-class="hover">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-card dynamic no-card solid-bottom" hover-class="hover">
     <view class="cu-item">
       <view class="cu-list menu-avatar">
         <view class="cu-item">
@@ -195,7 +195,7 @@
   comment_count: 评论数
 } -->
 <template name="article">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow" hover-class="hover">
       <view class="title">
         <view class="flex justify-start align-center">
@@ -237,7 +237,7 @@
   comment_count: 评论数
 } -->
 <template name="comment">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-list menu-avatar comment solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-list menu-avatar comment solid-bottom">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
@@ -297,7 +297,7 @@
   time: 发布时间
 } -->
 <template name="notice">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" class="cu-card article no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card solid-bottom">
     <view class="cu-item shadow">
       <view class="flex justify-start align-center padding padding-bottom-sm">
         <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
@@ -330,10 +330,10 @@
   status: 消息接收状态
 } -->
 <template name="message">
-  <view data-uid="{{uid}}" catchlongpress="{{render.longclickItem}}" data-openid="{{openID}}" class="cu-list menu-avatar margin-top-0" catchtap="getUserInfo">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-list menu-avatar margin-top-0">
     <view class="cu-item solid-bottom" hover-class="hover">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
-      <view wx:else class="cu-avatar round lg bg-black">wb</view>
+      <view wx:else class="cu-avatar round lg bg-black">{{name[0]}}</view>
       <view class="content">
         <view class="text-grey">
           <text class="text-cut">{{name}}</text>

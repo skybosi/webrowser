@@ -7,5 +7,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '授权'
+  nav: {
+    title: '授权',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  }
 }

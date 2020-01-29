@@ -1489,5 +1489,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '图标'
+  nav: {
+    title: '图标',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

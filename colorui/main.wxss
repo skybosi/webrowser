@@ -1715,6 +1715,8 @@ button.icon.lg {
 }
 
 .cu-bar.fixed,
+.cu-bar.fixfixed,
+.nav.fixfixed,
 .nav.fixed {
 	position: fixed;
 	width: 100%;

@@ -1,6 +1,9 @@
 var _lastindex = 0
+var startX = 0
+var startY = 0
+var lastLeft = lastTop = 0
 
-var initTab = function (index) {
+var initTab = function(index) {
   console.log('initTab:', _lastindex)
   return _lastindex == index ? 'text-white cur' : ''
 }
@@ -61,6 +64,43 @@ var tabWidth = function(event, ins) {
   return false
 }
 
-module.exports.initTab = initTab;
-module.exports.tabWidth = tabWidth;
-module.exports.tabSelect = tabSelect;
+function touchstart(event, ins) {
+  var touch = event.touches[0] || event.changedTouches[0]
+  startX = touch.pageX
+  startY = touch.pageY
+  ins.callMethod('onClickMovable', {
+    complete: function(res) {
+      console.log('args', res)
+    }
+  })
+}
+
+function touchmove(event, ins) {
+  var touch = event.touches[0] || event.changedTouches[0]
+  var pageX = touch.pageX
+  var pageY = touch.pageY
+  var deltaX = pageX - startX
+  var deltaY = pageY - startY
+  var left = deltaX + lastLeft
+  var top = deltaY + lastTop
+  startX = pageX
+  startY = pageY
+  lastLeft = left
+  lastTop = top
+  // console.log(deltaX, deltaY)
+  if (Math.abs(deltaX) > 1.5 || Math.abs(deltaY) > 1.5){
+    ins.selectComponent('.movable').setStyle({
+      left: left + 'px',
+      top: top + 'px'
+    })
+  }
+  return false
+}
+
+module.exports = {
+  touchstart: touchstart,
+  touchmove: touchmove,
+  initTab: initTab,
+  tabWidth: tabWidth,
+  tabSelect: tabSelect
+}

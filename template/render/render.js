@@ -3,6 +3,7 @@ import item from './item/item.js'
 import form from './form/form.js'
 import shower from './shower/shower.js'
 import button from './button/button.js'
+import tabbar from './tabbar/tabbar.js'
 import interactive from './interactive/interactive.js'
 
 export default Object.assign({
@@ -46,9 +47,14 @@ export default Object.assign({
     var list = {}
     var index = "list"
     if (undefined != zidx && '' != zidx) {
-      var zidx2 = zidx.replace(/\.?(\d)/g, '[$1]')
-      index = index + zidx.replace(/\.?(\d)/g, '[$1]') + ".list[" + tidx + "]."
-    }else{
+      zidx = "" + zidx
+      var t = zidx.replace(/\.?(\d)/g, '[$1]')
+      if (t != '[' + zidx + ']') {
+        index = index + ".list[" + tidx + "]."
+      }else{
+        index = index + "[" + tidx + "]."
+      }
+    } else {
       index = index + '[' + tidx + "]."
     }
     for (var item in data) {
@@ -61,4 +67,4 @@ export default Object.assign({
     var zidx = e.mark.zindex || e.currentTarget.dataset.zindex || e.target.dataset.zindex
     return this.data.list[tidx][key]
   }
-}, interactive, shower, item, form, button)
+}, interactive, shower, item, form, button, tabbar)

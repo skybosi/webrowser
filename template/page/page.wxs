@@ -4,21 +4,21 @@ var newmarkX = startmarkX = 0
  * 
  * scrollTop  页面滚动位置
  * reachBottom 页面是否触底
- * custom 页面自定义状态栏 信息
- * customBar 页面自定义状态栏高度
- * statusBar 状态栏高度
- * screenWidth 屏幕宽度
- * screenHeight 屏幕高度
+ * Custom 页面自定义状态栏 信息
+ * CustomBar 页面自定义状态栏高度
+ * StatusBar 状态栏高度
+ * ScreenWidth 屏幕宽度
+ * ScreenHeight 屏幕高度
  * 
  */
 var pageStats = {
   scrollTop: 0, // 页面滚动位置
   reachBottom: false, // 页面是否触底
-  custom: 0, // 页面自定义状态栏 信息
-  customBar: 0, // 页面自定义状态栏高度
-  statusBar: 0, // 状态栏高度
-  screenWidth: 0, // 屏幕宽度
-  screenHeight: 0 // 屏幕高度
+  Custom: 0, // 页面自定义状态栏 信息
+  CustomBar: 0, // 页面自定义状态栏高度
+  StatusBar: 0, // 状态栏高度
+  ScreenWidth: 0, // 屏幕宽度
+  ScreenHeight: 0 // 屏幕高度
 }
 
 /**
@@ -37,7 +37,7 @@ function _handleFixedView(e, ins, type) {
     case 'add': // 回复fixed的top属性
       for (var i = 0; i < all.length; ++i) {
         all[i].setStyle({
-          top: pageStats.customBar + 'px'
+          top: pageStats.CustomBar + 'px'
         })
       }
       break
@@ -65,7 +65,7 @@ function _handleStickyView(e, ins, type) {
     case 'add': // 添加sticky属性
       for (var i = 0; i < all.length; ++i) {
         all[i].setStyle({
-          'top': pageStats.customBar + 'px',
+          'top': pageStats.CustomBar + 'px',
           'position': 'fixed',
           'z-index': '99999'
         })
@@ -113,7 +113,7 @@ function touchstart(e, ins) {
  * 触摸事件结束，处理视图层变化，并回调事件处理函数
  */
 function touchmove(e, ins) {
-  var pullRet = _handlePullView(ins, 'check')
+  var pullRet = _handlePullView(e, ins, 'check')
   var enablePullUpRefresh = pullRet.enablePullUpRefresh
   var enablePullDownRefresh = pullRet.enablePullDownRefresh
   // 处理 Sticky
@@ -132,18 +132,18 @@ function touchmove(e, ins) {
   newmarkX = pageX
   newmarkY = pageY
   var width = e.target.dataset.width || e.currentTarget.dataset.width
-  var pullDownWidth = pageStats.screenHeight * 0.05
+  var pullDownWidth = pageStats.ScreenHeight * 0.05
   var moveX = Math.abs(pageX - startmarkX)
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
-      // 下拉清除fixed
-      _handleFixedView(e, ins, 'remove')
       e.direction = "down"
       // console.log("下:" + startmarkY + " " + pageY)
       // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
       // 满足下拉条件，且开启了下拉刷新的使用才触发动画
       if (pullDownWidth > Math.abs(newmarkY - startmarkY) && enablePullDownRefresh) {
+        // 下拉清除fixed
+        _handleFixedView(e, ins, 'remove')
         ins.selectComponent('.page-top').setStyle({
           transform: 'translateY(' + Math.min(pullDownWidth, newmarkY - startmarkY) + 'px)'
         })
@@ -195,7 +195,7 @@ function touchend(e, ins) {
   newmarkX = pageX
   newmarkY = pageY
   var width = e.target.dataset.width || e.currentTarget.dataset.width
-  var pullDownWidth = pageStats.screenHeight * 0.05
+  var pullDownWidth = pageStats.ScreenHeight * 0.05
   var moveX = Math.abs(pageX - startmarkX)
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下

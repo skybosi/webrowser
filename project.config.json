@@ -151,6 +151,13 @@
 					"pathName": "pages/index/index",
 					"query": "path=/navbar",
 					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "demo",
+					"pathName": "pages/index/index",
+					"query": "path=/demo/index",
+					"scene": null
 				}
 			]
 		}

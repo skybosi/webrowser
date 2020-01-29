@@ -8,9 +8,13 @@ var list = [{
   icon: "list",
   text: "水平导航",
   path: "/navbar"
-},]
+}, ]
 
 module.exports = {
   list: list,
-  title: '导航栏'
+  nav: {
+    title: '导航栏',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

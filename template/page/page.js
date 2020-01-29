@@ -106,11 +106,11 @@ export default function(context = {}) {
         maxScrollTop: 0,
         scrollTop: 0,
         reachBottom: false,
-        custom: app.globalData.Custom,
-        customBar: app.globalData.CustomBar,
-        statusBar: app.globalData.StatusBar,
-        screenWidth: app.globalData.DiviceInfo.screenWidth,
-        screenHeight: app.globalData.DiviceInfo.screenHeight,
+        Custom: app.globalData.Custom,
+        CustomBar: app.globalData.CustomBar,
+        StatusBar: app.globalData.StatusBar,
+        ScreenWidth: app.globalData.DiviceInfo.screenWidth,
+        ScreenHeight: app.globalData.DiviceInfo.screenHeight,
       },
       Custom: app.globalData.Custom,
       CustomBar: app.globalData.CustomBar,
@@ -128,6 +128,17 @@ export default function(context = {}) {
         path: '/pages/index/index'
       }
     },
+    tapIcon1() {
+      wx.navigateBack({
+        delta: 1
+      });
+    },
+    tapIcon2() {
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
+    },
     ...context
   });
 }
+

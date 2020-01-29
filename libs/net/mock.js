@@ -31,11 +31,11 @@
   Mock.prototype.get = function(path, args, body) {
     return new Promise((resolver, reject) => {
       this.ctx.setData(this.ctx.lru.get(path) || {})
-      var res = require(this.root + path)
+      var res = require(this.root + path) || {}
       res.path = path
       var parRes = parser(res.list) || []
       for (let key in parRes) {
-        modify(key, require(this.root + parRes[key]), res.list)
+        modify(key, require(this.root + parRes[key]) || {}, res.list)
       }
       var originData = this.ctx.getPage()
       var delta = diff(originData, res) || {}

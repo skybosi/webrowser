@@ -19,7 +19,7 @@
 <!-- 多行文本输入框 -->
 <template name="textarea">
   <!-- !!!!! placeholder 在ios表现有偏移 建议使用 第一种样式 -->
-  <view class="cu-form-group margin-top">
+  <view class="cu-form-group solid-bottom">
     <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="{{placeholder||'请输入...'}}"></textarea>
   </view>
 </template>
@@ -50,11 +50,11 @@
 
 <!-- 上传图片 -->
 <template name="upload-img">
-  <view class="cu-bar bg-white margin-top">
+  <view class="cu-bar bg-white">
     <view class="action">{{title||'图片上传'}}</view>
     <view class="action">{{imgList.length||0}}/{{size||9}}</view>
   </view>
-  <view class="cu-form-group">
+  <view class="cu-form-group solid-bottom">
     <view class="grid col-{{column||4}} grid-square flex-sub">
       <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-url="{{imgList[index]}}">
         <image src='{{imgList[index]}}' mode='aspectFill'></image>

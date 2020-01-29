@@ -93,5 +93,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '文本'
+  nav: {
+    title: '文本',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

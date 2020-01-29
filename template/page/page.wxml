@@ -16,7 +16,29 @@
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
     <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:zindex="{{zindex}}">
-      <template is="{{item.type}}" data="{{...item, tindex: index, zindex: (zindex ||index), customBar:CustomBar, statusBar:StatusBar,screenWidth:ScreenWidth,screenHeight:ScreenHeight}}"></template>
+      <template is="{{item.type}}" data="{{...item, tindex: index, zindex: (zindex ||index), CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+    </view>
+  </view>
+</template>
+
+<template name="cu-custom">
+  <view class="cu-custom" style="height:{{CustomBar}}px">
+    <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-white'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" bindtap="toTop">
+      <view class="action border-Custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px);background-color:#fff;{{icon2&&icon1?'border: 1rpx solid rgba(0, 0, 0, 0.1)':''}}">
+        <view class="action" style="{{icon2?'':'margin-left:0'}}">
+          <view class="text-xxl {{icon2?'padding-lr-sm':''}}">
+            <text class="cuIcon-{{icon1}}" bindtap="tapIcon1"></text>
+          </view>
+          <view wx:if="{{text1 && !icon2}}" class="padding-left-xs">{{text1}}</view>
+        </view>
+        <view class="action" bindtap="tapIcon1">
+          <view class="text-xxl {{icon1?'padding-lr-sm':''}}">
+            <text class="cuIcon-{{icon2}}" bindtap="tapIcon2"></text>
+          </view>
+          <view wx:if="{{text2 && !icon1}}" class="padding-left-xs">{{text2}}</view>
+        </view>
+      </view>
+      <view class="content" style="top:{{StatusBar}}px">{{title}}</view>
     </view>
   </view>
 </template>

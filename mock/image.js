@@ -57,5 +57,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '图片'
+  nav: {
+    title: '图片',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

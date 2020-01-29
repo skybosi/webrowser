@@ -50,5 +50,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '搜索'
+  nav: {
+    title: '搜索',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

@@ -12,5 +12,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '地图定位'
+  nav: {
+    title: '地图定位',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

@@ -1,0 +1,21 @@
+<!-- <wxs src="../../../template/page/page.wxs" module="page"></wxs> -->
+<include src="/template/render/render.wxml" />
+<template name="tabbar">
+  <block class="base">
+    <template is="page" data="{{...pages[PageIdx],tindex: PageIdx, zindex:PageIdx, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+  </block>
+  <view class="cu-bar tabbar bg-white foot">
+    <block wx:for="{{tabbar}}" wx:key="index">
+      <view class="action" bindtap="NavChange" data-cur="{{item.page}}" data-index="{{index}}">
+        <view class="action">
+          <view class="{{PageCur==item.page?'text-olive text-green cuIcon-'+item.iconSelected:'cuIcon-'+item.icon}}">
+            <view class="cu-tag badge" wx:if="{{item.tag!=0}}">
+              <block wx:if="{{item.tag!=1}}">{{item.tag>99?"99+":item.tag}}</block>
+            </view>
+          </view>
+          <view class="{{PageCur==item.page?'text-green':'text-gray'}}">{{item.title}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>

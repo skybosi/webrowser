@@ -87,5 +87,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '表单'
+  nav: {
+    title: '表单',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

@@ -8,5 +8,9 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '视频'
+  nav: {
+    title: '视频',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
 }

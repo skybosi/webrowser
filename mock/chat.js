@@ -99,6 +99,10 @@ var list = [{
 
 module.exports = {
   list: list,
-  title: '聊天',
+  nav: {
+    title: '聊天',
+    icon1: 'back',
+    text1: '返回',    // icon2: 'roundadd',
+  },
   enablePullDownRefresh: true
 }

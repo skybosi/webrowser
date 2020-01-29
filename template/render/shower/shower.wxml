@@ -95,7 +95,7 @@
   <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu solid-bottom" style="margin:0rpx" data-path="{{path}}">
     <view class="cu-item {{path?'arrow':''}} padding-lr" style="margin:0" hover-class="hover">
       <view class="content">
-        <text class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
+        <text wx:if="{{icon&&''!=icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
         <text class="text-grey">{{text}}</text>
       </view>
       <view class="action">
@@ -158,7 +158,7 @@
 
 <template name="rate">
   <view class="padding-lr">
-    <van-rate custom-class="van-rate" data-key="{{value?value:0}}" value="{{value?value:0}}" size="{{size?size:25}}" allow-half color="{{color?color:'#ee0a24'}}" count="{{count?count:5}}" void-color="grey" void-icon="star" touchable="{{ false }}" bind:change="onChange"
+    <van-rate Custom-class="van-rate" data-key="{{value?value:0}}" value="{{value?value:0}}" size="{{size?size:25}}" allow-half color="{{color?color:'#ee0a24'}}" count="{{count?count:5}}" void-color="grey" void-icon="star" touchable="{{ false }}" bind:change="onChange"
     />
   </view>
 </template>

@@ -109,12 +109,17 @@ var list = [{
     type: "label",
     text: "综合demo",
     icon: "discoverfill",
+    path: "/demo/index"
   },
 ]
 
 module.exports = {
   list: list,
-  title: '首页',
-  enablePullDownRefresh: true,
-  enablePullUpRefresh: true,
+  nav: {
+    title: '首页',
+    icon1: 'homefill',
+  }
+  // icon2: 'roundadd',
+  // enablePullDownRefresh: true,
+  // enablePullUpRefresh: true,
 }
