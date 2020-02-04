@@ -65,28 +65,28 @@
 					"id": -1,
 					"name": "text",
 					"pathName": "pages/index/index",
-					"query": "path=/text",
+					"query": "path=/basic/text",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "image",
 					"pathName": "pages/index/index",
-					"query": "path=/image",
+					"query": "path=/basic/image",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "card",
 					"pathName": "pages/index/index",
-					"query": "path=/card",
+					"query": "path=/business/card",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "video",
 					"pathName": "pages/index/index",
-					"query": "path=/video",
+					"query": "path=/basic/video",
 					"scene": null
 				},
 				{
@@ -97,59 +97,59 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 6,
 					"name": "tools",
 					"pathName": "pages/index/index",
-					"query": "path=/tools",
+					"query": "path=/form/tools",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "form",
 					"pathName": "pages/index/index",
-					"query": "path=/form",
+					"query": "path=/form/form",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "icon",
 					"pathName": "pages/index/index",
-					"query": "path=/icon",
+					"query": "path=/basic/icon",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "button",
 					"pathName": "pages/index/index",
-					"query": "path=/button",
+					"query": "path=/basic/button",
 					"scene": null
 				},
 				{
 					"id": 10,
 					"name": "chat",
 					"pathName": "pages/index/index",
-					"query": "path=/chat",
+					"query": "path=/business/chat",
 					"scene": null
 				},
 				{
 					"id": 11,
 					"name": "nav",
 					"pathName": "pages/index/index",
-					"query": "path=/nav",
+					"query": "path=/business/nav",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "location",
 					"pathName": "pages/index/index",
-					"query": "path=/location",
+					"query": "path=/business/location",
 					"scene": null
 				},
 				{
 					"id": -1,
 					"name": "navbar",
 					"pathName": "pages/index/index",
-					"query": "path=/navbar",
+					"query": "path=/business/navbar",
 					"scene": null
 				},
 				{
@@ -157,6 +157,34 @@
 					"name": "demo",
 					"pathName": "pages/index/index",
 					"query": "path=/demo/index",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "layout",
+					"pathName": "pages/index/index",
+					"query": "path=/layout/layout",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "popup",
+					"pathName": "pages/index/index",
+					"query": "path=/basic/popup",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "progress",
+					"pathName": "pages/index/index",
+					"query": "path=/basic/progress",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "loading",
+					"pathName": "pages/index/index",
+					"query": "path=/basic/loading",
 					"scene": null
 				}
 			]

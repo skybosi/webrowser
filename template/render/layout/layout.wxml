@@ -1,0 +1,43 @@
+<import src="/template/render/item/item.wxml" />
+<import src="/template/render/form/form.wxml" />
+<import src="/template/render/chat/chat.wxml" />
+<import src="/template/render/button/button.wxml" />
+<import src="/template/render/tabbar/tabbar.wxml" />
+<import src="/template/render/basic/basic.wxml" />
+<import src="/template/render/interactive/interactive.wxml" />
+<wxs src="./layout.wxs" module="layout"></wxs>
+
+<template name="grid">
+  <view class="cu-list grid col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}} solid" style="margin:0">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="cu-item">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+      </view>
+    </block>
+  </view>
+</template>
+
+<template name="flex-basis">
+  <view wx:if="{{left || right}}" class="bg-{{bgColor||'white'}} flex flex-wrap solid">
+    <view wx:if="{{size>0}}" class="radius" style="flex-basis:{{size}}%;">
+      <block wx:for="{{left.list||[left]}}" wx:key="index">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+      </block>
+    </view>
+    <view wx:if="{{size<=50}}" class="radius">
+      <block wx:for="{{right.list||[right]}}" wx:key="index">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+      </block>
+    </view>
+  </view>
+</template>
+
+<template name="flex-sub">
+  <view class="flex solid">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="flex radius padding-xs justify-center align-center" hover-class="hover" style="background-color:white;flex:{{item.sub||1}};min-height:80rpx;margin:5rpx">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+      </view>
+    </block>
+  </view>
+</template>

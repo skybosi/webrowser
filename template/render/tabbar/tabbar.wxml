@@ -2,7 +2,7 @@
 <include src="/template/render/render.wxml" />
 <template name="tabbar">
   <block class="base">
-    <template is="page" data="{{...pages[PageIdx],tindex: PageIdx, zindex:PageIdx, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+    <template is="page" data="{{...pages[PageIdx],tindex: PageIdx, route:PageIdx, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
   </block>
   <view class="cu-bar tabbar bg-white foot">
     <block wx:for="{{tabbar}}" wx:key="index">

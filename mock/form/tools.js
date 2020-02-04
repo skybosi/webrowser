@@ -34,12 +34,13 @@ var list = [{
     type: "interval",
   },
   {
-    text: `{"title": "xxx","start": 0, "step":1, "min":0, "max":10, "type": "stepper"}`,
+    text: `{"title": "xxx","value": 0, "step":1, "min":0, "max":10, "type": "stepper"}`,
     type: "code"
   }, {
     type: "stepper",
-    start: 1,
+    value: 0,
     min: 0,
+    step: 1,
     max: 10,
     title: "步数器"
   },
@@ -51,8 +52,8 @@ var list = [{
     type: "code"
   }, {
     type: "rate",
-    value: 3.5,
-    count: 5,
+    value: 3,
+    count: 7,
   },
   {
     type: "interval",

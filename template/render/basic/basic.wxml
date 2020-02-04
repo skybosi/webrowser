@@ -1,0 +1,400 @@
+<import src="/template/render/item/item.wxml" />
+<import src="/template/render/form/form.wxml" />
+<import src="/template/render/chat/chat.wxml" />
+<import src="/template/render/button/button.wxml" />
+<import src="/template/render/tabbar/tabbar.wxml" />
+<import src="/template/render/interactive/interactive.wxml" />
+<wxs src="../render.wxs" module="render"></wxs>
+<wxs src="./basic.wxs" module="basic"></wxs>
+
+<!-- 文本 -->
+<template name="text">
+  <view bindtap='clickText' catchlongpress='longclickText' wx:if="{{text}}" data-path="{{path}}" data-type="{{name}}" class="{{basic.template(name)}}">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- 链接标签 -->
+<template name="a">
+  <view wx:if="{{text}}" class="margin-tb-sm">
+    <text selectable='true' bindtap='{{basic.clickA}}' catchlongpress='longclickA' class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
+  </view>
+</template>
+
+<!-- 标题 -->
+<template name="title">
+  <template is="text" data='{{ name:"title", text: text }}'></template>
+</template>
+
+<!-- h1标签 -->
+<template name="h1">
+  <template is="text" data='{{ name:"h1", text: text }}'></template>
+</template>
+
+<!-- h2标签 -->
+<template name="h2">
+  <template is="text" data='{{ name:"h2", text: text }}'></template>
+</template>
+
+<!-- h3标签 -->
+<template name="h3">
+  <template is="text" data='{{ name:"h3", text: text }}'></template>
+</template>
+
+<!-- h4标签 -->
+<template name="h4">
+  <template is="text" data='{{ name:"h4", text: text }}'></template>
+</template>
+
+<!-- h5标签 -->
+<template name="h5">
+  <template is="text" data='{{ name:"h5", text: text }}'></template>
+</template>
+
+<!-- h标签 默认是h4 -->
+<template name="h">
+  <template is="text" data='{{ name:"h", text: text }}'></template>
+</template>
+
+<!-- 文段 -->
+<template name="p">
+  <view bindtap='clickP' catchlongpress='longclickP' wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
+    <text selectable='true'>{{text}}</text>
+  </view>
+</template>
+
+<!-- 结语文段 -->
+<template name="pe">
+  <view bindtap='clickPe' catchlongpress='longclickPe' class="text-center padding-lr padding-sm">
+    <view wx:if="{{text}}" class="margin-tb-sm text-gray text-{{weight?weight:'normal'}}">
+      <text selectable='true'>{{text}}</text>
+    </view>
+  </view>
+</template>
+
+<!-- 代码框 -->
+<template name="code">
+  <view class="content padding-lr">
+    <view class="bg-black padding-sm radius" style="white-space: pre-wrap;">
+      <view class="flex">
+        <view class="flex-sub">{{render.Json(text)}}</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 列表 -->
+<template name="li">
+  <view bindtap='clickLi' catchlongpress='longclickLi' wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
+    <text selectable='true' class="cuIcon-title text-{{color?color:render.color()}} padding-right-xs"></text>{{text}}
+  </view>
+</template>
+
+<!-- 标签贴 -->
+<template name="label">
+  <view catchtap="clickItem" catchlongpress="longclickItem" class="cu-list menu" style="margin:0rpx" data-path="{{path}}">
+    <view class="cu-item {{path?'arrow':''}} padding-lr" style="margin:0">
+      <view class="content">
+        <text wx:if="{{icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
+        <text class="text-grey text-cut">{{text}}</text>
+      </view>
+      <view class="action">
+        <view class="cu-avatar-group">
+          <view class="cu-avatar round sm" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});">
+          </view>
+        </view>
+        <!-- <text class="text-grey text-sm">{{image.length}}</text> -->
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 下拉框 -->
+<template name="dropdown">
+  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickItem" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
+    <view class="dropdown-item-{{tindex}} cu-item arrow padding-lr" style="margin:0">
+      <view class="content">
+        <text wx:if="{{icon&&''!=icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
+        <text class="text-grey text-cut">{{text}}</text>
+      </view>
+    </view>
+    <view wx:if="{{list}}" class="radius dropdown-{{tindex}} padding-lr-xs padding-bottom-sm" style="display:none">
+      <view wx:for="{{list}}" wx:key="index" style="min-height:80rpx;">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list[' + index + ']' }}"></template>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 弹框 -->
+<template name="popup">
+  <!-- 普通弹框 -->
+  <view wx:if="{{!poptype}}" class="popup-{{tindex}} cu-modal show">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">{{title}}</view>
+        <view class="action" data-type="close" catchtap="{{basic.switchPopup}}">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">{{content}}</view>
+    </view>
+  </view>
+  <!-- 底部弹框 -->
+  <view wx:if="{{poptype=='bottom'}}" class="popup-{{tindex}} cu-modal bottom-modal show">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
+        <view class="action text-blue" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
+      </view>
+      <view class="padding-xl">{{content}}</view>
+    </view>
+  </view>
+  <!-- 侧边弹框 -->
+  <view wx:if="{{poptype=='sideL'||poptype=='sideR'}}" class="popup-{{tindex}} cu-modal drawer-modal {{poptype=='sideL'?'justify-start':poptype=='sideR' ? 'justify-end':'justify-start'}} show}}" data-type="close" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog basis-lg" data-type="close" catchtap="{{basic.switchPopup}}" style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
+      <view wx:for="{{list}}" wx:key="index" class="flex flex-direction align-start" style="display:block;width:100%">
+        <template is="{{item.type}}" data="{{...item, tindex: tindex, rroute:route + '.list[' + index + ']'}}"></template>
+      </view>
+    </view>
+  </view>
+  <!-- 单选弹框 -->
+  <view wx:if="{{poptype=='radio'}}" class="popup-{{tindex}} cu-modal show" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog" catchtap="{{basic.switchPopup}}">
+      <radio-group class="block">
+        <view class="cu-list menu text-left">
+          <view class="cu-item" wx:for="{{list}}" wx:key="index">
+            <label class="flex justify-between align-center flex-sub">
+              <view class="flex-sub">{{item.text}}</view>
+              <radio class="round"></radio>
+            </label>
+          </view>
+        </view>
+      </radio-group>
+    </view>
+  </view>
+  <!-- 多选弹框 -->
+  <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog" catchtap="{{basic.switchPopup}}">
+      <view class="cu-bar bg-white">
+        <view class="action text-blue" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
+        <view class="action text-green" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
+      </view>
+      <view class="grid col-3 padding-sm">
+        <view wx:for="{{checkbox}}" class="padding-xs" wx:key="index">
+          <button class="cu-btn orange lg block {{item.checked?'bg-orange':'line-orange'}}" bindtap="ChooseCheckbox" data-value="{{item.value}}"> {{item.name}}
+            <view class="cu-tag sm round {{item.checked?'bg-white text-orange':'bg-orange'}}" wx:if="{{item.hot}}">HOT</view>
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 对话弹框 -->
+  <view wx:if="{{poptype=='dialog'}}" class="popup-{{tindex}} cu-modal show">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">{{title}}</view>
+        <view class="action" catchtap="{{basic.switchPopup}}">
+          <text class="cuIcon-close text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">{{content}}</view>
+      <view class="flex justify-between cu-bar bg-white">
+        <view wx:if="{icon}" class="action margin-0 {{icon?'flex-sub':''}} text-green" data-type="icon" catchtap="{{basic.switchPopup}}">
+          <text class="cuIcon-{{icon}}"></text>{{iconText}}
+        </view>
+        <view class="action margin-0 flex-sub text-green solid-left" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}
+        </view>
+        <view class="action margin-0 flex-sub solid-left" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 图片弹框 -->
+  <view wx:if="{{poptype=='image'}}" class="popup-{{tindex}} cu-modal show">
+    <view class="cu-dialog">
+      <view class="bg-img" style="background-image: url('{{image}}');height:200px;" catchtap="clickPopImage" data-path="{{path}}">
+        <view class="cu-bar justify-end text-white">
+          <view class="action" data-type="close" catchtap="{{basic.switchPopup}}">
+            <text class="cuIcon-close "></text>
+          </view>
+        </view>
+      </view>
+      <view class="cu-bar bg-white">
+        <view class="action margin-0 flex-sub solid-left" data-type="ok" catchtap="{{basic.switchPopup}}">{{oktilte||'确定'}}</view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 图片 -->
+<template name="img">
+  <view catchtap="viewImage" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
+    <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
+      <view class="image" style="height:375rpx">
+        <image src="{{url}}" mode="widthFix"></image>
+        <view class="cu-tag bg-{{tagcolor?tagcolor:'blue'}}">{{tag}}</view>
+        <view class="cu-bar bg-shadeBottom">
+          <text class="text-cut">{{summary}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<!-- 视频 -->
+<template name="video">
+  <view class="bg-white flex justify-center align-center padding-tb-sm padding-lr">
+    <video style="width:100%" bindtap='clickVideo' catchlongpress='longclickVideo' src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
+  </view>
+</template>
+
+<!-- 间隔 -->
+<template name="interval">
+  <view class="bg-white margin-top{{size?'-'+size:''}}"></view>
+</template>
+
+<!-- 滚动消息框 -->
+<template name="noticebar">
+  <!-- <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" /> -->
+  <view class="noticebar-{{tindex}} flex align-center content padding-lr padding-sm text-{{color?color:''}}" style="background-color:#fffbe8;line-height:1;">
+    <view class="text-xl">
+      <text class="cuIcon-notification padding-right-xs"></text>
+    </view>
+    <view class="flex-sub text-cut">
+      <view class="wb-animation">{{text}}</view>
+    </view>
+    <view class="text-xl" wx:if="{{closeable}}">
+      <text catchtap="{{basic.closeNoticebar}}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
+    </view>
+  </view>
+</template>
+
+<!-- 步数累加器 -->
+<template name="stepper">
+  <view class="bg-white flex align-center padding-xs padding-left-sm">
+    <button class="cu-btn bg-gray" disabled="{{(value||0)<=(min||0)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'minus']}}" data-tindex="{{tindex}}" data-route="{{route}}" catchtap="stepper">
+      <view class="cuIcon-move"></view>
+    </button>
+    <input class="text-center" type="digit" value="{{value}}" data-event-opts="{{[value||0, min, max, step?step:1, 'input']}}" data-tindex="{{tindex}}" data-route="{{route}}" bindinput="stepper" style="padding-left:10rpx;width:auto;max-width:100rpx;"
+    />
+    <button class="cu-btn bg-gray" disabled="{{(value||0)>=(max||10)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'plus']}}" data-tindex="{{tindex}}" data-route="{{route}}" catchtap="stepper">
+      <view class="cuIcon-add"></view>
+    </button>
+  </view>
+</template>
+
+<!-- 星评 -->
+<template name="rate">
+  <view class="padding-xs padding-lr">
+    <block wx:for="{{count}}" wx:for-item="star" wx:for-index="rating" wx:key="rating">
+      <view style="display:inline;font-size:56rpx" data-index="{{rating}}" catchtap="clickRate">
+        <text class="{{[rating<value?'cuIcon-favorfill text-orange':'cuIcon-favor text-gray']}}"></text>
+      </view>
+    </block>
+  </view>
+</template>
+
+<!-- 标签 -->
+<template name="tag">
+  <view class="padding-sm flex flex-wrap">
+    <block wx:for="{{tags}}" wx:key="index">
+      <view class="tag-{{tindex}}  padding-xs {{item.closeable?'cu-capsule':''}} {{item.shape||'radius'}}">
+        <view class="cu-tag bg-{{item.color||'black'}} {{item.shape||'radius'}} {{item.size||''}}">
+          {{item.tag}}
+        </view>
+        <view wx:if="{{item.closeable}}" class="cu-tag line-{{item.color||'black'}} {{item.size||''}}">
+          <text catchtap="{{basic.closeTag}}" data-id="{{tindex}}" class="cuIcon-close"></text>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+
+<!-- 进度条 -->
+<template name="progress">
+  <view class="padding bg-white">
+    <view class="cu-progress {{active?'striped active':''}} {{shape?shape:''}} {{size?size:''}}">
+      <view class="bg-{{color?color:'red'}} solid shadow-blur" style="width:{{value}}%;">{{value}}%</view>
+    </view>
+  </view>
+</template>
+
+<!-- 小提示 -->
+<template name="tip">
+  <view class="tooltip" style="position: relative;display: inline-block;border-bottom: 1px dotted black;">鼠标移动到这
+    <view class="tooltiptext" style="visibility: hidden;width: 120px;background-color: black;color: #fff;text-align: center;border-radius: 6px;padding: 5px 0;position: absolute;z-index: 1;">提示文本</view>
+  </view>
+</template>
+
+<!-- 加载进度 -->
+<template name="loading">
+  <view wx:if="{{loadtype=='modal'}}" class='cu-load load-modal'>
+    <view class='gray-text'>加载中...</view>
+  </view>
+  <view wx:elif="{{loadtype=='progress'}}" class='load-progress {{loadProgress!=0?"show":"hide"}}' style="top:{{CustomBar}}px;">
+    <view class='load-progress-bar bg-green' style="transform: translate3d(-{{100-loadProgress}}%, 0px, 0px);height:8rpx"></view>
+    <view class='load-progress-spinner text-green'></view>
+  </view>
+  <view wx:else class="cu-load {{isLoad==0?'loading':isLoad==1?'over':'bg-red erro'}} bg-{{color||isLoad==2?color:'blue'}}"></view>
+</template>
+
+<!--{
+  date: '昨天',
+  record: [
+    level: normal, notice, warn, error
+    log: [
+      {
+        time: 时间点
+        content: 内容
+      }
+    ]
+  ],
+}-->
+<template name='timeline'>
+  <view class="cu-timeline">
+    <view class="cu-time">{{date}}</view>
+    <block wx:for="{{record}}" wx:key="index">
+      <view wx:if="{{item.level=='notice'}}" class="cu-item cur cuIcon-noticefill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-green shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag line-yellow">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='error'}}" class="cu-item text-red cuIcon-attentionforbidfill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-red shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag line-black">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='normal'}}" class="cu-item text-grey cuIcon-evaluate_fill">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content bg-grey shadow-blur">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-yellow">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='warn'}}" class="cu-item text-blue">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="bg-blue content">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-red">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+      <view wx:if="{{item.level=='none'}}" class="cu-item">
+        <view wx:for="{{item.log}}" wx:key="index" wx:for-item="log" class="content">
+          <view wx:if="{{log.time}}" class="cu-capsule radius">
+            <view class="cu-tag bg-gray">{{log.time}}</view>
+          </view>
+          {{log.content}}
+        </view>
+      </view>
+    </block>
+  </view>
+</template>

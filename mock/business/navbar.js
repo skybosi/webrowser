@@ -9,18 +9,18 @@ var list = [{
     {
       name: "卡片",
       inner: {
-        goto: "/card",
+        goto: "/business/card",
       }
     }, {
       name: "地图",
       inner: {
-        goto: "/location",
+        goto: "/business/location",
       }
     },
     {
       name: "视频",
       inner: {
-        goto: "/video",
+        goto: "/basic/video",
       }
     },
     {
@@ -67,7 +67,7 @@ module.exports = {
   nav: {
     title: '水平导航',
     icon1: 'back',
-    text1: '返回',    // icon2: 'roundadd',
+    text1: '返回', // icon2: 'roundadd',
   },
   enablePullDownRefresh: false,
   enablePullUpRefresh: false,

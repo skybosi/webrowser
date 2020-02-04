@@ -43,14 +43,6 @@
   <view class="bg-img" style="background-image:url({{image[0]}});" data-id='{{id}}' bindtap="itemClick"></view>
 </template>
 
-<template name="grid">
-  <view class="cu-list grid solid-bottom col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}}" style="margin:0">
-    <view class="cu-item" wx:for="{{list}}" wx:key="index" hover-class="hover">
-      <template is="{{item.type}}" data="{{...item}}"></template>
-    </view>
-  </view>
-</template>
-
 <!-- 轮播图 -->
 <template name="swiper">
   <swiper catchtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper {{list.length>1?'square-dot':''}} {{!nopadding?'padding-lr':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true"
@@ -72,7 +64,7 @@
     interval="3000" duration="500" bindchange="{{render.cardSwiper}}" indicator-color="#8799a3" indicator-active-color="#0081ff">
     <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
       <view class="swiper-item" data-index="index">
-        <image src="{{item.url}}" mode="aspectFill" wx:if="{{!item.type||item.type=='image'}}"></image>
+        <image src="{{item.url}}" mode="widthFix" wx:if="{{!item.type||item.type=='image'}}"></image>
         <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>
       </view>
     </swiper-item>
@@ -100,7 +92,7 @@
   comment_count: 评论数
 } -->
 <template name="ad">
-  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" data-path="{{path}}" class="cu-card case no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" data-path="{{path}}" class="cu-card case no-card">
     <view class="cu-item shadow">
       <block wx:if="{{!swiper_type||swiper_type=='screen'}}">
         <template is="swiper" data='{{ list:image, nopadding: 1 }}'></template>
@@ -138,7 +130,7 @@
   comment_count: 评论数
 } -->
 <template name="dynamic">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-card dynamic no-card solid-bottom" hover-class="hover">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-card dynamic no-card" hover-class="hover">
     <view class="cu-item">
       <view class="cu-list menu-avatar">
         <view class="cu-item">
@@ -195,7 +187,7 @@
   comment_count: 评论数
 } -->
 <template name="article">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
     <view class="cu-item shadow" hover-class="hover">
       <view class="title">
         <view class="flex justify-start align-center">
@@ -237,7 +229,7 @@
   comment_count: 评论数
 } -->
 <template name="comment">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-list menu-avatar comment solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-list menu-avatar comment">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
@@ -297,7 +289,7 @@
   time: 发布时间
 } -->
 <template name="notice">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card solid-bottom">
+  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
     <view class="cu-item shadow">
       <view class="flex justify-start align-center padding padding-bottom-sm">
         <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
@@ -331,7 +323,7 @@
 } -->
 <template name="message">
   <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-list menu-avatar margin-top-0">
-    <view class="cu-item solid-bottom" hover-class="hover">
+    <view class="cu-item" hover-class="active">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-black">{{name[0]}}</view>
       <view class="content">

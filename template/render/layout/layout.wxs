@@ -1,0 +1,5 @@
+var fixedSize = function (size) {
+  return false
+}
+
+module.exports.fixedSize = fixedSize;

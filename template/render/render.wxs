@@ -143,7 +143,7 @@ var switchSearchBar = function(event, ins) {
   } else {
     ins.selectComponent('.search-bar-filter').removeClass('show')
   }
-  return this
+  return false
 }
 
 /**

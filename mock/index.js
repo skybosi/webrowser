@@ -1,8 +1,12 @@
 var list = [{
-    type: "search-bar",
-    autoplay: 1,
-    placeholder: ["webrowser", "weapp browser", "小程序"],
-    path: "/search"
+    type: "head",
+    // icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
+    title: '登录',
+    // tag: 'v0.0.4',
+    tagcolor: 'red',
+    subtitle: '欢迎光临',
+    bgColor: 'blue',
+    // bgImage: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10002.jpg"
   },
   {
     type: "label",
@@ -11,99 +15,174 @@ var list = [{
     path: "/content"
   },
   {
-    type: "label",
-    text: "常用模板",
+    type: "interval",
+  },
+  {
+    type: "dropdown",
+    text: "布局",
     icon: "explorefill",
-    image: [
-      "https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg",
-      "https://ossweb-img.qq.com/images/lol/web201310/skin/big10002.jpg",
-      "https://ossweb-img.qq.com/images/lol/web201310/skin/big10004.jpg",
-      "https://ossweb-img.qq.com/images/lol/web201310/skin/big10003.jpg",
-    ]
-  }, {
-    type: "grid",
-    gridCol: 4,
     list: [{
         icon: 'text',
         badge: 10,
-        name: '文本',
-        type: 'grid-icon',
-        path: '/text'
+        text: 'flex布局',
+        type: 'label',
+        path: '/layout/flex'
       }, {
         icon: 'square',
         badge: 1,
-        name: '按钮',
-        type: 'grid-icon',
-        path: '/button'
+        text: '网格布局',
+        type: 'label',
+        path: '/layout/grid'
       },
       {
         icon: 'picfill',
         badge: 3,
-        name: '图片',
-        type: 'grid-icon',
-        path: '/image'
+        text: '比例布局',
+        type: 'label',
+        path: '/layout/sub'
+      },
+    ]
+  },
+  {
+    type: "interval",
+    size: 'sm'
+  },
+  {
+    type: "dropdown",
+    icon: "infofill",
+    text: "基础组件",
+    list: [{
+        icon: 'text',
+        badge: 10,
+        text: '文本',
+        type: 'label',
+        path: '/basic/text'
       }, {
-        icon: 'videofill',
-        badge: 1,
-        name: '视频',
-        type: 'grid-icon',
-        path: '/video'
+        icon: 'icon',
+        badge: 10,
+        text: '图标',
+        type: 'label',
+        path: '/basic/icon'
       },
       {
+        icon: 'square',
+        badge: 1,
+        text: '按钮',
+        type: 'label',
+        path: '/basic/button'
+      },
+      {
+        icon: 'picfill',
+        badge: 3,
+        text: '图片',
+        type: 'label',
+        path: '/basic/image'
+      },
+      {
+        icon: 'videofill',
+        badge: 1,
+        text: '视频',
+        type: 'label',
+        path: '/basic/video'
+      },
+      {
+        icon: 'pulldown',
+        badge: 3,
+        text: '下拉框',
+        type: 'label',
+        path: '/basic/dropdown'
+      },
+      {
+        icon: 'pullup',
+        badge: 3,
+        text: '弹框',
+        type: 'label',
+        path: '/basic/popup'
+      },
+      {
+        icon: 'loading',
+        badge: 3,
+        text: '进度条',
+        type: 'label',
+        path: '/basic/progress'
+      },
+      {
+        icon: 'loading2',
+        badge: 3,
+        text: '加载',
+        type: 'label',
+        path: '/basic/loading'
+      },
+    ]
+  },
+  {
+    type: "interval",
+    size: 'sm'
+  },
+  {
+    type: "dropdown",
+    icon: "infofill",
+    text: "表单组件",
+    list: [{
+      icon: 'text',
+      badge: 10,
+      text: '表单',
+      type: 'label',
+      path: '/form/form'
+    }, {
+      icon: 'text',
+      badge: 10,
+      text: '搜索框',
+      type: 'label',
+      path: '/form/search'
+    }, {
+      icon: 'text',
+      badge: 10,
+      text: '工具',
+      type: 'label',
+      path: '/form/tools'
+    }]
+  },
+  {
+    type: "interval",
+    size: 'sm'
+  },
+  {
+    type: "dropdown",
+    icon: "infofill",
+    text: "业务组件",
+    list: [{
         icon: 'card',
-        badge: 6,
-        name: '卡片',
-        type: 'grid-icon',
-        path: '/card'
+        badge: 10,
+        text: '卡片',
+        type: 'label',
+        path: '/business/card'
       },
       {
         icon: 'locationfill',
-        badge: 0,
-        name: '地图定位',
-        type: 'grid-icon',
-        path: '/location'
-      }, {
-        icon: 'form',
-        badge: 3,
-        name: '表单',
-        type: 'grid-icon',
-        path: '/form'
-      }, {
-        icon: 'settingsfill',
-        badge: 6,
-        name: '工具',
-        type: 'grid-icon',
-        path: '/tools'
-      },
-      {
-        icon: 'icon',
-        badge: 1,
-        name: '图标',
-        type: 'grid-icon',
-        path: '/icon'
+        badge: 10,
+        text: '地图定位',
+        type: 'label',
+        path: '/business/location'
       },
       {
         icon: 'messagefill',
-        badge: 0,
-        name: '聊天',
-        type: 'grid-icon',
-        path: '/chat'
-      },
-      {
-        icon: 'safe',
-        badge: 0,
-        name: '授权',
-        type: 'grid-icon',
-        path: '/auth'
+        badge: 10,
+        text: '聊天',
+        type: 'label',
+        path: '/business/chat'
       },
       {
         icon: 'list',
-        badge: 0,
-        name: '导航',
-        type: 'grid-icon',
-        path: '/nav'
-      }
+        badge: 10,
+        text: '导航',
+        type: 'label',
+        path: '/business/nav'
+      },
     ]
+  },
+  {
+    type: "interval",
   },
   {
     type: "label",
@@ -118,6 +197,7 @@ module.exports = {
   nav: {
     title: '首页',
     icon1: 'homefill',
+    hideNavigation: true
   }
   // icon2: 'roundadd',
   // enablePullDownRefresh: true,

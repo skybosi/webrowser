@@ -14,8 +14,8 @@ page {
 }
 
 .active {
-  border-radius: 6rpx;
-  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 6rpx !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 .hover {

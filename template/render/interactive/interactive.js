@@ -114,9 +114,10 @@ export default ({
    * map-location
    */
   regionchange(e) {
+    // mark 不支持input等原生组件兼容
     e.mark = {
       tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex,
-      zindex: e.currentTarget.dataset.zindex || e.target.dataset.zindex
+      route: e.currentTarget.dataset.route || e.target.dataset.route
     }
     // 地图发生变化的时候，获取中间点，也就是cover-image指定的位置
     if (e.type == 'end' && (e.causedBy == 'scale' || e.causedBy == 'drag')) {

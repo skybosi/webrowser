@@ -2,7 +2,7 @@
 <import src="/template/render/form/form.wxml" />
 <import src="/template/render/chat/chat.wxml" />
 <import src="/template/render/button/button.wxml" />
-<import src="/template/render/shower/shower.wxml" />
+<import src="/template/render/basic/basic.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 
 <wxs src="./page.wxs" module="page"></wxs>
@@ -15,8 +15,8 @@
     change:prop="{{page.propObserver}}"
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
-    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:zindex="{{zindex}}">
-      <template is="{{item.type}}" data="{{...item, tindex: index, zindex: (zindex ||index), CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:route="{{route}}.list[{{index}}]">
+      <template is="{{item.type}}" data="{{...item, tindex: index, route: route + '.list[' + index + ']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
 </template>

@@ -2,7 +2,7 @@
 <wxs src="../../template/page/page.wxs" module="page"></wxs>
 <include src="/template/render/render.wxml" />
 <view class="container">
-  <block wx:if="{{hideNavigation?false:true}}">
+  <block wx:if="{{!hideNavigation}}">
     <custom bgColor="bg-gradual-blue" isHome="{{path=='/index'?true:false}}" isBack="{{path!='/index'?true:false}}">
       <view slot="backText">{{backText||'返回'}}</view>
       <view slot="content">{{nav.title}}</view>
@@ -18,10 +18,9 @@
     change:prop="{{page.propObserver}}"
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
-    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:zindex="{{index}}">
-      <template is="{{item.type}}" data="{{...item, tindex: index, zindex:index, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:route="list[{{index}}]">
+      <template is="{{item.type}}" data="{{...item, tindex: index, route:'list['+index+']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
-  <view class="cu-tabbar-height"></view>
   <view class="cu-load pull-up text-gray {{enablePullUpRefresh?'enablePullUpRefresh':''}}"></view>
 </view>

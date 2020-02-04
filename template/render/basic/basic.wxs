@@ -65,7 +65,45 @@ var closeTag = function(event, ins) {
   return false
 }
 
+var dropdown = function(event, ins) {
+  var st = event.instance.getState()
+  var clicked = st.clicked || 0
+  console.log('dropdown', JSON.stringify(event), JSON.stringify(ins))
+  var id = event.currentTarget.dataset.id || event.target.dataset.id
+  var tidx = event.mark.tindex
+  if (!clicked) {
+    ins.selectComponent('.dropdown-item-' + tidx).removeClass("arrow").addClass("arrowdown")
+    ins.selectComponent('.dropdown-' + tidx).setStyle({
+      display: 'block'
+    })
+    st.clicked = clicked + 1
+  } else {
+    ins.selectComponent('.dropdown-item-' + tidx).removeClass("arrowdown").addClass("arrow")
+    ins.selectComponent('.dropdown-' + tidx).setStyle({
+      display: 'none'
+    })
+    st.clicked = clicked - 1
+  }
+  event.id = id
+  // 调用预先定义的js 逻辑层的方法
+  ins.callMethod("dropDown", event)
+  return false
+}
+
+var switchPopup = function(event, ins) {
+  console.log('switchModal', JSON.stringify(event), JSON.stringify(ins))
+  var id = event.currentTarget.dataset.id || event.target.dataset.id
+  var tidx = event.mark.tindex
+  ins.selectComponent('.popup-' + tidx).removeClass("show")
+  event.id = id
+  // 调用预先定义的js 逻辑层的方法
+  ins.callMethod("clickPopup", event)
+  return false
+}
+
 module.exports.clickA = clickA;
 module.exports.closeTag = closeTag;
+module.exports.dropdown = dropdown;
 module.exports.template = template;
+module.exports.switchPopup = switchPopup;
 module.exports.closeNoticebar = closeNoticebar;

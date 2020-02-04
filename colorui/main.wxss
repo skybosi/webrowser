@@ -1393,6 +1393,27 @@ button.icon.lg {
 	line-height: 30rpx
 }
 
+.cu-list.menu>.cu-item.arrowdown {
+	padding-right: 90rpx
+}
+
+.cu-list.menu>.cu-item.arrowdown:before {
+	position: absolute;
+	top: 0;
+	right: 30rpx;
+	bottom: 0;
+	display: block;
+	margin: auto;
+	width: 30rpx;
+	height: 30rpx;
+	color: var(--grey);
+	content: "\e661";
+	text-align: center;
+	font-size: 34rpx;
+	font-family: "cuIcon";
+	line-height: 30rpx
+}
+
 .cu-list.menu>.cu-item button.content {
 	padding: 0;
 	background-color: transparent;
@@ -2620,7 +2641,9 @@ swiper.round-dot .wx-swiper-dot.wx-swiper-dot-active {
 }
 
 .card-swiper {
-	height: 420rpx !important;
+	max-height: 420rpx !important;
+  height: 420rpx !important;
+  min-height: 375rpx !important;
 }
 
 .card-swiper swiper-item {
