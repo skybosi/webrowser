@@ -90,6 +90,9 @@ module.exports = {
   nav: {
     title: '首页',
     icon1: 'homefill',
+    type: "search-bar",
+    placeholder: ["webrowser", "weapp browser", "小程序"],
+    path: "/search"
   }
   // icon2: 'roundadd',
   // enablePullDownRefresh: true,

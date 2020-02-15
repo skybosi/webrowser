@@ -2,11 +2,12 @@
 <import src="/template/render/form/form.wxml" />
 <import src="/template/render/chat/chat.wxml" />
 <import src="/template/render/basic/basic.wxml" />
+<import src="/template/render/layout/layout.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 
 <wxs src="./page.wxs" module="page"></wxs>
 <template name="page">
-  <view class='page-top'
+  <view class='page-top padding-bottom'
     bindtouchstart="{{page.touchStart}}"
     bindtouchmove="{{page.touchMove}}"
     bindtouchend="{{page.touchEnd}}"
@@ -15,29 +16,39 @@
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
     <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:route="{{route}}.list[{{index}}]">
-      <template is="{{item.type}}" data="{{...item, tindex: index, route: route + '.list[' + index + ']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+      <template is="{{item.type||'page'}}" data="{{...item, tindex: index, route: route + '.list[' + index + ']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
 </template>
 
 <template name="cu-custom">
-  <view class="cu-custom" style="height:{{CustomBar}}px">
-    <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-white'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" bindtap="toTop">
-      <view class="action border-Custom" style="width:{{Custom.width}}px;height:{{Custom.height}}px;margin-left:calc(750rpx - {{Custom.right}}px);background-color:#fff;{{icon2&&icon1?'border: 1rpx solid rgba(0, 0, 0, 0.1)':''}}">
-        <view class="action" style="{{icon2?'':'margin-left:0'}}">
-          <view class="text-xxl {{icon2?'padding-lr-sm':''}}">
-            <text class="cuIcon-{{icon1}}" bindtap="tapIcon1"></text>
+  <block wx:if="{{!hideNavigation}}">
+    <view class="cu-custom" style="height:{{CustomBar}}px">
+      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" bindtap="toTop">
+        <view class="{{(icon1 && icon2)?'flex border-custom':''}}" style="height:{{Custom.height}}px">
+          <view wx:if="{{icon1}}" class="action" bindtap="tapIcon1" data-env="{{_env}}" style="margin-right:0">
+            <view>
+              <text class="cuIcon-{{icon1}}"></text>
+            </view>
+            <view class="padding-left-xs">{{(icon1 && icon2)?'':text1}}</view>
           </view>
-          <view wx:if="{{text1 && !icon2}}" class="padding-left-xs">{{text1}}</view>
-        </view>
-        <view class="action" bindtap="tapIcon1">
-          <view class="text-xxl {{icon1?'padding-lr-sm':''}}">
-            <text class="cuIcon-{{icon2}}" bindtap="tapIcon2"></text>
+          <view wx:if="{{icon2}}" class="action" bindtap="tapIcon2" data-env="{{_env}}" style="margin-left:30rpx">
+            <view>
+              <text class="cuIcon-{{icon2}}"></text>
+            </view>
+            <view class="padding-left-xs">{{(icon1 && icon2)?'':text2}}</view>
           </view>
-          <view wx:if="{{text2 && !icon1}}" class="padding-left-xs">{{text2}}</view>
         </view>
+        <block wx:if="{{type}}">
+          <view class="search-form round" bindtap="toSearch">
+            <view class="cuIcon-search"></view>
+            <input type="text" placeholder="{{placeholder}}" disabled/>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="content" style="top:{{StatusBar}}px">{{title}}</view>
+        </block>
       </view>
-      <view class="content" style="top:{{StatusBar}}px">{{title}}</view>
     </view>
-  </view>
+  </block>
 </template>

@@ -48,7 +48,7 @@ var list = [{
     type: "interval",
   },
   {
-    text: `{ "title": "xxx", "value": 4.5, "count": 5, "type": "rate" }`,
+    text: `{ "title": "xxx", "value": 4.5, "count": 5, "type": "rate", "size": "xs/sm/df/lg/xl/xxl/sl/xsl" }`,
     type: "code"
   }, {
     type: "rate",
@@ -59,12 +59,14 @@ var list = [{
     type: "rate",
     value: 3,
     count: 7,
+    size: "xs",
     icon: 'like'
   },
   {
     type: "rate",
     value: 3,
-    count: 7,
+    count: 5,
+    size: 'xsl',
     icon: 'selection'
   },
   {

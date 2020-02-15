@@ -31,7 +31,7 @@
 </template>
 
 <template name="grid-icon">
-  <view class="cuIcon-{{icon}} text-{{(!path||!color)?render.color():color}}" data-path='{{path}}' catchtap="clickItem" catchlongpress="longclickItem">
+  <view class="cuIcon-{{icon}} text-{{(!path||!color)?render.color():color}}" data-path='{{path}}' catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem">
     <view class="cu-tag badge" wx:if="{{badge&&badge!=0}}">
       <block wx:if="{{badge!=1}}">{{badge>99?"99+":badge}}</block>
     </view>
@@ -45,7 +45,7 @@
 
 <!-- 轮播图 -->
 <template name="swiper">
-  <swiper catchtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="screen-swiper {{list.length>1?'square-dot':''}} {{!nopadding?'padding-lr':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true"
+  <swiper catchtap="clickSwiper" data-env="{{_env}}" catchlongpress="longclickSwiper" wx:if="{{list}}" class="screen-swiper {{list.length>1?'square-dot':''}} {{!nopadding?'padding-lr':''}}" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true"
     autoplay="true" interval="3000" duration="500">
     <swiper-item wx:for="{{list}}" wx:key="key">
       <view class="image">
@@ -60,7 +60,7 @@
 </template>
 
 <template name="card-swiper">
-  <swiper catchtap='clickSwiper' catchlongpress='longclickSwiper' wx:if="{{list}}" class="card-swiper {{list.length>1?'square-dot':''}} margin-tb-sm" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true" autoplay="true"
+  <swiper catchtap="clickSwiper" data-env="{{_env}}" catchlongpress="longclickSwiper" wx:if="{{list}}" class="card-swiper {{list.length>1?'square-dot':''}} margin-tb-sm" vertical="{{vertical?true:false}}" indicator-dots="{{list.length>1?'true':false}}" circular="true" autoplay="true"
     interval="3000" duration="500" bindchange="{{render.cardSwiper}}" indicator-color="#8799a3" indicator-active-color="#0081ff">
     <swiper-item id="card-swiper" wx:for="{{list}}" wx:key="key" class="{{index==0?'cur':''}} show-swiper-{{index}}">
       <view class="swiper-item" data-index="index">
@@ -92,7 +92,7 @@
   comment_count: 评论数
 } -->
 <template name="ad">
-  <view catchtap="clickItem" catchlongpress="longclickItem" data-id="{{id}}" data-path="{{path}}" class="cu-card case no-card">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" data-id="{{id}}" data-path="{{path}}" class="cu-card case no-card">
     <view class="cu-item shadow">
       <block wx:if="{{!swiper_type||swiper_type=='screen'}}">
         <template is="swiper" data='{{ list:image, nopadding: 1 }}'></template>
@@ -130,7 +130,7 @@
   comment_count: 评论数
 } -->
 <template name="dynamic">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-card dynamic no-card" hover-class="hover">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-card dynamic no-card" hover-class="hover">
     <view class="cu-item">
       <view class="cu-list menu-avatar">
         <view class="cu-item">
@@ -153,7 +153,7 @@
               <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});"></view>
             </view> -->
         <view class="grid flex-sub padding-lr col-3 grid-square">
-          <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+          <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
         </view>
       </view>
       <view class="text-gray text-sm text-right padding">
@@ -187,7 +187,7 @@
   comment_count: 评论数
 } -->
 <template name="article">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
     <view class="cu-item shadow" hover-class="hover">
       <view class="title">
         <view class="flex justify-start align-center">
@@ -197,7 +197,7 @@
         </view>
       </view>
       <view class="content">
-        <image wx:if="{{image[0]}}" src="{{image[0]}}" mode="aspectFill" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{image[0]}}"></image>
+        <image wx:if="{{image[0]}}" src="{{image[0]}}" mode="aspectFill" catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-url="{{image[0]}}"></image>
         <view class="desc">
           <view class="text-content padding-left-xs text-justify" style="height:auto;max-height:4.8em">{{summary}}</view>
           <view>
@@ -229,7 +229,7 @@
   comment_count: 评论数
 } -->
 <template name="comment">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-list menu-avatar comment">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-list menu-avatar comment">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
@@ -247,7 +247,7 @@
               <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});"></view>
             </view> -->
             <view class="grid flex-sub col-3 grid-square">
-              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
             </view>
           </view>
           <view wx:if="{{comment}}" class="bg-gray padding-xs radius text-sm">
@@ -260,7 +260,7 @@
                 <view class="flex-sub">: {{item.content}}</view>
               </view>
             </block>
-            <view wx:if="{{comment.total}}" catchtap="getMoreComment" catchlongpress="copyMoreComment" class="text-blue text-bold padding-tb-sm">
+            <view wx:if="{{comment.total}}" catchtap="getMoreComment" data-env="{{_env}}" catchlongpress="copyMoreComment" class="text-blue text-bold padding-tb-sm">
               {{comment.total}}条回复
               <text class="cuIcon-right"></text>
             </view>
@@ -289,7 +289,7 @@
   time: 发布时间
 } -->
 <template name="notice">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="{{render.longclickItem}}" data-id="{{id}}"  data-path="{{path}}" class="cu-card article no-card">
     <view class="cu-item shadow">
       <view class="flex justify-start align-center padding padding-bottom-sm">
         <view wx:if="{{tag}}" class="cu-tag radius line-orange sm margin-right-xs">{{tag}}</view>
@@ -322,7 +322,7 @@
   status: 消息接收状态
 } -->
 <template name="message">
-  <view catchtap="clickItem" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-list menu-avatar margin-top-0">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="{{render.longclickItem}}" data-id="{{id}}" data-path="{{path}}" class="cu-list menu-avatar margin-top-0">
     <view class="cu-item" hover-class="active">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:else class="cu-avatar round lg bg-black">{{name[0]}}</view>
