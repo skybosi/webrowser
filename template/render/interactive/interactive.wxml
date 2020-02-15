@@ -7,7 +7,7 @@
 <!-- <wxs src="../../page/page.wxs" module="page"></wxs> -->
 
 <template name="user">
-  <view data-uid="{{id||uid}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" catchtap="getUserInfo">
+  <view data-uid="{{id||uid}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" data-env="{{_env}}" catchtap="getUserInfo">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:elif="{{name}}" class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
@@ -35,7 +35,7 @@
     </view>
     <view class="flex">
       <view class="flex-sub padding-sm text-center">关注</view>
-      <view class="flex-sub padding-sm text-center" data-uid="{{uid}}" data-openid="{{openID}}" catchtap="contactUser">联系</view>
+      <view class="flex-sub padding-sm text-center" data-uid="{{uid}}" data-openid="{{openID}}" data-env="{{_env}}" catchtap="contactUser">联系</view>
     </view>
   </view>
   <view class="padding-bottom-sm"></view>
@@ -68,7 +68,7 @@
         </view>
       </block>
       <block wx:else>
-        <view class='avatar margin-left' data-path="{{path}}" bindtap="navigateTo">
+        <view class='avatar margin-left' data-path="{{path}}" data-env="{{_env}}" bindtap="navigateTo">
           <image class="cu-avatar xl round" src="{{userInfo.avatarUrl}}"></image>
         </view>
         <view class='flex flex-direction justify-center margin-left'>
@@ -107,14 +107,14 @@
         </swiper-item>
       </swiper>
     </view>
-    <view class="action" bindtap="{{render.switchSearchBar}}" data-target="show">
+    <view class="action" data-env="{{_env}}" bindtap="{{render.switchSearchBar}}" data-target="show">
       <text>筛选</text>
       <text class="cuIcon-triangledownfill"></text>
     </view>
   </view>
   <view class="cu-bar bg-gray"></view>
   <view class="action">
-    <view class="cu-modal drawer-modal justify-top search-bar-filter" bindtap="{{render.switchSearchBar}}" data-target="">
+    <view class="cu-modal drawer-modal justify-top search-bar-filter" bindtap="{{render.switchSearchBar}}" data-env="{{_env}}" data-target="">
       <view class="cu-dialog padding" catchtap style="position: absolute;height:60%;width:100%;top:{{Top}}px">
         <slot id="filter" name="content"></slot>
       </view>
@@ -156,15 +156,15 @@
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
         <view class="content">{{title}}</view>
-        <view class="action" data-chose="ignore" bindtap="{{render.authDisplay}}">
+        <view class="action" data-chose="ignore" data-env="{{_env}}" bindtap="{{render.authDisplay}}">
           <text class="cuIcon-roundclosefill text-red"></text>
         </view>
       </view>
       <view class="padding-xl">{{content}}</view>
       <view class="cu-bar bg-white justify-around">
         <view class="action">
-          <button class="cu-btn line-blue text-green margin-right" data-chose="cancel" bindtap="{{render.authDisplay}}">取消</button>
-          <button class="cu-btn bg-green margin-left" bindtap="{{render.authDisplay}}" data-chose="ok" open-type="getUserInfo" bindgetuserinfo="getRegister">确定</button>
+          <button class="cu-btn line-blue text-green margin-right" data-chose="cancel" data-env="{{_env}}" bindtap="{{render.authDisplay}}">取消</button>
+          <button class="cu-btn bg-green margin-left" data-env="{{_env}}" bindtap="{{render.authDisplay}}" data-chose="ok" open-type="getUserInfo" bindgetuserinfo="getRegister">确定</button>
         </view>
       </view>
     </view>
@@ -172,10 +172,10 @@
 </template>
 
 <template name="tree">
-  <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{CustomBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" catchtap="{{interactive.tabWidth}}" />
+  <view class="tab-tool cuIcon-roundright text-gray" style="width:64rpx;height:64rpx;position:fixed;top:{{CustomBar+11}}px;left:12rpx;z-index:1025;font-size:2.5em;opacity:0.5" data-env="{{_env}}" catchtap="{{interactive.tabWidth}}" />
   <view class="flex">
     <scroll-view class="tree-tab nav padding-tb" scroll-y scroll-with-animation="true" scroll-top="{{VerticalNavTop}}" style="width:0rpx;height:{{ScreenHeight}}px;-webkit-overflow-scrolling:touch">
-      <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-id="{{index}}">
+      <view class="cu-item {{index==(TabCur||0)?'text-green cur':''}} text-cut" style="display:flex;justify-content:center;align-items:center" wx:for="{{list}}" wx:key="index" catchtap='tabSelect' data-env="{{_env}}" data-id="{{index}}">
         <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>

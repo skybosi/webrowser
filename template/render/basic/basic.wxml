@@ -16,7 +16,7 @@
 <!-- 链接标签 -->
 <template name="a">
   <view wx:if="{{text}}" class="margin-tb-sm">
-    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickA" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
+    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickA" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
   </view>
 </template>
 
@@ -110,7 +110,7 @@
 
 <!-- 下拉框 -->
 <template name="dropdown">
-  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickDropdown" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
+  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickDropdown" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
     <view class="dropdown-item-{{tindex}} cu-item arrow padding-lr" style="margin:0">
       <view class="content">
         <text wx:if="{{icon&&''!=icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -132,7 +132,7 @@
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
         <view class="content">{{title}}</view>
-        <view class="action" data-type="close" catchtap="{{basic.switchPopup}}">
+        <view class="action" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
           <text class="cuIcon-close text-red"></text>
         </view>
       </view>
@@ -143,23 +143,23 @@
   <view wx:if="{{poptype=='bottom'}}" class="popup-{{tindex}} cu-modal bottom-modal show">
     <view class="cu-dialog">
       <view class="cu-bar bg-white">
-        <view class="action text-green" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
-        <view class="action text-blue" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
+        <view class="action text-green" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
+        <view class="action text-blue" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
       </view>
       <view class="padding-xl">{{content}}</view>
     </view>
   </view>
   <!-- 侧边弹框 -->
-  <view wx:if="{{poptype=='sideL'||poptype=='sideR'}}" class="popup-{{tindex}} cu-modal drawer-modal {{poptype=='sideL'?'justify-start':poptype=='sideR' ? 'justify-end':'justify-start'}} show}}" data-type="close" catchtap="{{basic.switchPopup}}">
-    <view class="cu-dialog basis-lg" data-type="close" catchtap="{{basic.switchPopup}}" style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
+  <view wx:if="{{poptype=='sideL'||poptype=='sideR'}}" class="popup-{{tindex}} cu-modal drawer-modal {{poptype=='sideL'?'justify-start':poptype=='sideR' ? 'justify-end':'justify-start'}} show}}" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog basis-lg" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}" style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
       <view wx:for="{{list}}" wx:key="index" class="flex flex-direction align-start" style="display:block;width:100%">
         <template is="{{item.type}}" data="{{...item, tindex: tindex, rroute:route + '.list[' + index + ']'}}"></template>
       </view>
     </view>
   </view>
   <!-- 单选弹框 -->
-  <view wx:if="{{poptype=='radio'}}" class="popup-{{tindex}} cu-modal show" catchtap="{{basic.switchPopup}}">
-    <view class="cu-dialog" catchtap="{{basic.switchPopup}}">
+  <view wx:if="{{poptype=='radio'}}" class="popup-{{tindex}} cu-modal show" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
       <radio-group class="block">
         <view class="cu-list menu text-left">
           <view class="cu-item" wx:for="{{list}}" wx:key="index">
@@ -173,11 +173,11 @@
     </view>
   </view>
   <!-- 多选弹框 -->
-  <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" catchtap="{{basic.switchPopup}}">
-    <view class="cu-dialog" catchtap="{{basic.switchPopup}}">
+  <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
+    <view class="cu-dialog" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
       <view class="cu-bar bg-white">
-        <view class="action text-blue" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
-        <view class="action text-green" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
+        <view class="action text-blue" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
+        <view class="action text-green" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
       </view>
       <view class="grid col-3 padding-sm">
         <view wx:for="{{checkbox}}" class="padding-xs" wx:key="index">
@@ -193,18 +193,18 @@
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
         <view class="content">{{title}}</view>
-        <view class="action" catchtap="{{basic.switchPopup}}">
+        <view class="action" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
           <text class="cuIcon-close text-red"></text>
         </view>
       </view>
       <view class="padding-xl">{{content}}</view>
       <view class="flex justify-between cu-bar bg-white">
-        <view wx:if="{icon}" class="action margin-0 {{icon?'flex-sub':''}} text-green" data-type="icon" catchtap="{{basic.switchPopup}}">
+        <view wx:if="{icon}" class="action margin-0 {{icon?'flex-sub':''}} text-green" data-type="icon" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
           <text class="cuIcon-{{icon}}"></text>{{iconText}}
         </view>
-        <view class="action margin-0 flex-sub text-green solid-left" data-type="close" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}
+        <view class="action margin-0 flex-sub text-green solid-left" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}
         </view>
-        <view class="action margin-0 flex-sub solid-left" data-type="ok" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}
+        <view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}
         </view>
       </view>
     </view>
@@ -214,13 +214,13 @@
     <view class="cu-dialog">
       <view class="bg-img" style="background-image: url('{{image}}');height:200px;" catchtap="clickPopImage" data-env="{{_env}}" data-path="{{path}}">
         <view class="cu-bar justify-end text-white">
-          <view class="action" data-type="close" catchtap="{{basic.switchPopup}}">
+          <view class="action" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
             <text class="cuIcon-close "></text>
           </view>
         </view>
       </view>
       <view class="cu-bar bg-white">
-        <view class="action margin-0 flex-sub solid-left" data-type="ok" catchtap="{{basic.switchPopup}}">{{oktilte||'确定'}}</view>
+        <view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{oktilte||'确定'}}</view>
       </view>
     </view>
   </view>
@@ -256,11 +256,11 @@
 <!-- 按钮 -->
 <template name="button">
   <block class="margin">
-    <button catchtap="{{tap||'clickButton'}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
       disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
-    <button catchtap="{{tap||'clickButton'}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
       disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
@@ -278,7 +278,7 @@
       <view class="wb-animation">{{text}}</view>
     </view>
     <view class="text-xl" wx:if="{{closeable}}">
-      <text catchtap="{{basic.closeNoticebar}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
+      <text catchtap="{{basic.closeNoticebar}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
     </view>
   </view>
 </template>
@@ -292,7 +292,7 @@
           {{item.tag}}
         </view>
         <view wx:if="{{item.closeable}}" class="cu-tag line-{{item.color||'black'}} {{item.size||''}}">
-          <text catchtap="{{basic.closeTag}}" data-id="{{tindex}}" class="cuIcon-close"></text>
+          <text catchtap="{{basic.closeTag}}" data-env="{{_env}}" data-id="{{tindex}}" class="cuIcon-close"></text>
         </view>
       </view>
     </block>

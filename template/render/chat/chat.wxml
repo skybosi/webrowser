@@ -5,7 +5,7 @@
   <view class="cu-item self">
     <view class="main">
       <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content bg-green shadow">
-        <text bindlongtap="longTapText">{{summary}}</text>
+        <text bindlongtap="longTapText" data-env="{{_env}}">{{summary}}</text>
       </view>
       <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="ViewImage" data-env="{{_env}}" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
       <view wx:if="{{msg_type=='sound'}}" class="action text-bold text-grey">{{duration}}</view>
@@ -73,9 +73,9 @@
         <input class="solid-bottom" bindfocus="{{chat.inputFocus}}" bindblur="{{chat.inputBlur}}" adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" bindinput="commentInput" value="{{inputValue}}"></input>
         <view class="action">
           <!-- <text class="cuIcon-emojifill text-grey"></text> -->
-          <text wx:if="{{!inputValue}}" class="cuIcon-roundaddfill text-grey" style="font-size:60rpx" bindtap="switchModal"></text>
+          <text wx:if="{{!inputValue}}" class="cuIcon-roundaddfill text-grey" style="font-size:60rpx" bindtap="switchModal" data-env="{{_env}}"></text>
         </view>
-        <button wx:if="{{inputValue}}" class="cu-btn bg-green shadow-blur" data-id="{{id}}" data-utype="{{utype}}" bindtap="sendMessage">发送</button>
+        <button wx:if="{{inputValue}}" class="cu-btn bg-green shadow-blur" data-id="{{id}}" data-utype="{{utype}}" data-env="{{_env}}" bindtap="sendMessage">发送</button>
       </view>
     </view>
   </view>

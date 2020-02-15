@@ -15,15 +15,15 @@
     <view class="cu-dialog">
       <view class="cu-bar bg-white justify-end">
         <view class="content">{{title}}</view>
-        <view class="action" data-chose="ignore" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">
+        <view class="action" data-chose="ignore" data-env="{{_env}}" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">
           <text class="cuIcon-close text-red"></text>
         </view>
       </view>
       <view class="padding-xl">{{content}}</view>
       <view class="cu-bar bg-white justify-around">
         <view class="action">
-          <button class="cu-btn line-green text-green" data-chose="cancel" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{cancel?cancel:'取消'}}</button>
-          <button class="cu-btn bg-green margin-left" data-chose="ok" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{ok?ok:'确定'}}</button>
+          <button class="cu-btn line-green text-green" data-chose="cancel" data-env="{{_env}}" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{cancel?cancel:'取消'}}</button>
+          <button class="cu-btn bg-green margin-left" data-chose="ok" data-env="{{_env}}" bindtap="{{hideModal?hideModal:render.longclickItemHandle}}">{{ok?ok:'确定'}}</button>
         </view>
       </view>
     </view>
@@ -40,7 +40,7 @@
 </template>
 
 <template name="grid-image">
-  <view class="bg-img" style="background-image:url({{image[0]}});" data-id='{{id}}' bindtap="itemClick"></view>
+  <view class="bg-img" style="background-image:url({{image[0]}});" data-id='{{id}}' data-env="{{_env}}" bindtap="itemClick"></view>
 </template>
 
 <!-- 轮播图 -->

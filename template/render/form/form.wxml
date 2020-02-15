@@ -72,11 +72,11 @@
 <!-- 步数累加器 -->
 <template name="stepper">
   <view class="bg-white flex align-center padding-xs padding-left-sm">
-    <button class="cu-btn bg-gray" disabled="{{(value||0)<=(min||0)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'minus']}}" data-tindex="{{tindex}}" data-route="{{route}}" catchtap="stepper">
+    <button class="cu-btn bg-gray" disabled="{{(value||0)<=(min||0)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'minus']}}" data-tindex="{{tindex}}" data-route="{{route}}" data-env="{{_env}}" catchtap="stepper">
       <view class="cuIcon-move"></view>
     </button>
     <input class="text-center" type="digit" value="{{value}}" data-event-opts="{{[value||0, min, max, step?step:1, 'input']}}" data-tindex="{{tindex}}" data-route="{{route}}" bindinput="stepper" style="padding-left:10rpx;width:auto;max-width:100rpx;" />
-    <button class="cu-btn bg-gray" disabled="{{(value||0)>=(max||10)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'plus']}}" data-tindex="{{tindex}}" data-route="{{route}}" catchtap="stepper">
+    <button class="cu-btn bg-gray" disabled="{{(value||0)>=(max||10)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'plus']}}" data-tindex="{{tindex}}" data-route="{{route}}" data-env="{{_env}}" catchtap="stepper">
       <view class="cuIcon-add"></view>
     </button>
   </view>
@@ -86,7 +86,7 @@
 <template name="rate">
   <view class="padding-xs padding-lr">
     <block wx:for="{{count}}" wx:for-item="star" wx:for-index="rating" wx:key="rating">
-      <view style="display:inline;" class="text-{{size||''}}" data-index="{{rating}}" catchtap="clickRate">
+      <view style="display:inline;" class="text-{{size||''}}" data-index="{{rating}}" data-env="{{_env}}" catchtap="clickRate">
         <text class="{{[rating<value?'text-orange cuIcon-' + (icon ||'favor') + 'fill':' text-gray cuIcon-' + ( icon || 'favor')]}}"></text>
       </view>
     </block>

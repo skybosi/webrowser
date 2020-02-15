@@ -24,7 +24,7 @@
 <template name="cu-custom">
   <block wx:if="{{!hideNavigation}}">
     <view class="cu-custom" style="height:{{CustomBar}}px">
-      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" bindtap="toTop">
+      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" data-env="{{_env}}" bindtap="toTop">
         <view class="{{(icon1 && icon2)?'flex border-custom':''}}" style="height:{{Custom.height}}px">
           <view wx:if="{{icon1}}" class="action" bindtap="tapIcon1" data-env="{{_env}}" style="margin-right:0">
             <view>
@@ -40,7 +40,7 @@
           </view>
         </view>
         <block wx:if="{{type}}">
-          <view class="search-form round" bindtap="toSearch">
+          <view class="search-form round" bindtap="toSearch" data-env="{{_env}}">
             <view class="cuIcon-search"></view>
             <input type="text" placeholder="{{placeholder}}" disabled/>
           </view>
