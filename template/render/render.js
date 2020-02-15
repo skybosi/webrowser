@@ -2,7 +2,6 @@
 import item from './item/item.js'
 import form from './form/form.js'
 import basic from './basic/basic.js'
-import button from './button/button.js'
 import tabbar from './tabbar/tabbar.js'
 import interactive from './interactive/interactive.js'
 
@@ -45,18 +44,6 @@ export default Object.assign({
     var tidx = e.currentTarget.dataset.tindex || e.target.dataset.tindex || e.mark.tindex
     var zidx = e.currentTarget.dataset.route || e.target.dataset.route || e.mark.route
     var list = {}
-    // var index = "list"
-    // if (undefined != zidx && '' != zidx) {
-    //   zidx = "" + zidx
-    //   var t = zidx.replace(/\.?(\d)/g, '[$1]')
-    //   if (t != '[' + zidx + ']') {
-    //     index = index + ".list[" + tidx + "]."
-    //   }else{
-    //     index = index + "[" + tidx + "]."
-    //   }
-    // } else {
-    //   index = index + '[' + tidx + "]."
-    // }
     for (var item in data) {
       list[zidx + '.' + item] = data[item]
     }
@@ -67,4 +54,4 @@ export default Object.assign({
     var zidx = e.mark.route || e.currentTarget.dataset.route || e.target.dataset.route
     return this.data.list[tidx][key]
   }
-}, interactive, basic, item, form, button, tabbar)
+}, interactive, basic, item, form, tabbar)

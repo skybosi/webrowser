@@ -61,7 +61,9 @@ var list = [{
 module.exports = {
   list: list,
   title: '我的',
-  hideNavigation: true
-  // enablePullDownRefresh: true,
+  nav: {
+    hideNavigation: true,
+  },
+  enablePullDownRefresh: true,
   // enablePullUpRefresh: true,
 }

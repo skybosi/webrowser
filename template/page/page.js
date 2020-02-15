@@ -128,6 +128,18 @@ export default function(context = {}) {
         path: '/pages/index/index'
       }
     },
+    toTop(e) {
+      let curTime = e.timeStamp;
+      let lastTime = this.lastTapDiffTime;
+      this.lastTapDiffTime = curTime;
+      //两次点击间隔小于300ms, 认为是双击
+      let diff = curTime - lastTime;
+      if (diff < 300) {
+        wx.pageScrollTo({
+          scrollTop: 0
+        })
+      }
+    },
     tapIcon1() {
       wx.navigateBack({
         delta: 1

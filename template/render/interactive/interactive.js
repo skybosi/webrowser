@@ -10,6 +10,7 @@ export default ({
    * 进入发布者个人中心
    */
   getUserInfo(e) {
+    this.beforeClick(e)
     var uid = e.currentTarget.dataset.uid
     var openID = e.currentTarget.dataset.openid
     wx.navigateTo({
@@ -20,6 +21,7 @@ export default ({
    * 联系发布者
    */
   contactUser(e) {
+    this.beforeClick(e)
     var uid = e.currentTarget.dataset.uid
     var openID = e.currentTarget.dataset.openid
     wx.navigateTo({
@@ -27,6 +29,7 @@ export default ({
     })
   },
   hideModal(e) {
+    this.beforeClick(e)
     let chose = e.currentTarget.dataset.chose || 'ignore'
     var callback = e.currentTarget.dataset.callback
     this.setData({
@@ -39,6 +42,7 @@ export default ({
     }
   },
   updateAutoplay(e) {
+    this.beforeClick(e)
     console.log("updateAutoplay:" + JSON.stringify(e))
     if (e.type == 'focus') {
       this.setData({
@@ -54,6 +58,7 @@ export default ({
    * search-bar
    */
   getSearchPage(e) {
+    this.beforeClick(e)
     console.log(e)
     let index = e.currentTarget.dataset.index
     let path = e.currentTarget.dataset.path
@@ -70,6 +75,7 @@ export default ({
    * tree
    */
   tabSelect(e) {
+    this.beforeClick(e)
     wx.pageScrollTo({
       scrollTop: 0,
     })
@@ -80,6 +86,7 @@ export default ({
     })
   },
   VerticalMain(e) {
+    this.beforeClick(e)
     let that = this;
     let list = this.getData(e, "list");
     let tabHeight = 0;
@@ -159,6 +166,7 @@ export default ({
     })
   },
   currentLocation(e) {
+    this.beforeClick(e)
     //当前位置
     const that = this;
     wx.getLocation({

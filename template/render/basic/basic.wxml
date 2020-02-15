@@ -1,7 +1,6 @@
 <import src="/template/render/item/item.wxml" />
 <import src="/template/render/form/form.wxml" />
 <import src="/template/render/chat/chat.wxml" />
-<import src="/template/render/button/button.wxml" />
 <import src="/template/render/tabbar/tabbar.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 <wxs src="../render.wxs" module="render"></wxs>
@@ -254,6 +253,18 @@
   <view class="bg-white margin-top{{size?'-'+size:''}}"></view>
 </template>
 
+<!-- 按钮 -->
+<template name="button">
+  <block class="margin">
+    <button wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
+    </button>
+    <button wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
+    </button>
+  </block>
+</template>
+
 <!-- 滚动消息框 -->
 <template name="noticebar">
   <!-- <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" /> -->
@@ -289,7 +300,7 @@
   <view class="padding-xs padding-lr">
     <block wx:for="{{count}}" wx:for-item="star" wx:for-index="rating" wx:key="rating">
       <view style="display:inline;font-size:56rpx" data-index="{{rating}}" catchtap="clickRate">
-        <text class="{{[rating<value?'cuIcon-favorfill text-orange':'cuIcon-favor text-gray']}}"></text>
+        <text class="{{[rating<value?'text-orange cuIcon-' + (icon ||'favor') + 'fill':' text-gray cuIcon-' + ( icon || 'favor')]}}"></text>
       </view>
     </block>
   </view>

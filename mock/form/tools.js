@@ -56,6 +56,18 @@ var list = [{
     count: 7,
   },
   {
+    type: "rate",
+    value: 3,
+    count: 7,
+    icon: 'like'
+  },
+  {
+    type: "rate",
+    value: 3,
+    count: 7,
+    icon: 'selection'
+  },
+  {
     type: "interval",
   },
 ]

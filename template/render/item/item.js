@@ -3,6 +3,7 @@ export default {
    * 点击item模板
    */
   clickItem(e) {
+    this.beforeClick(e)
     console.log(e)
     let index = e.currentTarget.dataset.index
     let path = e.currentTarget.dataset.path
@@ -22,6 +23,7 @@ export default {
    * 长按item模板
    */
   longclickItem(e) {
+    this.beforeClick(e)
     console.log(e)
   },
 }

@@ -1,5 +1,5 @@
 var list = [{
-    type: "head",
+    type: "login",
     // icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
     title: '登录',
     // tag: 'v0.0.4',
@@ -57,7 +57,15 @@ var list = [{
         text: '文本',
         type: 'label',
         path: '/basic/text'
-      }, {
+      },
+      {
+        icon: 'text',
+        badge: 10,
+        text: '分割线',
+        type: 'label',
+        path: '/basic/divider'
+      },
+      {
         icon: 'icon',
         badge: 10,
         text: '图标',
@@ -98,6 +106,13 @@ var list = [{
         text: '弹框',
         type: 'label',
         path: '/basic/popup'
+      },
+      {
+        icon: 'loading2',
+        badge: 3,
+        text: 'tip',
+        type: 'label',
+        path: '/basic/tip'
       },
       {
         icon: 'loading',
@@ -190,6 +205,13 @@ var list = [{
     icon: "discoverfill",
     path: "/demo/index"
   },
+  {
+    type: "divider",
+    text: '哎！到底啦。。。',
+    click: function() {
+      console.log('我是分割线!!!')
+    }
+  },
 ]
 
 module.exports = {
@@ -198,7 +220,8 @@ module.exports = {
     title: '首页',
     icon1: 'homefill',
     hideNavigation: true
-  }
+  },
+  hideNavigation: true
   // icon2: 'roundadd',
   // enablePullDownRefresh: true,
   // enablePullUpRefresh: true,

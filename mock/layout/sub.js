@@ -25,14 +25,14 @@ var list = [{
         sub: 1,
         icon: 'picfill',
         badge: 3,
-        name: '图片',
+        text: '图片',
         type: 'grid-icon',
         path: '/image'
       }, {
         sub: 2,
         icon: 'videofill',
         badge: 1,
-        name: '视频',
+        text: '视频',
         type: 'grid-icon',
         path: '/video'
       },
@@ -40,7 +40,7 @@ var list = [{
         sub: 2,
         icon: 'card',
         badge: 6,
-        name: '卡片',
+        text: '卡片',
         type: 'grid-icon',
         path: '/card'
       },

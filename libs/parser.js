@@ -1,51 +1,114 @@
 const MAP_KEY = {
-  goto: 1
+  'goto': 'goto',
+  'import': 'import',
+  'v-bind': 'v-bind',
 }
+const IGNOREKEY = {
+  '_env': 1
+}
+const NULLTYPE = '[object Null]'
 const ARRAYTYPE = '[object Array]'
 const OBJECTTYPE = '[object Object]'
+const NUMBERTYPE = '[object Number]'
+const STRINGTYPE = '[object String]'
 const FUNCTIONTYPE = '[object Function]'
+var parser = {}
 
-export default function parser(data) {
-  // console.log("checkGoto", data)
+function parse(data, path, route) {
   let paths = []
-  paths['_'] = []
-  var curpath = ""
-  for (let index in data) {
-    console.log(index, data[index]);
-    _deepCheckgoto(index, data[index], curpath, paths)
-    curpath = ""
+  paths['_'] = {}
+  paths['$'] = {}
+  const dataType = type(data)
+  let _path = path || ''
+  let _route = route || ''
+  for (let key in data) {
+    if (data[key] !== undefined && !IGNOREKEY[key]) {
+      key = (dataType == ARRAYTYPE) ? Number(key) : key
+      _deepParse(key, data[key], _path, _route, paths)
+    }
   }
-  // for (let index in paths) {
-  //   console.log(index, paths[index]);
-  // }
-  return paths["_"]
+  Object.assign(data, paths)
+  return paths
 }
 
-function _deepCheckgoto(index, data, parent, paths) {
+/**
+ * 深度遍历所有的结构
+ */
+function _deepParse(index, data, curpath, curoute, paths) {
+  const indexType = type(index)
   const dataType = type(data)
-  let curpath = parent
-  if (parent) {
-    curpath = curpath + "." + index
-    paths[parent + "." + index] = 1
+  let path = ''
+  let route = ''
+  if ('' != curpath) {
+    path = (curpath != '' ? (curpath + ".") : '') + index
+    // paths[path] = data
   } else {
-    curpath = index
-    // paths[curpath] = data
+    path = curpath + index
+    // paths[path] = data
+  }
+  if (indexType == NUMBERTYPE) {
+    route = (curoute != '' ? curoute : '') + "[" + index + "]"
+  } else {
+    route = (curoute != '' ? (curoute + '.') : '') + index
   }
   if (dataType == OBJECTTYPE || dataType == ARRAYTYPE) {
+    if (dataType == OBJECTTYPE) {
+      data._env = {}
+      data._env._route = route
+    }
     for (let key in data) {
-      if (data[key] !== undefined) {
-        _deepCheckgoto(key, data[key], curpath, paths)
+      if (data[key] !== undefined && !IGNOREKEY[key]) {
+        key = (dataType == ARRAYTYPE) ? Number(key) : key
+        _deepParse(key, data[key], path, route, paths)
       }
     }
   } else {
-    // delete paths[parent]
-    curpath = parent
+    paths['$'][path] = data
   }
+  // 处理关键字
   if (MAP_KEY[index]) {
-    paths["_"][curpath] = data
+    if (!paths['_'][MAP_KEY[index]]) {
+      paths['_'][MAP_KEY[index]] = []
+    }
+    paths['_'][MAP_KEY[index]][path] = {
+      _data: data,
+      _path: path,
+      _route: route
+    }
   }
 }
 
+/**
+ * 判断Object的类型
+ */
 function type(obj) {
   return Object.prototype.toString.call(obj)
+}
+
+/**
+ * 根据path 修改Object中path对应的value
+ */
+function modify(path, route, value, obj) {
+  const arr = path.split('.')
+  let keyword = '.' + arr.pop()
+  path = path.substring(0, path.length - keyword.length)
+  route = route.substring(0, route.length - keyword.length)
+  const len = arr.length - 1
+  parse(value, path, route)
+  arr.reduce((cur, key, index) => {
+    if (!(cur[key]))
+      throw `${key} 不存在!`
+    if (index === len) {
+      cur[key] = value
+    }
+    return cur[key]
+  }, obj)
+  Object.assign(obj['_'], value['_'])
+  Object.assign(obj['$'], value['$'])
+}
+
+module.exports = {
+  type: type,
+  parse: parse,
+  modify: modify
 }

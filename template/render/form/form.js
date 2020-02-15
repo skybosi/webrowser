@@ -1,5 +1,6 @@
 export default {
   ChooseImage(e) {
+    this.beforeClick(e)
     wx.chooseImage({
       count: 4, //默认9
       sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -18,12 +19,14 @@ export default {
     });
   },
   ViewImage(e) {
+    this.beforeClick(e)
     wx.previewImage({
       urls: this.getData(e, "imgList"),
       current: e.currentTarget.dataset.url
     });
   },
   DelImg(e) {
+    this.beforeClick(e)
     var index = e.currentTarget.dataset.index || e.currentTarget.dataset.index
     wx.showModal({
       title: '召唤师',

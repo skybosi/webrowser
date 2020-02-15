@@ -19,7 +19,7 @@
         <view>
           <view wx:if="{{image && image[0]}}" class="padding-top-xs">
             <view class="grid flex-sub col-3 grid-square">
-              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
             </view>
           </view>
         </view>
@@ -54,6 +54,32 @@
   </view>
 </template>
 
+<template name="login">
+  <view class="padding-tb-xl bg-gradual-blue" style="height: 3 * {{CustomBar}}rpx;">
+    <view class="flex padding-xl padding-bottom-sm">
+      <block wx:if="{{!hasUserInfo}}">
+        <view class='avatar margin-left'>
+          <text class="cu-avatar xl round cuIcon-safe text-xl text-red"></text>
+        </view>
+        <view class='flex flex-direction justify-center margin-left'>
+          <button class="content text-lg text-left" open-type="getUserInfo" bindgetuserinfo="getRegister">
+            <text class="text-grey">登录</text>
+          </button>
+        </view>
+      </block>
+      <block wx:else>
+        <view class='avatar margin-left' data-path="{{path}}" bindtap="navigateTo">
+          <image class="cu-avatar xl round" src="{{userInfo.avatarUrl}}"></image>
+        </view>
+        <view class='flex flex-direction justify-center margin-left'>
+          <text class="padding-xs text-xl">{{userInfo.nickName}}</text>
+          <text class="padding-xs">{{userInfo.summary}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
 <!-- {
   placeholder: "搜索最新公告消息"
 } -->
@@ -77,7 +103,7 @@
       <text class="cuIcon-search"></text>
       <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
         <swiper-item wx:for="{{render.toArray(placeholder)}}" wx:key="index" class="flex align-center text-black">
-          <input type="text" placeholder="{{item}}" confirm-type="search" data-path="{{path}}" bindtap="getSearchPage" bindblur="{{render.switchAutoplay}}"></input>
+          <input type="text" placeholder="{{item}}" confirm-type="search" data-path="{{path}}" bindtap="getSearchPage" data-env="{{_env}}" bindblur="{{render.switchAutoplay}}"></input>
         </swiper-item>
       </swiper>
     </view>
@@ -97,13 +123,32 @@
 </template>
 
 <template name="index-bar">
-  <van-index-bar index-list="{{ indexList }}" scroll-top="{{ scrollTop }}">
-    <view wx:for="{{ itemList }}" wx:key="index">
-      <van-index-anchor use-slot index="{{ item.name }}">
-        <template is="message" data="{{...item}}"></template>
-      </van-index-anchor>
+  <scroll-view scroll-y class="indexes" scroll-into-view="indexes-{{listCurID}}" style="height:calc(100vh - {{CustomBar}}px - 50px)" scroll-with-animation="true" enable-back-to-top="true">
+    <block wx:for="{{list}}" wx:key>
+      <view class="padding indexItem-{{list[index]}}" id="indexes-{{list[index]}}" data-index="{{list[index]}}">{{list[index]}}</view>
+      <view class="cu-list menu-avatar no-padding">
+        <view class="cu-item" wx:for="{{2}}" wx:key wx:for-index="sub">
+          <view class="cu-avatar round lg">{{list[index]}}</view>
+          <view class="content">
+            <view class="text-grey">{{list[index]}}
+              <text class="text-abc">{{list[sub]}}</text>君</view>
+            <view class="text-gray text-sm">
+              有{{sub+2}}个主子需要伺候
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+  <view class="indexBar" style="height:calc(100vh - {{CustomBar}}px - 50px)">
+    <view class="indexBar-box" bindtouchstart="tStart" bindtouchend="tEnd" catchtouchmove="tMove">
+      <view class="indexBar-item" wx:for="{{list}}" wx:key id="{{index}}" bindtouchstart="getCur" bindtouchend="setCur">{{list[index]}}</view>
     </view>
-  </van-index-bar>
+  </view>
+  <!--选择显示-->
+  <view hidden="{{hidden}}" class="indexToast">
+    {{listCur}}
+  </view>
 </template>
 
 <template name="auth">
@@ -149,7 +194,7 @@
 <template name="nav">
   <scroll-view scroll-x class="bg-white nav text-center padding-bottom-xs sticky-view">
     <block wx:for="{{list}}" wx:key="index">
-      <view id="nav-tab" class="cu-item nav-tab-{{index}} {{index==(TabCur||0)?'text-green cur':''}}" catchtap="tabSelect" data-id="{{index}}">
+      <view id="nav-tab" class="cu-item nav-tab-{{index}} {{index==(TabCur||0)?'text-green cur':''}}" catchtap="tabSelect" data-env="{{_env}}" data-id="{{index}}">
         <text class="cuIcon-{{item.icon}}"></text> {{item.name}}
       </view>
     </block>
@@ -160,7 +205,7 @@
 </template>
 
 <template name="map-location">
-  <map id="maps" style="height:100vh;width:100%" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location bindregionchange="regionchange" data-tindex="{{tindex}}" data-route="{{route}}">
+  <map id="maps" style="height:100vh;width:100%" longitude="{{longitude}}" latitude="{{latitude}}" scale="16" show-location bindregionchange="regionchange" data-tindex="{{tindex}}" data-route="{{route}}" data-env="{{_env}}">
     <cover-image style="position:relative;width:80rpx;height:80rpx;top:50%;left:50%;margin-top:-42px;margin-left:-22px;" src="/static/image/location.png" />
     <!-- <cover-view style="position:relative;top:50%;left:50%;margin-top:-60rpx;margin-left:-30rpx;">
       <cover-view class="cuIcon-locationfill text-green" style="background-color:rgba(255, 255, 255, 0);width:96rpx;height:96rpx;font-size:2em"></cover-view>
@@ -177,7 +222,7 @@
         </cover-view>
       </cover-view>
     </cover-view>
-    <cover-view class="cu-avatar lg flex align-center justify-center round" style="position:fixed;bottom:80rpx;right: 60rpx;background:rgba(255, 255, 255, 0.94);" mark:tindex="{{tindex}}" data-route="{{route}}" catchtap="currentLocation">
+    <cover-view class="cu-avatar lg flex align-center justify-center round" style="position:fixed;bottom:80rpx;right: 60rpx;background:rgba(255, 255, 255, 0.94);" mark:tindex="{{tindex}}" data-route="{{route}}" catchtap="currentLocation" data-env="{{_env}}">
       <!-- <cover-view class="bg-white cuIcon-focus text-grey" style="width: 64rpx; height: 64rpx;"/> -->
       <cover-image src="/static/image/current.png" style="width: 48rpx; height: 48rpx;"></cover-image>
     </cover-view>
@@ -186,7 +231,7 @@
 
 <template name="movable">
   <view style='position:relative;z-index:1025'>
-    <button bindtouchstart="{{interactive.touchstart}}" bindtouchmove="{{interactive.touchmove}}" bindtouchend='{{interactive.touchmove}}' catchtap="" class="movable cu-btn icon round lg lines-{{color||''}} flex justify-center flex-direction align-center padding-sm margin-sm"
+    <button bindtouchstart="{{interactive.touchstart}}" bindtouchmove="{{interactive.touchmove}}" bindtouchend='{{interactive.touchmove}}' catchtap="" data-env="{{_env}}" class="movable cu-btn icon round lg lines-{{color||''}} flex justify-center flex-direction align-center padding-sm margin-sm"
       style="position:absolute;left:{{left}}px;top:{{top}}px">
       <text class="cuIcon-{{icon||'roundadd'}}" style="font-size:2em"></text>
     </button>

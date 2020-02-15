@@ -7,7 +7,7 @@
       <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content bg-green shadow">
         <text bindlongtap="longTapText">{{summary}}</text>
       </view>
-      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="ViewImage" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
+      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="ViewImage" data-env="{{_env}}" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
       <view wx:if="{{msg_type=='sound'}}" class="action text-bold text-grey">{{duration}}</view>
       <view wx:if="{{msg_type=='sound'}}" class="content shadow">
         <text class="cuIcon-sound text-xxl padding-right-xl"></text>
@@ -82,7 +82,7 @@
 </template>
 
 <template name="chat">
-  <view wx:for="{{list}}" wx:key="index" bindtap="hideModal" style="background-color:rgba(0,0,0,0.1)">
+  <view wx:for="{{list}}" wx:key="index" bindtap="hideModal" data-env="{{_env}}" style="background-color:rgba(0,0,0,0.1)">
     <view class="cu-chat">
       <template is="chat-{{item.from_type}}" data="{{...item}}"></template>
     </view>

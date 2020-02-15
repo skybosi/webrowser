@@ -35,7 +35,7 @@
     <view class="cu-tag badge" wx:if="{{badge&&badge!=0}}">
       <block wx:if="{{badge!=1}}">{{badge>99?"99+":badge}}</block>
     </view>
-    <text wx:if="{{name}}" class="text-cut">{{name}}</text>
+    <text wx:if="{{text}}" class="text-cut">{{text}}</text>
   </view>
 </template>
 

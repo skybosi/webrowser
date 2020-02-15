@@ -1,5 +1,6 @@
 export default {
   NavChange(e) {
+    this.beforeClick(e)
     // 处理前一个页面的生命周期
     // this.getCurrComponent().onHide()
     // this.getCurrComponent().onUnload()
@@ -8,6 +9,18 @@ export default {
       PageIdx: e.currentTarget.dataset.index,
       isNavChange: true,
       isShow: true
+    })
+    var index = e.currentTarget.dataset.index
+    var path = e.currentTarget.dataset.path || e.target.dataset.path
+    var id = e.currentTarget.dataset.id
+    var query = e.currentTarget.dataset.query
+    this.data.path = path
+    this.data.query = query
+    var PageIdx = this.getData(e, "PageIdx")
+    this.mock.get(path, query).then(res => {
+      this.renderData(e, {
+        ["pages[" + PageIdx + "]"]: res
+      })
     })
     // // 注册消息回调
     // app.Messager.addWatcher(this.onMessage, this.data.PageCur, this)

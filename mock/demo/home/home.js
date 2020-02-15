@@ -104,7 +104,8 @@ module.exports = {
   list: list,
   nav: {
     title: '卡片',
-    icon1: 'back',
-    text1: '返回', // icon2: 'roundadd',
-  }
+    icon1: 'search',
+    text1: '', // icon2: 'roundadd',
+  },
+  enablePullDownRefresh: true,
 }

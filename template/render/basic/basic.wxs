@@ -101,7 +101,31 @@ var switchPopup = function(event, ins) {
   return false
 }
 
+var showTip = function (event, ins) {
+  // console.log('showTip', JSON.stringify(event), JSON.stringify(ins))
+  var id = event.currentTarget.dataset.id || event.target.dataset.id
+  var tidx = event.mark.tindex
+  var st = event.instance.getState()
+  var clicked = st.clicked || 0
+  if(!clicked){
+    ins.selectComponent('.tooltiptext-' + tidx).setStyle({
+      display: 'block'
+    })
+    st.clicked = clicked + 1
+  }else{
+    ins.selectComponent('.tooltiptext-' + tidx).setStyle({
+      display: 'none'
+    })
+    st.clicked = clicked - 1
+  }
+  event.id = id
+  // 调用预先定义的js 逻辑层的方法
+  ins.callMethod("showTip", event)
+  return false
+}
+
 module.exports.clickA = clickA;
+module.exports.showTip = showTip;
 module.exports.closeTag = closeTag;
 module.exports.dropdown = dropdown;
 module.exports.template = template;

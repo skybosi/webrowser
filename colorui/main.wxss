@@ -3836,6 +3836,39 @@ scroll-view.cu-steps .cu-item {
 }
 
 /* ==================
+          标题
+ ==================== */
+.cu-title.center-title {
+	text-align: center;
+}
+
+.cu-title.center-title [class*="text-"] {
+	position: relative;
+	display: inline-block;
+	padding: 0 30rpx;
+}
+
+.cu-title.center-title [class*="text-"]::after,
+.cu-title.center-title [class*="text-"]::before {
+	content: "";
+	display: block;
+	position: absolute;
+	width: 40%;
+	height: 2rpx;
+	background-color: #333;
+	left: -40%;
+	right: auto;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+.cu-title.center-title [class*="text-"]::before {
+	left: auto;
+	right: -40%;
+}
+
+/* ==================
           文本
  ==================== */
 

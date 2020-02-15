@@ -4,7 +4,17 @@ var list = [{
   },
   {
     "text": "该项目名称：webrowser => weapp browser",
-    "type": "h"
+    "type": "h",
+    "element": {
+      type: 'tip',
+      list: [{
+          text: '复制'
+        },
+        {
+          text: '粘贴'
+        }
+      ]
+    }
   },
   {
     "text": "原理：",
@@ -77,6 +87,6 @@ module.exports = {
   nav: {
     title: '原理',
     icon1: 'back',
-    text1: '返回',    // icon2: 'roundadd',
+    text1: '返回', // icon2: 'roundadd',
   },
 }

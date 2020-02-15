@@ -98,6 +98,7 @@ var list = [{
 
 module.exports = {
   list: list,
+  backgroundColor: 'white',
   nav: {
     title: '微信小程序底层实现原理',
     icon1: 'back',
