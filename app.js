@@ -1,4 +1,5 @@
 //app.js
+import event from './libs/event.js'
 App({
   onLaunch: function() {
     // 展示本地存储能力
@@ -25,5 +26,7 @@ App({
       }
     })
   },
-  globalData: {}
+  globalData: {
+  },
+  event: event
 });

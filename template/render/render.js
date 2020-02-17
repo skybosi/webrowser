@@ -40,33 +40,35 @@ export default Object.assign({
     });
   },
   renderData(e, data) {
-    // console.log('renderData:', JSON.stringify(e))
-    var env = e.currentTarget.dataset.env
-    var tidx = e.currentTarget.dataset.tindex || e.target.dataset.tindex || e.mark.tindex
-    var zidx = env._route || e.currentTarget.dataset.route || e.target.dataset.route || e.mark.route
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = env._index || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var route = env._route
     var list = {}
     for (var item in data) {
-      list[zidx + '.' + item] = data[item]
+      list[route + '.' + item] = data[item]
     }
     this.setData(list)
   },
   getData(e, key) {
-    var tidx = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
-    var zidx = e.mark.route || e.currentTarget.dataset.route || e.target.dataset.route
-    return key ? this.data.list[tidx][key] : this.data.list[tidx]
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = env._index || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var route = env._route
+    var data = this.parser.get(env._path, this.data)
+    return key ? data[key] : data
   },
   createElement(e) {
-    var index = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = env._index ||e.currentTarget.dataset.tindex || e.target.dataset.tindex
     var node = e.currentTarget.dataset.node || e.target.dataset.node || {}
     var elementNode = node[e.nodeType]
     if (Object.prototype.toString.call(node.element) == "[object String]") {
       elementNode = JSON.parse(elementNode)
     }
-    let list = this.data.list || []
-    if (!index) {
+    var list = this.data.list || []
+    if (!tindex) {
       list.splice(list.length - 1, 0, elementNode)
     } else {
-      list.splice(index + 1, 0, elementNode)
+      list.splice(tindex + 1, 0, elementNode)
     }
     this.setData({
       list: list
@@ -75,8 +77,9 @@ export default Object.assign({
     this.lru.set(this.data.path, list)
   },
   removeElement(e, index) {
-    var tindex = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
-    let list = this.data.list || []
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = e._index || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var list = this.data.list || []
     if (index) {
       list.splice(index, 1)
     } else {
@@ -89,8 +92,12 @@ export default Object.assign({
     this.lru.set(this.data.path, list)
   },
   beforeClick(e) {
-    var index = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = e._index || e.currentTarget.dataset.tindex || e.target.dataset.tindex
     var node = e.currentTarget.dataset.node || e.target.dataset.node || {}
+    if (env._methodName && this.data._on[env._methodName]) {
+      this.data._on[env._methodName](this, e)
+    }
     var elementNode = node.b_n
     if (Object.prototype.toString.call(elementNode) == "[object String]") {
       elementNode = JSON.parse(elementNode)
@@ -101,7 +108,8 @@ export default Object.assign({
     }
   },
   afterClick(e) {
-    var index = e.mark.tindex || e.currentTarget.dataset.tindex || e.target.dataset.tindex
+    var env = e.currentTarget.dataset.env || e.target.dataset.env
+    var tindex = e._index || e.currentTarget.dataset.tindex || e.target.dataset.tindex
     var node = e.currentTarget.dataset.node || e.target.dataset.node || {}
     var elementNode = node.a_n
     if (Object.prototype.toString.call(elementNode) == "[object String]") {

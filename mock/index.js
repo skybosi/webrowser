@@ -59,13 +59,6 @@ var list = [{
         path: '/basic/text'
       },
       {
-        icon: 'text',
-        badge: 10,
-        text: '分割线',
-        type: 'label',
-        path: '/basic/divider'
-      },
-      {
         icon: 'icon',
         badge: 10,
         text: '图标',
@@ -94,13 +87,6 @@ var list = [{
         path: '/basic/video'
       },
       {
-        icon: 'pulldown',
-        badge: 3,
-        text: '下拉框',
-        type: 'label',
-        path: '/basic/dropdown'
-      },
-      {
         icon: 'pullup',
         badge: 3,
         text: '弹框',
@@ -115,6 +101,20 @@ var list = [{
         path: '/basic/tip'
       },
       {
+        icon: 'loading2',
+        badge: 3,
+        text: '加载',
+        type: 'label',
+        path: '/basic/loading'
+      },
+      {
+        icon: 'pulldown',
+        badge: 3,
+        text: '下拉框',
+        type: 'label',
+        path: '/basic/dropdown'
+      },
+      {
         icon: 'loading',
         badge: 3,
         text: '进度条',
@@ -122,11 +122,11 @@ var list = [{
         path: '/basic/progress'
       },
       {
-        icon: 'loading2',
-        badge: 3,
-        text: '加载',
+        icon: 'text',
+        badge: 10,
+        text: '分割线',
         type: 'label',
-        path: '/basic/loading'
+        path: '/basic/divider'
       },
     ]
   },
@@ -139,24 +139,27 @@ var list = [{
     icon: "infofill",
     text: "表单组件",
     list: [{
-      icon: 'text',
-      badge: 10,
-      text: '表单',
-      type: 'label',
-      path: '/form/form'
-    }, {
-      icon: 'text',
-      badge: 10,
-      text: '搜索框',
-      type: 'label',
-      path: '/form/search'
-    }, {
-      icon: 'text',
-      badge: 10,
-      text: '工具',
-      type: 'label',
-      path: '/form/tools'
-    }]
+        icon: 'text',
+        badge: 10,
+        text: '表单',
+        type: 'label',
+        path: '/form/form'
+      },
+      {
+        icon: 'text',
+        badge: 10,
+        text: '搜索框',
+        type: 'label',
+        path: '/form/search'
+      },
+      {
+        icon: 'text',
+        badge: 10,
+        text: '工具',
+        type: 'label',
+        path: '/form/tools'
+      }
+    ]
   },
   {
     type: "interval",
@@ -203,17 +206,21 @@ var list = [{
     type: "label",
     text: "综合demo",
     icon: "discoverfill",
+    value: '@obj.value',
     path: "/demo/index"
   },
   {
     type: "divider",
     text: '哎！到底啦。。。',
-    click: function() {
-      console.log('我是分割线!!!')
-    }
+    value: '@test',
+    click: ':clickDivider'
   },
 ]
-
+var methods = {
+  clickDivider: function() {
+    console.log('我是分割线!!!')
+  }
+}
 module.exports = {
   list: list,
   nav: {
@@ -221,6 +228,7 @@ module.exports = {
     icon1: 'homefill',
     hideNavigation: true
   },
+  methods: methods,
   hideNavigation: true
   // icon2: 'roundadd',
   // enablePullDownRefresh: true,

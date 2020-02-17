@@ -3,12 +3,14 @@ var list = [{
     type: "code"
   }, {
     title: "姓名",
-    type: "input"
+    type: "input",
+    value: "@user.value",
   }, {
     title: "收货地址",
     icon: "locationfill",
     color: "red",
     type: "input",
+    value: "@user.address",
   },
   {
     title: "验证码",
@@ -36,35 +38,50 @@ var list = [{
     title: "用户消息",
     color: "green",
     type: "switch",
-    checked: 1
+    value: 1
   },
   {
     title: "内部消息",
     color: "red",
     type: "switch",
     shape: "radius",
-    checked: 1
+    value: 1
   },
   {
-    text: `{ "type": "radio", "title": "...", "shape":"radius", "checked": 1 }`,
+    text: `{ "type": "radio", "shape":"radius", "value": [{"title":"","value":""}] }`,
     type: "code"
   },
   {
-    title: "单选框",
     color: "red",
     type: "radio",
     shape: "radius",
+    list: [{
+        title: "单选1",
+        value: '1',
+      },
+      {
+        title: "单选2",
+        value: '3',
+      }
+    ]
   },
   {
-    text: `{ "type": "checkbox", "title": "...", "shape":"round", "checked": 1 }`,
+    text: `{ "type": "checkbox", "shape":"round", "value": [{"title":"","value":""}] }`,
     type: "code"
   },
   {
-    title: "复选框",
     color: "blue",
     type: "checkbox",
     shape: "round",
-    checked: 1
+    list: [{
+        title: "复选1",
+        value: '1',
+      },
+      {
+        title: "复选2",
+        value: '2',
+      }
+    ]
   },
   {
     text: `{ "type": "upload-img", "title": "图片上传" }`,
@@ -90,6 +107,6 @@ module.exports = {
   nav: {
     title: '表单',
     icon1: 'back',
-    text1: '返回',    // icon2: 'roundadd',
+    text1: '返回', // icon2: 'roundadd',
   },
 }

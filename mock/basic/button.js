@@ -10,6 +10,7 @@ var list = [{
     title: "颜色按钮",
     color: "green",
     type: "button",
+    path: "/demo/index"
   },
   {
     title: "按钮大小",

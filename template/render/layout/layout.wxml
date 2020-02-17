@@ -10,7 +10,7 @@
   <view class="cu-list grid col-square-{{gridCol?gridCol:4}} {{gridBorder?'':'no-border'}} solid" style="margin:0">
     <block wx:for="{{list}}" wx:key="index">
       <view class="cu-item">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </view>
     </block>
   </view>
@@ -20,12 +20,12 @@
   <view wx:if="{{left || right}}" class="bg-{{bgColor||'white'}} flex flex-wrap solid">
     <view wx:if="{{size>0}}" class="radius" style="flex-basis:{{size}}%;">
       <block wx:for="{{left.list||[left]}}" wx:key="index">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </block>
     </view>
     <view wx:if="{{size<=50}}" class="radius">
       <block wx:for="{{right.list||[right]}}" wx:key="index">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </block>
     </view>
   </view>
@@ -35,7 +35,7 @@
   <view class="flex solid">
     <block wx:for="{{list}}" wx:key="index">
       <view class="flex radius padding-xs justify-center align-center" hover-class="hover" style="background-color:white;flex:{{item.sub||1}};min-height:80rpx;margin:5rpx">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list['+index+']'}}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </view>
     </block>
   </view>

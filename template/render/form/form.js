@@ -44,6 +44,39 @@ export default {
       }
     })
   },
+  bindinput(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      value: e.detail.value
+    })
+  },
+  bindTextArea(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      value: e.detail.value
+    })
+  },
+  btnText(e) {
+    this.beforeClick(e)
+  },
+  switchChange(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      value: e.detail.value
+    })
+  },
+  radioChange(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      value: e.detail.value
+    })
+  },
+  checkboxChange(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      value: e.detail.value
+    })
+  },
   stepper(e) {
     this.beforeClick(e)
     let eventOpts = e.currentTarget.dataset.eventOpts || e.target.dataset.eventOpts || {}
@@ -72,8 +105,7 @@ export default {
     } else if (type === 'input') {
       // mark 不支持input等原生组件兼容
       e.mark = {
-        tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex,
-        route: e.currentTarget.dataset.route || e.target.dataset.route
+        tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex
       }
       if (inputValue + '' != inputValue) {
         value = scale * inputValue;

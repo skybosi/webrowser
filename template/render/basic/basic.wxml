@@ -8,7 +8,7 @@
 
 <!-- 文本 -->
 <template name="text">
-  <view catchtap="clickText" data-env="{{_env}}" catchlongpress="longclickText" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{text}}" data-path="{{path}}" data-type="{{name}}" class="{{basic.template(name)}}">
+  <view catchtap="clickText" data-env="{{_env}}" catchlongpress="longclickText" wx:if="{{text}}" data-path="{{path}}" data-type="{{name}}" class="{{basic.template(name)}}">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
@@ -16,55 +16,55 @@
 <!-- 链接标签 -->
 <template name="a">
   <view wx:if="{{text}}" class="margin-tb-sm">
-    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickA" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
+    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickA" data-env="{{_env}}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
   </view>
 </template>
 
 <!-- 标题 -->
 <template name="title">
-  <template is="text" data='{{ name:"title", text: text }}'></template>
+  <template is="text" data='{{ name:"title", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h1标签 -->
 <template name="h1">
-  <template is="text" data='{{ name:"h1", text: text }}'></template>
+  <template is="text" data='{{ name:"h1", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h2标签 -->
 <template name="h2">
-  <template is="text" data='{{ name:"h2", text: text }}'></template>
+  <template is="text" data='{{ name:"h2", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h3标签 -->
 <template name="h3">
-  <template is="text" data='{{ name:"h3", text: text }}'></template>
+  <template is="text" data='{{ name:"h3", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h4标签 -->
 <template name="h4">
-  <template is="text" data='{{ name:"h4", text: text }}'></template>
+  <template is="text" data='{{ name:"h4", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h5标签 -->
 <template name="h5">
-  <template is="text" data='{{ name:"h5", text: text }}'></template>
+  <template is="text" data='{{ name:"h5", text: text, _env: _env }}'></template>
 </template>
 
 <!-- h标签 默认是h4 -->
 <template name="h">
-  <template is="text" data='{{ name:"h", text: text }}'></template>
+  <template is="text" data='{{ name:"h", text: text, _env: _env }}'></template>
 </template>
 
 <!-- 文段 -->
 <template name="p">
-  <view catchtap="clickP" data-env="{{_env}}" catchlongpress="longclickP" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
+  <view catchtap="clickP" data-env="{{_env}}" catchlongpress="longclickP" wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
 
 <!-- 结语文段 -->
 <template name="pe">
-  <view catchtap="clickPe" data-env="{{_env}}" catchlongpress="longclickPe" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="text-center padding-lr padding-sm">
+  <view catchtap="clickPe" data-env="{{_env}}" catchlongpress="longclickPe" class="text-center padding-lr padding-sm">
     <view wx:if="{{text}}" class="margin-tb-sm text-gray text-{{weight?weight:'normal'}}">
       <text selectable='true'>{{text}}</text>
     </view>
@@ -84,14 +84,14 @@
 
 <!-- 列表 -->
 <template name="li">
-  <view catchtap="clickLi" data-env="{{_env}}" catchlongpress="longclickLi" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
+  <view catchtap="clickLi" data-env="{{_env}}" catchlongpress="longclickLi" wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
     <text selectable='true' class="cuIcon-title text-{{color?color:render.color()}} padding-right-xs"></text>{{text}}
   </view>
 </template>
 
 <!-- 标签贴 -->
 <template name="label">
-  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="cu-list menu" style="margin:0rpx" data-path="{{path}}">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" class="cu-list menu" style="margin:0rpx" data-path="{{path}}">
     <view class="cu-item {{path?'arrow':''}} padding-lr" style="margin:0">
       <view class="content">
         <text wx:if="{{icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -110,7 +110,7 @@
 
 <!-- 下拉框 -->
 <template name="dropdown">
-  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickDropdown" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
+  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickDropdown" data-env="{{_env}}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
     <view class="dropdown-item-{{tindex}} cu-item arrow padding-lr" style="margin:0">
       <view class="content">
         <text wx:if="{{icon&&''!=icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -119,7 +119,7 @@
     </view>
     <view wx:if="{{list}}" class="radius dropdown-{{tindex}} padding-lr-xs padding-bottom-sm" style="display:none">
       <view wx:for="{{list}}" wx:key="index" style="min-height:80rpx;">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, route:route + '.list[' + index + ']' }}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </view>
     </view>
   </view>
@@ -153,7 +153,7 @@
   <view wx:if="{{poptype=='sideL'||poptype=='sideR'}}" class="popup-{{tindex}} cu-modal drawer-modal {{poptype=='sideL'?'justify-start':poptype=='sideR' ? 'justify-end':'justify-start'}} show}}" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
     <view class="cu-dialog basis-lg" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}" style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
       <view wx:for="{{list}}" wx:key="index" class="flex flex-direction align-start" style="display:block;width:100%">
-        <template is="{{item.type}}" data="{{...item, tindex: tindex, rroute:route + '.list[' + index + ']'}}"></template>
+        <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </view>
     </view>
   </view>
@@ -228,7 +228,7 @@
 
 <!-- 图片 -->
 <template name="img">
-  <view catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
+  <view catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
     <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
       <view class="image" style="height:375rpx">
         <image src="{{url}}" mode="widthFix"></image>
@@ -244,7 +244,7 @@
 <!-- 视频 -->
 <template name="video">
   <view class="bg-white flex justify-center align-center padding-tb-sm padding-lr">
-    <video style="width:100%" catchtap="clickVideo" data-env="{{_env}}" catchlongpress="longclickVideo" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
+    <video style="width:100%" catchtap="clickVideo" data-env="{{_env}}" catchlongpress="longclickVideo" src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
 
@@ -256,12 +256,11 @@
 <!-- 按钮 -->
 <template name="button">
   <block class="margin">
-    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-path="{{path}}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
       disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
-    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
-      disabled="{{disabled}}">
+    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-path="{{path}}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
   </block>
@@ -269,16 +268,15 @@
 
 <!-- 滚动消息框 -->
 <template name="noticebar">
-  <!-- <van-notice-bar wx:if="{{text}}" color="{{color?color:''}}" scrollable="{{scrollable?scrollable:true}}" wrapable="{{wrapable?wrapable:''}}" text="{{text}}" left-icon="volume-o" mode="{{closeable?'closeable':''}}" /> -->
-  <view class="noticebar-{{tindex}} flex align-center content padding-lr padding-sm text-{{color?color:''}}" style="background-color:#fffbe8;line-height:1;">
+  <view wx:if="{{(show||null==show)}}" class="noticebar-{{tindex}} flex align-center content padding-lr padding-sm text-{{color?color:''}}" style="background-color:#fffbe8;line-height:1;">
     <view class="text-xl">
       <text class="cuIcon-notification padding-right-xs"></text>
     </view>
     <view class="flex-sub text-cut">
-      <view class="wb-animation">{{text}}</view>
+      <view class="wb-animation">{{show}}{{text}}</view>
     </view>
     <view class="text-xl" wx:if="{{closeable}}">
-      <text catchtap="{{basic.closeNoticebar}}" data-env="{{_env}}" data-node="{{ { b_n: beforeNode, a_n: afterNode} }}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
+      <text catchtap="{{basic.closeNoticebar}}" data-env="{{_env}}" data-id="{{tindex}}" class="cuIcon-roundclosefill padding-left-xs"></text>
     </view>
   </view>
 </template>
@@ -287,7 +285,7 @@
 <template name="tag">
   <view class="padding-sm flex flex-wrap">
     <block wx:for="{{tags}}" wx:key="index">
-      <view class="tag-{{tindex}}  padding-xs {{item.closeable?'cu-capsule':''}} {{item.shape||'radius'}}">
+      <view wx:if="{{(item.show||null==item.show)}}" class="tag-{{tindex}}  padding-xs {{item.closeable?'cu-capsule':''}} {{item.shape||'radius'}}">
         <view class="cu-tag bg-{{item.color||'black'}} {{item.shape||'radius'}} {{item.size||''}}">
           {{item.tag}}
         </view>

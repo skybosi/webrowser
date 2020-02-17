@@ -31,14 +31,14 @@
       res.enablePullDownRefresh = res.enablePullDownRefresh || false
       res.enablePullUpRefresh = res.enablePullUpRefresh || false
       res.hideNavigation = res.hideNavigation || false
-      resolver(res)
       // var originData = this.ctx.getPage()
       // var delta = diff(originData, res) || {}
       // // console.log(delta)
-      // this.ctx.lru.set(path, res)
+      this.ctx.lru.set(path, res)
       // if (0 != Object.keys(delta).length) {
       //   resolver(delta)
       // }
+      resolver(res)
     }).catch((e) => {
       console.log(e)
     });

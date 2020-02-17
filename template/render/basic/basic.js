@@ -36,12 +36,18 @@ export default {
   clickPopImage(e) {
     console.log(e)
     this.beforeClick(e)
-    let index = e.currentTarget.dataset.index
+    let env = e.currentTarget.dataset.env || e.target.dataset.env
+    let index = e.currentTarget.dataset.index || e.target.dataset.index
     let path = e.currentTarget.dataset.path || e.target.dataset.path
-    let id = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id || e.target.dataset.id
+    let query = e.currentTarget.dataset.query || e.target.dataset.query
     if ('' != path && undefined != path) {
+      let eventId = env._id + ">" + this.parser.BKDRHash(path + query)
+      this.app.event.on(eventId, this, function(e) {
+        console.log(e)
+      })
       wx.navigateTo({
-        url: '/pages/index/index?path=' + path
+        url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
       })
     } else {
       console.log("path is empty!")
@@ -61,12 +67,18 @@ export default {
   clickA(e) {
     this.beforeClick(e)
     console.log(e)
-    let index = e.currentTarget.dataset.index
-    let path = e.currentTarget.dataset.href || e.target.dataset.href
-    let id = e.currentTarget.dataset.id
+    let env = e.currentTarget.dataset.env || e.target.dataset.env
+    let index = e.currentTarget.dataset.index || e.target.dataset.index
+    let path = e.currentTarget.dataset.path || e.target.dataset.path
+    let id = e.currentTarget.dataset.id || e.target.dataset.id
+    let query = e.currentTarget.dataset.query || e.target.dataset.query
     if ('' != path && undefined != path) {
+      let eventId = env._id + ">" + this.parser.BKDRHash(path + query)
+      this.app.event.on(eventId, this, function(e) {
+        console.log(e)
+      })
       wx.navigateTo({
-        url: '/pages/index/index?path=' + path
+        url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
       })
     } else {
       console.log("path is empty!")
@@ -82,12 +94,42 @@ export default {
     this.removeElement(e)
   },
   clickDivider(e) {
+    this.beforeClick(e)
     let eventOpts = e.currentTarget.dataset.eventOpts || e.target.dataset.eventOpts || {}
-    var env = this.getData(e)
-    env.click()
   },
   clickButton(e) {
     this.beforeClick(e)
+    let env = e.currentTarget.dataset.env || e.target.dataset.env
+    let index = e.currentTarget.dataset.index || e.target.dataset.index
+    let path = e.currentTarget.dataset.path || e.target.dataset.path
+    let id = e.currentTarget.dataset.id || e.target.dataset.id
+    let query = e.currentTarget.dataset.query || e.target.dataset.query
+    if ('' != path && undefined != path) {
+      let eventId = env._id + ">" + this.parser.BKDRHash(path + query)
+      this.app.event.on(eventId, this, function(e) {
+        console.log(e)
+      })
+      wx.navigateTo({
+        url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
+      })
+    } else {
+      console.log("path is empty!")
+      wx.showToast({
+        title: '无效跳转！',
+      })
+    }
+  },
+  closeNoticebar(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      show: e.detail.value
+    })
+  },
+  closeTag(e) {
+    this.beforeClick(e)
+    this.renderData(e, {
+      show: e.detail.value
+    })
   },
   longclickA(e) {
     this.beforeClick(e)

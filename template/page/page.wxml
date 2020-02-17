@@ -15,8 +15,8 @@
     change:prop="{{page.propObserver}}"
     prop="{{pageStats}}"
     data-width="{{ScreenHeight}}">
-    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:route="{{route}}.list[{{index}}]">
-      <template is="{{item.type||'page'}}" data="{{...item, tindex: index, route: route + '.list[' + index + ']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
+    <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}">
+      <template is="{{item.type||'page'}}" data="{{...item, tindex: index, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
 </template>

@@ -9,9 +9,6 @@
     "navigationBarTitleText": "webrowser",
     "navigationBarBackgroundColor": "#39b54a"
   },
-  "usingComponents": {
-    "custom": "/colorui/custom/custom"
-  },
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于定位效果展示"

@@ -1,23 +1,14 @@
 //index.js
 import Page from '../../template/page/page';
 
-
 //获取应用实例
 const app = getApp()
 
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {},
-  /**
-   * 洗牌算法
-   */
-  shuffle(arr) {
-    arr.sort(() => Math.random() - 0.5);
-    return arr;
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -26,6 +17,7 @@ Page({
     var query = options.query
     this.data.path = path
     this.data.query = query
+    this.data._id = this.parser.BKDRHash(path + query)
     this.mock.get(path, query).then(res => {
       this.setData(res)
     })
@@ -35,28 +27,54 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    let event = {
+      _eventId: this.data._eventId,
+      _ctx: this.data._ctx,
+      _id: this.data._id,
+      _type: 'onReady'
+    }
+    app.event.emit(this.data._eventId, event)
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    let event = {
+      _eventId: this.data._eventId,
+      _ctx: this.data._ctx,
+      _id: this.data._id,
+      _type: 'onShow'
+    }
+    app.event.emit(this.data._eventId, event)
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function() {
-
+    let event = {
+      _eventId: this.data._eventId,
+      _ctx: this.data._ctx,
+      _id: this.data._id,
+      _type: 'onHide',
+      _bind: this.data._bind
+    }
+    app.event.emit(this.data._eventId, event)
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-
+    let event = {
+      _eventId: this.data._eventId,
+      _ctx: this.data._ctx,
+      _id: this.data._id,
+      _type: 'onUnload',
+      _bind: this.data._bind
+    }
+    app.event.emit(this.data._eventId, event)
   },
 
   /**

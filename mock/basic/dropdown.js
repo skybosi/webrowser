@@ -46,8 +46,8 @@ module.exports = {
   list: list,
   nav: {
     title: '下拉框',
-    icon1: 'homefill',
-    hideNavigation: true
+    icon1: 'back',
+    text1: '返回', // icon2: 'roundadd',
   }
   // icon2: 'roundadd',
   // enablePullDownRefresh: true,

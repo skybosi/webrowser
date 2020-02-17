@@ -1,13 +1,14 @@
 <wxs src="../render.wxs" module="render"></wxs>
+<wxs src="./form.wxs" module="form"></wxs>
 
 <!-- 输入框 -->
 <template name="input">
   <form>
     <view class="cu-form-group solid-bottom">
       <view wx:if="{{title}}" class="title">{{title}}</view>
-      <input placeholder='{{placeholder||"请输入..."}}'></input>
+      <input placeholder='{{placeholder||"请输入..."}}' data-env="{{_env}}" bindinput="bindinput" value="{{value}}"></input>
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} text-{{color||render.color()}}"></text>
-      <button wx:if="{{btnText}}" class="cu-btn bg-{{color}} shadow">{{btnText}}</button>
+      <button wx:if="{{btnText}}" class="cu-btn bg-{{color}} shadow" data-env="{{_env}}" bindtap="btnText">{{btnText}}</button>
       <view wx:if="{{tag}}" class="cu-capsule radius">
         <view class="cu-tag bg-{{color}}">{{tag}}</view>
         <view wx:if="{{tag2}}" class="cu-tag line-{{color?color:render.color()}}">{{tag2}}</view>
@@ -20,7 +21,7 @@
 <template name="textarea">
   <!-- !!!!! placeholder 在ios表现有偏移 建议使用 第一种样式 -->
   <view class="cu-form-group solid-bottom">
-    <textarea maxlength="-1" disabled="{{modalName!=null}}" bindinput="textareaAInput" placeholder="{{placeholder||'请输入...'}}"></textarea>
+    <textarea maxlength="-1" disabled="{{modalName!=null}}" data-env="{{_env}}" bindinput="bindTextArea" value="{{value}}" placeholder="{{placeholder||'请输入...'}}"></textarea>
   </view>
 </template>
 
@@ -28,24 +29,32 @@
 <template name="switch">
   <view class="cu-form-group">
     <view wx:if="{{title}}" class="title">{{title}}</view>
-    <switch class="{{color}} {{shape?shape:''}} sm" checked="{{checked==1?1:0}}"></switch>
+    <switch class="{{color}} {{shape?shape:''}} sm" data-env="{{_env}}" checked="{{value}}" bindchange="switchChange"></switch>
   </view>
 </template>
 
 <!-- 单选框 -->
 <template name="radio">
-  <view class="cu-form-group">
-    <view wx:if="{{title}}" class="title">{{title}}</view>
-    <radio class="{{shape?'radio':''}} {{color?color:''}}" checked="{{checked==1?1:0}}"></radio>
-  </view>
+  <radio-group class="block" data-env="{{_env}}" bindchange="radioChange">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="cu-form-group">
+        <view wx:if="{{item.title}}" class="title">{{item.title}}</view>
+        <radio class="{{shape?'radio':''}} {{color?color:''}}" value="{{item.value}}"></radio>
+      </view>
+    </block>
+  </radio-group>
 </template>
 
 <!-- 复选框 -->
 <template name="checkbox">
-  <view class="cu-form-group">
-    <view wx:if="{{title}}" class="title">{{title}}</view>
-    <checkbox class="{{shape?shape:''}} {{color?color:''}}" checked="{{checked==1?1:0}}"></checkbox>
-  </view>
+  <checkbox-group class="block" data-env="{{_env}}" bindchange="checkboxChange">
+    <block wx:for="{{list}}" wx:key="index">
+      <view class="cu-form-group">
+        <view wx:if="{{item.title}}" class="title">{{item.title}}</view>
+        <checkbox class="{{shape?shape:''}} {{color?color:''}}" value="{{item.value}}"></checkbox>
+      </view>
+    </block>
+  </checkbox-group>
 </template>
 
 <!-- 上传图片 -->
@@ -72,11 +81,11 @@
 <!-- 步数累加器 -->
 <template name="stepper">
   <view class="bg-white flex align-center padding-xs padding-left-sm">
-    <button class="cu-btn bg-gray" disabled="{{(value||0)<=(min||0)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'minus']}}" data-tindex="{{tindex}}" data-route="{{route}}" data-env="{{_env}}" catchtap="stepper">
+    <button class="cu-btn bg-gray" disabled="{{(value||0)<=(min||0)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'minus']}}" data-tindex="{{tindex}}" data-env="{{_env}}" catchtap="stepper">
       <view class="cuIcon-move"></view>
     </button>
-    <input class="text-center" type="digit" value="{{value}}" data-event-opts="{{[value||0, min, max, step?step:1, 'input']}}" data-tindex="{{tindex}}" data-route="{{route}}" bindinput="stepper" style="padding-left:10rpx;width:auto;max-width:100rpx;" />
-    <button class="cu-btn bg-gray" disabled="{{(value||0)>=(max||10)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'plus']}}" data-tindex="{{tindex}}" data-route="{{route}}" data-env="{{_env}}" catchtap="stepper">
+    <input class="text-center" type="digit" value="{{value}}" data-event-opts="{{[value||0, min, max, step?step:1, 'input']}}" data-tindex="{{tindex}}" bindinput="stepper" style="padding-left:10rpx;width:auto;max-width:100rpx;" />
+    <button class="cu-btn bg-gray" disabled="{{(value||0)>=(max||10)||disabled}}" data-event-opts="{{[value||0, min, max, step?step:1, 'plus']}}" data-tindex="{{tindex}}" data-env="{{_env}}" catchtap="stepper">
       <view class="cuIcon-add"></view>
     </button>
   </view>

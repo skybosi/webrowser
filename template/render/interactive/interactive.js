@@ -11,10 +11,11 @@ export default ({
    */
   getUserInfo(e) {
     this.beforeClick(e)
-    var uid = e.currentTarget.dataset.uid
-    var openID = e.currentTarget.dataset.openid
+    let uid = e.currentTarget.dataset.uid
+    let openID = e.currentTarget.dataset.openid
+    let env = e.currentTarget.dataset.env
     wx.navigateTo({
-      url: '/pages/me/mime/mime?uid=' + uid + '&openID=' + openID,
+      url: '/pages/me/mime/mime?uid=' + uid + '&openID=' + openID + '&ctx=' + JSON.stringify(env),
     })
   },
   /**
@@ -22,10 +23,11 @@ export default ({
    */
   contactUser(e) {
     this.beforeClick(e)
-    var uid = e.currentTarget.dataset.uid
-    var openID = e.currentTarget.dataset.openid
+    let env = e.currentTarget.dataset.env
+    let uid = e.currentTarget.dataset.uid
+    let openID = e.currentTarget.dataset.openid
     wx.navigateTo({
-      url: '/pages/tiding/chat/chat?id=' + uid + '&openID=' + openID + "&pageId=content",
+      url: '/pages/tiding/chat/chat?id=' + uid + '&openID=' + openID + '&ctx=' + JSON.stringify(env),
     })
   },
   hideModal(e) {
@@ -60,12 +62,18 @@ export default ({
   getSearchPage(e) {
     this.beforeClick(e)
     console.log(e)
-    let index = e.currentTarget.dataset.index
-    let path = e.currentTarget.dataset.path
-    let id = e.currentTarget.dataset.id
+    let env = e.currentTarget.dataset.env || e.target.dataset.env
+    let index = e.currentTarget.dataset.index || e.target.dataset.index
+    let path = e.currentTarget.dataset.path || e.target.dataset.path
+    let id = e.currentTarget.dataset.id || e.target.dataset.id
+    let query = e.currentTarget.dataset.query || e.target.dataset.query
     if ('' != path) {
+      let eventId = env._id + ">" + this.parser.BKDRHash(path + query)
+      this.app.event.on(eventId, this, function(e) {
+        console.log(e)
+      })
       wx.navigateTo({
-        url: '/pages/index/index?path=' + path
+        url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
       })
     } else {
       console.log("path is empty!")
@@ -123,8 +131,7 @@ export default ({
   regionchange(e) {
     // mark 不支持input等原生组件兼容
     e.mark = {
-      tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex,
-      route: e.currentTarget.dataset.route || e.target.dataset.route
+      tindex: e.currentTarget.dataset.tindex || e.target.dataset.tindex
     }
     // 地图发生变化的时候，获取中间点，也就是cover-image指定的位置
     if (e.type == 'end' && (e.causedBy == 'scale' || e.causedBy == 'drag')) {

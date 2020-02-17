@@ -13,6 +13,13 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+/**
+ * 洗牌算法
+ */
+const shuffle = arr => {
+  arr.sort(() => Math.random() - 0.5);
+  return arr;
+}
 
 module.exports = {
   formatTime: formatTime

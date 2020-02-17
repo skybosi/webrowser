@@ -44,7 +44,8 @@ var closeNoticebar = function(event, ins) {
   ins.selectComponent('.noticebar-' + id).setStyle({
     display: 'none'
   })
-  event.id = id
+  event.id = id;
+  (event.detail || {}).value = 0
   // 调用预先定义的js 逻辑层的方法
   ins.callMethod("closeNoticebar", event)
   return false
@@ -59,9 +60,10 @@ var closeTag = function(event, ins) {
   ins.selectComponent('.tag-' + id).setStyle({
     display: 'none'
   })
-  event.id = id
+  event.id = id;
+  (event.detail || {}).value = 0
   // 调用预先定义的js 逻辑层的方法
-  ins.callMethod("closeNoticebar", event)
+  ins.callMethod("closeTag", event)
   return false
 }
 
@@ -70,16 +72,17 @@ var dropdown = function(event, ins) {
   var clicked = st.clicked || 0
   console.log('dropdown', JSON.stringify(event), JSON.stringify(ins))
   var id = event.currentTarget.dataset.id || event.target.dataset.id
-  var tidx = event.mark.tindex
+  var env = event.currentTarget.dataset.env || event.target.dataset.env
+  var tindex = env._index || event.mark.tindex
   if (!clicked) {
-    ins.selectComponent('.dropdown-item-' + tidx).removeClass("arrow").addClass("arrowdown")
-    ins.selectComponent('.dropdown-' + tidx).setStyle({
+    ins.selectComponent('.dropdown-item-' + tindex).removeClass("arrow").addClass("arrowdown")
+    ins.selectComponent('.dropdown-' + tindex).setStyle({
       display: 'block'
     })
     st.clicked = clicked + 1
   } else {
-    ins.selectComponent('.dropdown-item-' + tidx).removeClass("arrowdown").addClass("arrow")
-    ins.selectComponent('.dropdown-' + tidx).setStyle({
+    ins.selectComponent('.dropdown-item-' + tindex).removeClass("arrowdown").addClass("arrow")
+    ins.selectComponent('.dropdown-' + tindex).setStyle({
       display: 'none'
     })
     st.clicked = clicked - 1
@@ -93,27 +96,29 @@ var dropdown = function(event, ins) {
 var switchPopup = function(event, ins) {
   console.log('switchModal', JSON.stringify(event), JSON.stringify(ins))
   var id = event.currentTarget.dataset.id || event.target.dataset.id
-  var tidx = event.mark.tindex
-  ins.selectComponent('.popup-' + tidx).removeClass("show")
+  var env = event.currentTarget.dataset.env || event.target.dataset.env
+  var tindex = env._index || event.mark.tindex
+  ins.selectComponent('.popup-' + tindex).removeClass("show")
   event.id = id
   // 调用预先定义的js 逻辑层的方法
   ins.callMethod("clickPopup", event)
   return false
 }
 
-var showTip = function (event, ins) {
+var showTip = function(event, ins) {
   // console.log('showTip', JSON.stringify(event), JSON.stringify(ins))
   var id = event.currentTarget.dataset.id || event.target.dataset.id
-  var tidx = event.mark.tindex
+  var env = event.currentTarget.dataset.env || event.target.dataset.env
+  var tindex = env._index || event.mark.tindex
   var st = event.instance.getState()
   var clicked = st.clicked || 0
-  if(!clicked){
-    ins.selectComponent('.tooltiptext-' + tidx).setStyle({
+  if (!clicked) {
+    ins.selectComponent('.tooltiptext-' + tindex).setStyle({
       display: 'block'
     })
     st.clicked = clicked + 1
-  }else{
-    ins.selectComponent('.tooltiptext-' + tidx).setStyle({
+  } else {
+    ins.selectComponent('.tooltiptext-' + tindex).setStyle({
       display: 'none'
     })
     st.clicked = clicked - 1

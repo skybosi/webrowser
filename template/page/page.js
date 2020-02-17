@@ -1,6 +1,5 @@
 const app = getApp();
 import diff from '../../libs/diff.js'
-import event from '../../libs/event.js'
 import parser from '../../libs/parser.js'
 import render from '../../template/render/render.js'
 const LRUMap = require('../../libs/lru/lru.js').LRUMap
@@ -17,7 +16,6 @@ export default function(context = {}) {
   Object.assign(context, render, {
     lru: lru,
     diff: diff,
-    event: event,
     parser: parser
   })
   /**
@@ -30,8 +28,18 @@ export default function(context = {}) {
     Object.assign(self, {
       mock: mock
     })
+    self.app = app
+    self.data.query = options.query
+    self.data.path = options.path || "/index"
+    self.data._id = this.parser.BKDRHash(self.data.path + self.data.query)
+    try {
+      self.data["_ctx"] = JSON.parse(options.ctx)
+      self.data._eventId = self.data._ctx._id + ">" + self.data._id
+    } catch (e) {
+      self.data["_ctx"] = null
+      self.data._eventId = ".>" + self.data._id
+    }
     Object.assign(this.data, this.lru.get(options.path || "/index"))
-    // console.log("onload common page", this.data)
     originOnLoad && originOnLoad.call(self, options)
   }
   /**
@@ -49,7 +57,7 @@ export default function(context = {}) {
         break
       case 'left':
       case 'right':
-        self.event.emit('tabselect', e);
+        app.event.emit('tabselect', e);
         break;
       default:
         wx.showToast({

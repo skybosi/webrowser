@@ -1,3 +1,17 @@
+/**
+ * 
+ * https://github.com/dannnney/weapp-event
+ * 一个基本合格的 Event 管理器应该具备怎样的能力？
+ *  - 支持多种 Event 的通知
+ *  - 支持对某一 Event 可以添加多个监听者
+ *  - 支持对某一 Event 可以移除某一监听者
+ *  - 将 Event 的存储和管理放在一个单独模块中，可以被所有文件全局引用
+ * 根据以上的描述，我们来设计一个新的 Event 模块，对应上面的能力，它应该具有如下三个函数：
+ *  - on函数: 用来向管理器中添加一个 Event 的 Callback，且每一个 Event 必须有全局唯一的 EventName，函数内部通过一个数组来保存同一 Event 的多个 Callback
+ *  - remove函数: 用来向管理器移除一个 Event 的 Callback
+ *  - emit函数: 用来触发一个 Event 
+ * 
+ */
 var events = {};
 
 function on(name, self, callback) {
