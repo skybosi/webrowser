@@ -55,6 +55,6 @@ module.exports = {
     icon1: 'back',
     text1: '返回',
     icon2: 'roundadd',
+    enablePullDownRefresh: true
   },
-  enablePullDownRefresh: true
 }

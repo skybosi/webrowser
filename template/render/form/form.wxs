@@ -1,0 +1,10 @@
+var radioValue = function(value, env) {
+  return JSON.stringify({ value: value, env: env })
+}
+
+var checkboxValue = function(value, env) {
+  return JSON.stringify({value: value, env: env})
+}
+
+module.exports.radioValue = radioValue;
+module.exports.checkboxValue = checkboxValue;

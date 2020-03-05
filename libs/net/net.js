@@ -1,13 +1,37 @@
+import config from './config';
+
+function deviceInfo(isSync, cb) {
+  var deviceInfo = wx.getStorageSync('deviceInfo')
+  if (deviceInfo) {
+    return deviceInfo
+  }
+  isSync = isSync || false
+  if (isSync) {
+    var res = wx.getSystemInfoSync()
+    wx.setStorageSync('deviceInfo', res)
+    return res
+  } else {
+    wx.getSystemInfo({
+      success: function (res) {
+        if (cb) {
+          wx.setStorageSync('deviceInfo', res)
+          cb(res)
+        }
+      }
+    })
+  }
+}
+
 // server config
 const _header = {
   'GET': {
     //设置参数内容类型为x-www-form-urlencoded
     'content-type': 'application/x-www-form-urlencoded',
     'Accept': 'application/json',
-    "Version": ''
+    "Version": config.VERSION
   },
   'POST': {
-    "Version": ''
+    "Version": config.VERSION
   }
 }
 
@@ -16,12 +40,15 @@ const _header = {
  */
 function addparams(params) {
   params = params || {}
-  params.brand = encodeURIComponent(device.brand)
-  params.model = encodeURIComponent(device.model)
-  params.language = encodeURIComponent(device.language)
-  params.system = encodeURIComponent(device.system)
-  params.platform = encodeURIComponent(device.platform)
-  params.client_id = encodeURIComponent(device.platform + "_" + device.system +
+  params.version = config.VERSION
+  var device = deviceInfo(true)
+  params.brand = encodeURI(device.brand)
+  params.model = encodeURI(device.model)
+  params.language = encodeURI(device.language)
+  params.system = encodeURI(device.system)
+  params.platform = encodeURI(device.platform)
+  params.client_app = config.VERSION
+  params.client_id = encodeURI(device.platform + "_" + device.system +
     "_" + device.brand + "_" + device.model)
   return params
 }
@@ -44,8 +71,8 @@ function getData(res) {
   var header = res.header
   if (200 == res.statusCode) {
     var result = res.data
-    message = result.message || errcode.message[result.errcode + ""]
-    if (result && result.data && errcode.OK_STATUS == result.status) {
+    message = result.message
+    if (result && result.data && 0 == result.status) {
       data = result.data
       header = res.header
     }
@@ -123,7 +150,20 @@ const _post = (url, args, body) => {
   return http(url, "POST", body)
 }
 
+
+/**
+ * request
+ */
+const _request = (url, args, body) => {
+  if (body) {
+    return _post(url, args, body)
+  } else {
+    return _get(url, args)
+  }
+}
+
 module.exports = {
-  HttpGet: _get,
-  HttpPost: _post,
+  get: _get,
+  post: _post,
+  request: _request,
 }

@@ -103,7 +103,7 @@ var list = [{
 module.exports = {
   list: list,
   nav: {
-    title: '卡片',
+    title: '首页',
     icon1: 'search',
     text1: '', // icon2: 'roundadd',
   },

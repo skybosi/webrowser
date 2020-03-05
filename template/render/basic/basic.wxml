@@ -1,14 +1,14 @@
 <import src="/template/render/item/item.wxml" />
 <import src="/template/render/form/form.wxml" />
 <import src="/template/render/chat/chat.wxml" />
-<import src="/template/render/tabbar/tabbar.wxml" />
+<import src="/template/render/layout/layout.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 <wxs src="../render.wxs" module="render"></wxs>
 <wxs src="./basic.wxs" module="basic"></wxs>
 
 <!-- 文本 -->
 <template name="text">
-  <view catchtap="clickText" data-env="{{_env}}" catchlongpress="longclickText" wx:if="{{text}}" data-path="{{path}}" data-type="{{name}}" class="{{basic.template(name)}}">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" wx:if="{{text}}" data-type="{{name}}" class="{{basic.template(name)}}">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
@@ -16,7 +16,7 @@
 <!-- 链接标签 -->
 <template name="a">
   <view wx:if="{{text}}" class="margin-tb-sm">
-    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickA" data-env="{{_env}}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
+    <text selectable='true' catchtap="{{basic.clickA}}" catchlongpress="longclickItem" data-env="{{_env}}" class="a-link text-blue padding-lr" style="text-decoration:underline;" data-href="{{href}}">{{text}}</text>
   </view>
 </template>
 
@@ -57,14 +57,14 @@
 
 <!-- 文段 -->
 <template name="p">
-  <view catchtap="clickP" data-env="{{_env}}" catchlongpress="longclickP" wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" wx:if="{{text}}" class="margin-tb-sm padding-lr text-black text-{{weight?weight:'normal'}} text-indent text-justify">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
 
 <!-- 结语文段 -->
 <template name="pe">
-  <view catchtap="clickPe" data-env="{{_env}}" catchlongpress="longclickPe" class="text-center padding-lr padding-sm">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" class="text-center padding-lr padding-sm">
     <view wx:if="{{text}}" class="margin-tb-sm text-gray text-{{weight?weight:'normal'}}">
       <text selectable='true'>{{text}}</text>
     </view>
@@ -84,7 +84,7 @@
 
 <!-- 列表 -->
 <template name="li">
-  <view catchtap="clickLi" data-env="{{_env}}" catchlongpress="longclickLi" wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickLi" wx:if="{{text}}" class="cu-bar padding-lr justify-start text-{{weight?weight:'normal'}}" style="min-height:55rpx;align-items:baseline">
     <text selectable='true' class="cuIcon-title text-{{color?color:render.color()}} padding-right-xs"></text>{{text}}
   </view>
 </template>
@@ -110,7 +110,7 @@
 
 <!-- 下拉框 -->
 <template name="dropdown">
-  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickDropdown" data-env="{{_env}}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
+  <view catchtap="{{basic.dropdown}}" catchlongpress="longclickItem" data-env="{{_env}}" class="cu-list menu bg-white solid-top" style="margin:0rpx" data-path="{{path}}">
     <view class="dropdown-item-{{tindex}} cu-item arrow padding-lr" style="margin:0">
       <view class="content">
         <text wx:if="{{icon&&''!=icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -173,15 +173,17 @@
     </view>
   </view>
   <!-- 多选弹框 -->
-  <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
-    <view class="cu-dialog" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
+  <!-- <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" data-env="{{_env}}" catchtap="{{basic.switchPopup}}"> -->
+    <!-- <view class="cu-dialog" data-env="{{_env}}" catchtap="{{basic.switchPopup}}"> -->
+  <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show">
+    <view class="cu-dialog">
       <view class="cu-bar bg-white">
         <view class="action text-blue" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}</view>
         <view class="action text-green" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}</view>
       </view>
       <view class="grid col-3 padding-sm">
         <view wx:for="{{checkbox}}" class="padding-xs" wx:key="index">
-          <button class="cu-btn orange lg block {{item.checked?'bg-orange':'line-orange'}}" catchtap="ChooseCheckbox" data-env="{{_env}}" data-value="{{item.value}}"> {{item.name}}
+          <button class="cu-btn orange lg block {{item.checked?'bg-orange':'line-orange'}}" catchtap="chooseCheckbox" data-env="{{_env}}" data-value="{{item.value}}"> {{item.name}}
             <view class="cu-tag sm round {{item.checked?'bg-white text-orange':'bg-orange'}}" wx:if="{{item.hot}}">HOT</view>
           </button>
         </view>
@@ -228,7 +230,7 @@
 
 <!-- 图片 -->
 <template name="img">
-  <view catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
+  <view catchtap="clickItem" data-env="{{ {..._env,_href2:'previewImage'} }}" catchlongpress="longclickImg" wx:if="{{url}}" class="cu-card case padding-tb-xs padding-lr" data-url="{{url}}" data-urls="{{urls}}">
     <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
       <view class="image" style="height:375rpx">
         <image src="{{url}}" mode="widthFix"></image>
@@ -244,7 +246,7 @@
 <!-- 视频 -->
 <template name="video">
   <view class="bg-white flex justify-center align-center padding-tb-sm padding-lr">
-    <video style="width:100%" catchtap="clickVideo" data-env="{{_env}}" catchlongpress="longclickVideo" src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
+    <video style="width:100%" catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" src="{{url}}" controls="{{true}}" objectFit="cover" page-gesture="true" show-mute-btn="true" />
   </view>
 </template>
 
@@ -256,11 +258,11 @@
 <!-- 按钮 -->
 <template name="button">
   <block class="margin">
-    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-path="{{path}}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+    <button catchtap="clickItem" data-env="{{_env}}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
       disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
-    <button catchtap="{{tap||'clickButton'}}" data-env="{{_env}}" data-path="{{path}}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <button catchtap="clickItem" data-env="{{_env}}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
   </block>
@@ -310,7 +312,7 @@
 <template name="tip">
   <view class="tooltiptext-{{tindex}} text-center padding-tb-xs padding-sm radius" style="background-color:rgba(0, 0, 0, .5);color:#fff;position:absolute;z-index:1025;left:30rpx">
     <block wx:for="{{list}}" wx:key="index">
-      <view catchtap="clickTip" data-env="{{_env}}" data-event-opts="{{item}}" class="text-cut solid-bottom padding-bottom-xs">{{item.text}}</view>
+      <view catchtap="clickItem" data-env="{{_env}}" data-event-opts="{{item}}" class="text-cut solid-bottom padding-bottom-xs">{{item.text}}</view>
     </block>
   </view>
 </template>
@@ -329,7 +331,7 @@
 
 <!-- 分割线 -->
 <template name="divider">
-  <view class="cu-title.center-title margin-top padding-top" catchtap="clickDivider" data-env="{{_env}}" data-event-opts="{{[click, text]}}">
+  <view class="cu-title.center-title margin-top padding-top" catchtap="clickItem" data-env="{{_env}}" data-event-opts="{{[click, text]}}">
     <view class="text-gray text-{{size||''}}">{{text||'我是分割线'}}</view>
   </view>
 </template>

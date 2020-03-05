@@ -45,7 +45,7 @@ function parse(data, path, route) {
   paths['_'] = {}, paths['$'] = {}, paths['#'] = {}
   paths['_on'] = data['methods'] || {}, paths['_bind'] = data['_bind'] || {}, paths['_model'] = data['_model'] || {}
   // 清空老数据
-  _init(data, _route)
+  _init(data, _path, _route)
   // 递归处理数据
   for (let key in data) {
     if (data[key] !== undefined && !IGNOREKEY[key]) {
@@ -54,18 +54,23 @@ function parse(data, path, route) {
     }
   }
   Object.assign(data, paths)
-  return paths
+  return data
 }
 
 /**
  * 初始化数据
  */
-function _init(data, _route) {
+function _init(data, path, route) {
   data['_'] = {}, data['$'] = {}, data['#'] = {}, data['_on'] = data['_on'] || data['methods'] || {}
   // data['_bind'] = {}, data['_model'] = {}
+  let index = path.split('.') || []
   data['_env'] = {
-    _id: BKDRHash(_route),
-    _route: _route
+    _id: hash(route),
+    _index: Number(index[index.length - 1]),
+    _path: path,
+    _route: route,
+    _node: data.beforeNode,
+    node_: data.afterNode
   }
 }
 
@@ -100,11 +105,14 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
   if (dataType == OBJECTTYPE || dataType == ARRAYTYPE) {
     if (dataType == OBJECTTYPE) {
       data._env = {}
-      data._env._id = BKDRHash(route)
+      data._env._id = hash(route)
       data._env._path = path
       data._env._route = route
       data._env._index = index
       data._env._method = null
+      data._env._node = data.beforeNode
+      data._env._href = (data.path||"").trim()
+      data._env.node_ = data.afterNode
       paths['#'][data._env._id] = data
     }
     for (let key in data) {
@@ -114,6 +122,9 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
       }
     }
   } else {
+    if (dataType == STRINGTYPE) {
+      data = data.trim()
+    }
     // 处理事件及数据绑定
     if (data && MAP_OP[data[0]]) {
       MAP_OP[data[0]](root, parent, paths, index, data)
@@ -123,7 +134,7 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
   // 处理关键字
   if (MAP_KEY[index]) {
     if (!paths['_'][index]) {
-      paths['_'][index] = []
+      paths['_'][index] = {}
     }
     paths['_'][index][path] = {
       _data: data,
@@ -160,6 +171,8 @@ function modify(path, route, value, obj) {
     }
     return cur[key]
   }, obj)
+  // delete(value['list'])
+  Object.assign(obj, value)
   Object.assign(obj['_'], value['_'])
   Object.assign(obj['$'], value['$'])
 }
@@ -178,28 +191,16 @@ function gotoFunc(arr, path, route) {
   }
 }
 
-/**
- * BKDR Hash (modified version)
- *
- * @param {String} str string to hash
- * @returns {Number}
- */
-function BKDRHash(str) {
-  var seed = 131;
-  var seed2 = 137;
-  var hash = 0;
-  // make hash more sensitive for short string like 'a', 'b', 'c'
-  str += 'x';
-  // Note: Number.MAX_SAFE_INTEGER equals 9007199254740991
-  var MAX_SAFE_INTEGER = parseInt(9007199254740991 / seed2);
-  for (var i = 0; i < str.length; i++) {
-    if (hash > MAX_SAFE_INTEGER) {
-      hash = parseInt(hash / seed2);
-    }
-    hash = hash * seed + str.charCodeAt(i);
+function hash(str) {
+  str = str.toLowerCase();
+  // 1315423911=b'1001110011001111100011010100111'
+  var hash = 1315423911;
+  for (let i = str.length - 1; i >= 0; i--) {
+    let ch = str.charCodeAt(i);
+    hash ^= ((hash << 5) + ch + (hash >> 2));
   }
-  return hash;
-};
+  return (hash & 0x7FFFFFFF);
+}
 
 /**
  * 根据path 获取Object中path对应的value
@@ -253,7 +254,7 @@ function _bind(root, parent, paths, index, value) {
 }
 
 /**
- * 数据双向绑定
+ * 数据双向绑定 TODO
  */
 function _model(root, parent, paths, index, value) {
   let _value = value.slice(1)
@@ -290,14 +291,31 @@ function _model(root, parent, paths, index, value) {
  * 函数绑定
  */
 function _on(root, parent, paths, index, value) {
-  let _funcName = value.slice(1)
-  _funcName && (parent._env._method = root['_on'][_funcName]) && (parent._env._methodName = _funcName)
+  let {
+    _funcName,
+    param
+  } = _onCheck(value, paths)
+  // _funcName && (parent._env._method = root['_on'][_funcName]) && (parent._env._methodName = _funcName, _param = param)
+  _funcName && (parent._env._methodName = _funcName, parent._env._param = param)
 }
+
+/**
+ * 处理函数绑定
+ */
+function _onCheck(value, paths) {
+  let _funcName = value.slice(1)
+  let param = (_funcName.match(/(.*)\(.+\)/g) || [_funcName + "()"])[0].match(/(?!,)[a-zA-Z0-9]+/g) || [];
+  return {
+    _funcName: param.shift(),
+    param: param
+  }
+}
+
 
 module.exports = {
   get: get,
   type: type,
   parse: parse,
   modify: modify,
-  BKDRHash: BKDRHash,
+  hash: hash,
 }

@@ -8,7 +8,7 @@
       <view wx:if="{{title}}" class="title">{{title}}</view>
       <input placeholder='{{placeholder||"请输入..."}}' data-env="{{_env}}" bindinput="bindinput" value="{{value}}"></input>
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} text-{{color||render.color()}}"></text>
-      <button wx:if="{{btnText}}" class="cu-btn bg-{{color}} shadow" data-env="{{_env}}" bindtap="btnText">{{btnText}}</button>
+      <button wx:if="{{btnText}}" class="cu-btn bg-{{color}} shadow" data-env="{{_env}}" bindtap="clickItem">{{btnText}}</button>
       <view wx:if="{{tag}}" class="cu-capsule radius">
         <view class="cu-tag bg-{{color}}">{{tag}}</view>
         <view wx:if="{{tag2}}" class="cu-tag line-{{color?color:render.color()}}">{{tag2}}</view>
@@ -65,7 +65,7 @@
   </view>
   <view class="cu-form-group solid-bottom">
     <view class="grid col-{{column||4}} grid-square flex-sub">
-      <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="ViewImage" data-env="{{_env}}" data-url="{{imgList[index]}}">
+      <view class="bg-img" wx:for="{{imgList}}" wx:key="index" bindtap="clickItem" data-env="{{ {..._env,_href2:'previewImage'} }}" data-url="{{imgList[index]}}" data-urls="{{imgList}}">
         <image src='{{imgList[index]}}' mode='aspectFill'></image>
         <view class="cu-tag bg-red" catchtap="DelImg" data-env="{{_env}}" data-index="{{index}}">
           <text class="cuIcon-close"></text>

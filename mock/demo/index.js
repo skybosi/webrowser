@@ -25,7 +25,7 @@ module.exports = {
     page: "community",
     title: "社区",
     icon: "circle",
-    path: "/demo/community/community",
+    path: "/demo/community/community ",
     iconSelected: "circlefill",
   }, {
     tag: "",
@@ -50,7 +50,6 @@ module.exports = {
     iconSelected: "myfill",
   }],
   PageCur: 'home',
-  PageIdx: 0,
   // enablePullDownRefresh: true,
   // enablePullUpRefresh: true,
 }

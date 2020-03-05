@@ -7,7 +7,7 @@
 <!-- <wxs src="../../page/page.wxs" module="page"></wxs> -->
 
 <template name="user">
-  <view data-uid="{{id||uid}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" data-env="{{_env}}" catchtap="getUserInfo">
+  <view data-uid="{{id||uid}}" data-openid="{{openID}}" class="bg-white cu-list menu-avatar comment padding solid-bottom" data-env="{{_env}}" catchtap="clickItem">
     <view class="cu-item">
       <view wx:if="{{avatar}}" class="cu-avatar round lg" style="background-image:url({{avatar}});"></view>
       <view wx:elif="{{name}}" class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
@@ -19,7 +19,7 @@
         <view>
           <view wx:if="{{image && image[0]}}" class="padding-top-xs">
             <view class="grid flex-sub col-3 grid-square">
-              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="viewImage" data-env="{{_env}}" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
+              <view class="bg-img" wx:for="{{image}}" wx:key="index" style="background-image:url({{item}});" catchtap="clickItem" data-env="{{ {..._env,_href2:'previewImage'} }}" catchlongpress="longclickImg" data-url="{{item}}" data-urls="{{image}}"></view>
             </view>
           </view>
         </view>
@@ -68,7 +68,7 @@
         </view>
       </block>
       <block wx:else>
-        <view class='avatar margin-left' data-path="{{path}}" data-env="{{_env}}" bindtap="navigateTo">
+        <view class='avatar margin-left' data-env="{{_env}}" bindtap="clickItem">
           <image class="cu-avatar xl round" src="{{userInfo.avatarUrl}}"></image>
         </view>
         <view class='flex flex-direction justify-center margin-left'>
@@ -103,7 +103,7 @@
       <text class="cuIcon-search"></text>
       <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
         <swiper-item wx:for="{{render.toArray(placeholder)}}" wx:key="index" class="flex align-center text-black">
-          <input type="text" placeholder="{{item}}" confirm-type="search" data-path="{{path}}" bindtap="getSearchPage" data-env="{{_env}}" bindblur="{{render.switchAutoplay}}"></input>
+          <input type="text" placeholder="{{item}}" confirm-type="search" bindtap="clickItem" data-env="{{_env}}" bindblur="{{render.switchAutoplay}}"></input>
         </swiper-item>
       </swiper>
     </view>
@@ -179,7 +179,7 @@
         <text wx:if="{{item.inner && item.inner.type}}">{{item.name}}</text>
       </view>
     </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation="true" scroll-into-view="main-{{MainCur||0}}" style="height:{{ScreenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" bindscroll="VerticalMain">
+    <scroll-view class="VerticalMain" scroll-y scroll-with-animation="true" scroll-into-view="main-{{MainCur||0}}" style="height:{{ScreenHeight}}px;background-color:#f1f1f1;-webkit-overflow-scrolling:touch" data-env="{{_env}}" bindscroll="VerticalMain">
       <view wx:if="{{item.inner && item.inner.type}}" class="padding-bottom-xs tree-item" wx:for="{{list}}" wx:key="index" id="main-{{index}}">
         <view class='cu-bar solid-bottom bg-white'>
           <view class='action'>
@@ -200,7 +200,7 @@
     </block>
   </scroll-view>
   <view class="padding-top-xs">
-    <template is="{{list[TabCur||0].inner.type || 'page'}}" data="{{... list[TabCur||0].inner}}"></template>
+    <template is="{{list[TabCur||0].type || 'page'}}" data="{{... list[TabCur||0]}}"></template>
   </view>
 </template>
 

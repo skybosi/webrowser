@@ -1,7 +1,6 @@
 <import src="/template/render/item/item.wxml" />
 <import src="/template/render/form/form.wxml" />
 <import src="/template/render/chat/chat.wxml" />
-<import src="/template/render/tabbar/tabbar.wxml" />
 <import src="/template/render/basic/basic.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 <wxs src="./layout.wxs" module="layout"></wxs>
@@ -32,9 +31,9 @@
 </template>
 
 <template name="flex-sub">
-  <view class="flex solid">
+  <view class="flex solid-right">
     <block wx:for="{{list}}" wx:key="index">
-      <view class="flex radius padding-xs justify-center align-center" hover-class="hover" style="background-color:white;flex:{{item.sub||1}};min-height:80rpx;margin:5rpx">
+      <view class="flex radius justify-center align-center" style="background-color:white;flex:{{item.sub||1}};min-height:80rpx">
         <template is="{{item.type}}" data="{{...item, tindex: tindex}}"></template>
       </view>
     </block>

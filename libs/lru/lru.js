@@ -27,16 +27,19 @@
   const NEWER = Symbol('newer');
   const OLDER = Symbol('older');
   const DEFAULTLIMIT = 20;
+  const DEFAULTACCESS = 10;
 
-  function LRUMap(limit, entries) {
+  function LRUMap(limit, access, entries) {
     if (typeof limit !== 'number') {
       // called as (entries)
       entries = limit;
       limit = DEFAULTLIMIT;
+      access = DEFAULTACCESS;
     }
 
     this.size = 0;
     this.limit = limit || DEFAULTLIMIT;
+    this.access = access || DEFAULTACCESS;
     this.oldest = this.newest = undefined;
     this._keymap = new Map();
 
@@ -53,6 +56,7 @@
   function Entry(key, value) {
     this.key = key;
     this.value = value;
+    this.access = 0;
     this[NEWER] = undefined;
     this[OLDER] = undefined;
   }
@@ -110,6 +114,13 @@
     // First, find our cache entry
     var entry = this._keymap.get(key);
     if (!entry) return; // Not cached. Sorry.
+    if (entry.access > this.access) {
+      this._keymap.delete(entry.key);
+      return;
+    }
+    entry.access++;
+    // 更新access
+    this._keymap.set(key, entry);
     // As <key> was found in the cache, register it as being requested recently
     this._markEntryAsUsed(entry);
     return entry.value;
@@ -121,6 +132,7 @@
     if (entry) {
       // update existing
       entry.value = value;
+      entry.access = 0;
       this._markEntryAsUsed(entry);
       return this;
     }

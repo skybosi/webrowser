@@ -117,7 +117,7 @@ function touchmove(e, ins) {
   var enablePullUpRefresh = pullRet.enablePullUpRefresh
   var enablePullDownRefresh = pullRet.enablePullDownRefresh
   // 处理 Sticky
-  // console.log(JSON.stringify(pageStats))
+  // console.log(JSON.stringify(pullRet))
   if ((pageStats.scrollTop || 0) > 45) {
     _handleStickyView(e, ins, 'add')
   } else {
@@ -179,9 +179,10 @@ function touchmove(e, ins) {
  * 触摸事件结束，处理视图层，并回调事件处理函数
  */
 function touchend(e, ins) {
-  var pullRet = _handlePullView(ins, 'check')
+  var pullRet = _handlePullView(e, ins, 'check')
   var enablePullUpRefresh = pullRet.enablePullUpRefresh
   var enablePullDownRefresh = pullRet.enablePullDownRefresh
+  // console.log(enablePullUpRefresh, enablePullDownRefresh)
   // 处理 添加 fix
   _handleFixedView(e, ins, 'add')
   // 删除可能存在的动画
@@ -201,14 +202,14 @@ function touchend(e, ins) {
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
       e.direction = "down"
-      // console.log("下:" + startmarkY + " " + pageY) 
+      console.log("下:" + startmarkY + " " + pageY) 
       if (enablePullDownRefresh) {
         ins.callMethod('onPageEvent', e)
       }
     }
     if (startmarkY > newmarkY) {
       e.direction = "up"
-      // console.log("上:" + startmarkY + " " + pageY)
+      console.log("上:" + startmarkY + " " + pageY)
       if (enablePullUpRefresh) {
         ins.callMethod('onPageEvent', e)
       }

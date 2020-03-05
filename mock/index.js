@@ -52,82 +52,102 @@ var list = [{
     icon: "infofill",
     text: "基础组件",
     list: [{
-        icon: 'text',
-        badge: 10,
-        text: '文本',
-        type: 'label',
-        path: '/basic/text'
+        type: "flex-sub",
+        list: [{
+            icon: 'text',
+            badge: 10,
+            text: '文本',
+            type: 'label',
+            path: '/basic/text'
+          },
+          {
+            icon: 'icon',
+            badge: 10,
+            text: '图标',
+            type: 'label',
+            path: '/basic/icon'
+          },
+        ]
       },
       {
-        icon: 'icon',
-        badge: 10,
-        text: '图标',
-        type: 'label',
-        path: '/basic/icon'
+        type: "flex-sub",
+        list: [{
+            icon: 'square',
+            badge: 1,
+            text: '按钮',
+            type: 'label',
+            path: '/basic/button'
+          },
+          {
+            icon: 'picfill',
+            badge: 3,
+            text: '图片',
+            type: 'label',
+            path: '/basic/image'
+          },
+        ]
       },
       {
-        icon: 'square',
-        badge: 1,
-        text: '按钮',
-        type: 'label',
-        path: '/basic/button'
+        type: "flex-sub",
+        list: [{
+            icon: 'videofill',
+            badge: 1,
+            text: '视频',
+            type: 'label',
+            path: '/basic/video'
+          },
+          {
+            icon: 'pullup',
+            badge: 3,
+            text: '弹框',
+            type: 'label',
+            path: '/basic/popup'
+          },
+        ]
       },
       {
-        icon: 'picfill',
-        badge: 3,
-        text: '图片',
-        type: 'label',
-        path: '/basic/image'
+        type: "flex-sub",
+        list: [{
+            icon: 'loading2',
+            badge: 3,
+            text: 'tip',
+            type: 'label',
+            path: '/basic/tip'
+          },
+          {
+            icon: 'loading2',
+            badge: 3,
+            text: '加载',
+            type: 'label',
+            path: '/basic/loading'
+          },
+        ]
       },
       {
-        icon: 'videofill',
-        badge: 1,
-        text: '视频',
-        type: 'label',
-        path: '/basic/video'
-      },
-      {
-        icon: 'pullup',
-        badge: 3,
-        text: '弹框',
-        type: 'label',
-        path: '/basic/popup'
-      },
-      {
-        icon: 'loading2',
-        badge: 3,
-        text: 'tip',
-        type: 'label',
-        path: '/basic/tip'
-      },
-      {
-        icon: 'loading2',
-        badge: 3,
-        text: '加载',
-        type: 'label',
-        path: '/basic/loading'
-      },
-      {
-        icon: 'pulldown',
-        badge: 3,
-        text: '下拉框',
-        type: 'label',
-        path: '/basic/dropdown'
-      },
-      {
-        icon: 'loading',
-        badge: 3,
-        text: '进度条',
-        type: 'label',
-        path: '/basic/progress'
-      },
-      {
-        icon: 'text',
-        badge: 10,
-        text: '分割线',
-        type: 'label',
-        path: '/basic/divider'
-      },
+        type: "flex-sub",
+        list: [{
+            icon: 'pulldown',
+            badge: 3,
+            text: '下拉框',
+            type: 'label',
+            path: '/basic/dropdown'
+          },
+          {
+            icon: 'loading',
+            badge: 3,
+            text: '进度条',
+            type: 'label',
+            path: '/basic/progress'
+          },
+          {
+            icon: 'text',
+            badge: 10,
+            text: '分割线',
+            type: 'label',
+            path: '/basic/divider'
+          },
+        ]
+      }
     ]
   },
   {
@@ -211,9 +231,51 @@ var list = [{
   },
   {
     type: "divider",
-    text: '哎！到底啦。。。',
+    text: '弹一下',
     value: '@test',
-    click: ':clickDivider'
+    click: ':clickDivider(test, obj)',
+    afterNode: {
+      type: "popup",
+      poptype: 'image',
+      oktile: '背景弹框',
+      image: "https://ossweb-img.qq.com/images/lol/web201310/skin/big81006.jpg"
+    },
+    beforeNode: {
+      type: "popup",
+      poptype: "checkbox",
+      title: '多选弹框',
+      checkbox: [{
+        value: 0,
+        name: '10元',
+        checked: false,
+        hot: false,
+      }, {
+        value: 1,
+        name: '20元',
+        checked: true,
+        hot: false,
+      }, {
+        value: 2,
+        name: '30元',
+        checked: true,
+        hot: true,
+      }, {
+        value: 3,
+        name: '60元',
+        checked: false,
+        hot: true,
+      }, {
+        value: 4,
+        name: '80元',
+        checked: false,
+        hot: false,
+      }, {
+        value: 5,
+        name: '100元',
+        checked: false,
+        hot: false,
+      }]
+    },
   },
 ]
 var methods = {

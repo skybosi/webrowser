@@ -6,30 +6,6 @@ let qqmapsdk = qqmapsdk = new QQMapWX({
 const app = getApp()
 
 export default ({
-  /**
-   * 进入发布者个人中心
-   */
-  getUserInfo(e) {
-    this.beforeClick(e)
-    let uid = e.currentTarget.dataset.uid
-    let openID = e.currentTarget.dataset.openid
-    let env = e.currentTarget.dataset.env
-    wx.navigateTo({
-      url: '/pages/me/mime/mime?uid=' + uid + '&openID=' + openID + '&ctx=' + JSON.stringify(env),
-    })
-  },
-  /**
-   * 联系发布者
-   */
-  contactUser(e) {
-    this.beforeClick(e)
-    let env = e.currentTarget.dataset.env
-    let uid = e.currentTarget.dataset.uid
-    let openID = e.currentTarget.dataset.openid
-    wx.navigateTo({
-      url: '/pages/tiding/chat/chat?id=' + uid + '&openID=' + openID + '&ctx=' + JSON.stringify(env),
-    })
-  },
   hideModal(e) {
     this.beforeClick(e)
     let chose = e.currentTarget.dataset.chose || 'ignore'
@@ -54,29 +30,6 @@ export default ({
       this.setData({
         ["searchBar.autoplay"]: 1
       })
-    }
-  },
-  /**
-   * search-bar
-   */
-  getSearchPage(e) {
-    this.beforeClick(e)
-    console.log(e)
-    let env = e.currentTarget.dataset.env || e.target.dataset.env
-    let index = e.currentTarget.dataset.index || e.target.dataset.index
-    let path = e.currentTarget.dataset.path || e.target.dataset.path
-    let id = e.currentTarget.dataset.id || e.target.dataset.id
-    let query = e.currentTarget.dataset.query || e.target.dataset.query
-    if ('' != path) {
-      let eventId = env._id + ">" + this.parser.BKDRHash(path + query)
-      this.app.event.on(eventId, this, function(e) {
-        console.log(e)
-      })
-      wx.navigateTo({
-        url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
-      })
-    } else {
-      console.log("path is empty!")
     }
   },
   /**

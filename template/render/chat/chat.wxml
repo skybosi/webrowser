@@ -7,7 +7,7 @@
       <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content bg-green shadow">
         <text bindlongtap="longTapText" data-env="{{_env}}">{{summary}}</text>
       </view>
-      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="ViewImage" data-env="{{_env}}" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
+      <image wx:if="{{msg_type=='image'}}" src="{{image}}" class="radius" mode="widthFix" catchtap="clickItem" data-env="{{ {..._env,_href2:'previewImage'} }}" data-url="{{image}}" data-urls="{{imageUrls}}"></image>
       <view wx:if="{{msg_type=='sound'}}" class="action text-bold text-grey">{{duration}}</view>
       <view wx:if="{{msg_type=='sound'}}" class="content shadow">
         <text class="cuIcon-sound text-xxl padding-right-xl"></text>

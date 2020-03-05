@@ -31,7 +31,7 @@ var list = [{
     block: 1,
     color: "green",
     type: "button",
-    click: ':clickPublish'
+    click: ':clickPublish(post)'
   },
 ]
 var methods = {

@@ -100,7 +100,8 @@ var list = [{
         type: "h"
       },
     ]
-  }, {
+  },
+  {
     type: "popup",
     poptype: 'sideR',
     title: 'cevian',

@@ -5,6 +5,7 @@
 <import src="/template/render/layout/layout.wxml" />
 <import src="/template/render/interactive/interactive.wxml" />
 
+<wxs src="../render/render.wxs" module="render"></wxs>
 <wxs src="./page.wxs" module="page"></wxs>
 <template name="page">
   <view class='page-top padding-bottom'
@@ -24,25 +25,25 @@
 <template name="cu-custom">
   <block wx:if="{{!hideNavigation}}">
     <view class="cu-custom" style="height:{{CustomBar}}px">
-      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" data-env="{{_env}}" bindtap="toTop">
+      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}} {{(icon1 && icon2)?'padding-left-sm':''}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" data-env="{{_env}}" bindtap="toTop" bindlongpress="longPressNav">
         <view class="{{(icon1 && icon2)?'flex border-custom':''}}" style="height:{{Custom.height}}px">
-          <view wx:if="{{icon1}}" class="action" bindtap="tapIcon1" data-env="{{_env}}" style="margin-right:0">
-            <view>
-              <text class="cuIcon-{{icon1}}"></text>
-            </view>
+          <view wx:if="{{icon1}}" class="action" catchtap="clickItem" data-env="{{ {..._env, _href: icon1} }}" style="margin-right:0">
+            <view class="cuIcon-{{icon1}}"></view>
             <view class="padding-left-xs">{{(icon1 && icon2)?'':text1}}</view>
           </view>
-          <view wx:if="{{icon2}}" class="action" bindtap="tapIcon2" data-env="{{_env}}" style="margin-left:30rpx">
-            <view>
-              <text class="cuIcon-{{icon2}}"></text>
-            </view>
+          <view wx:if="{{icon2}}" class="action" catchtap="clickItem" data-env="{{ {..._env, _href: icon2} }}" style="margin-left:20rpx">
+            <view class="cuIcon-{{icon2}}"></view>
             <view class="padding-left-xs">{{(icon1 && icon2)?'':text2}}</view>
           </view>
         </view>
         <block wx:if="{{type}}">
-          <view class="search-form round" bindtap="toSearch" data-env="{{_env}}">
-            <view class="cuIcon-search"></view>
-            <input type="text" placeholder="{{placeholder}}" disabled/>
+          <view class="search-form round">
+            <text class="cuIcon-search"></text>
+            <swiper vertical="{{true}}" autoplay="{{autoplay==0?false:true}}" circular="{{true}}" interval="3000" class="flex-sub input" style="height:100%">
+              <swiper-item wx:for="{{render.toArray(placeholder)}}" wx:key="index" class="flex align-center text-black">
+                <input type="text" placeholder="{{item}}" confirm-type="search" bindtap="clickItem" data-env="{{_env}}" bindblur="{{render.switchAutoplay}}"></input>
+              </swiper-item>
+            </swiper>
           </view>
         </block>
         <block wx:else>
@@ -52,3 +53,21 @@
     </view>
   </block>
 </template>
+
+<template name="tabbar">
+  <view wx:if="{{tabbar}}" class="cu-bar tabbar bg-white foot">
+    <block wx:for="{{tabbar}}" wx:key="index">
+      <view class="action" bindtap="NavChange" data-env="{{ {...item._env,_href2: 'tabbar'} }}" data-cur="{{item.page}}" data-index="{{index}}" data-path="{{item.path}}">
+        <view class="action">
+          <view class="{{PageCur==item.page?'text-olive text-green cuIcon-'+item.iconSelected:'cuIcon-'+item.icon}}">
+            <view class="cu-tag badge" wx:if="{{item.tag!=0}}">
+              <block wx:if="{{item.tag!=1}}">{{item.tag>99?"99+":item.tag}}</block>
+            </view>
+          </view>
+          <view class="{{PageCur==item.page?'text-green':'text-gray'}}">{{item.title}}</view>
+        </view>
+      </view>
+    </block>
+  </view>
+</template>
+  

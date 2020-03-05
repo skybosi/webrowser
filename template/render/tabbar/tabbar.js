@@ -6,7 +6,6 @@ export default {
     // this.getCurrComponent().onUnload()
     this.renderData(e, {
       PageCur: e.currentTarget.dataset.cur,
-      PageIdx: e.currentTarget.dataset.index,
       isNavChange: true,
       isShow: true
     })
@@ -16,7 +15,6 @@ export default {
     var query = e.currentTarget.dataset.query
     this.data.path = path
     this.data.query = query
-    var PageIdx = this.getData(e, "PageIdx")
     this.mock.get(path, query).then(res => {
       this.renderData(e, {
         ["pages[" + PageIdx + "]"]: res
