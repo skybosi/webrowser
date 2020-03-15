@@ -18,13 +18,6 @@ export default {
       }
     });
   },
-  ViewImage(e) {
-    this.beforeClick(e)
-    wx.previewImage({
-      urls: this.getData(e, "imgList"),
-      current: e.currentTarget.dataset.url
-    });
-  },
   DelImg(e) {
     this.beforeClick(e)
     var index = e.currentTarget.dataset.index || e.currentTarget.dataset.index
@@ -55,9 +48,6 @@ export default {
     this.renderData(e, {
       value: e.detail.value
     })
-  },
-  btnText(e) {
-    this.beforeClick(e)
   },
   switchChange(e) {
     this.beforeClick(e)

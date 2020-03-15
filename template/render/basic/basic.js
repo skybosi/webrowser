@@ -1,21 +1,5 @@
 export default {
   /**
-   * 图片预览
-   */
-  viewImage(e) {
-    this.beforeClick(e)
-    let url = e.currentTarget.dataset.url
-    let urls = e.currentTarget.dataset.urls || [url]
-    if (url) {
-      wx.previewImage({
-        urls: urls,
-        current: urls
-      });
-    } else {
-      console.log("No Image Source")
-    }
-  },
-  /**
    * 长按图片
    */
   longclickImg(e) {

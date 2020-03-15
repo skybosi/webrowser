@@ -1,6 +1,7 @@
 // template/render/render.js
-import item from './item/item.js'
 import form from './form/form.js'
+import auth from './auth/auth.js'
+import chat from './chat/chat.js'
 import basic from './basic/basic.js'
 import interactive from './interactive/interactive.js'
 
@@ -52,7 +53,7 @@ export default Object.assign({
     for (var item in data) {
       list[route + '.' + item] = data[item]
     }
-    this.setData(list)
+    this._setData(list)
   },
   /**
    * 依据可以获取数据
@@ -69,14 +70,15 @@ export default Object.assign({
    */
   createElement(e) {
     var env = this.getEnv(e)
-    var _tindex = env._index
+    var _index_tb = env._path.split('.')
+    var _tindex = (Number(_index_tb[1]) != env._index) ? Number(_index_tb[1]) : env._index
     var tindex_ = _tindex + (env._node ? 2 : 1)
     var list = this.data.list || []
     env._node && list.splice(_tindex, 0, env._node)
     env.node_ && list.splice(tindex_, 0, env.node_)
     for (let i = _tindex; i < list.length; ++i) {
       this.parser.parse(list[i], "list." + i, "list[" + i + "]")
-      delete(list[i]['_']), delete(list[i]['$']), delete(list[i]['#'])
+      delete(list[i]['_']), delete(list[i]['_$']), delete(list[i]['_#'])
     }
     // 新增试图事件交互处理
     if (env._node) {
@@ -93,11 +95,11 @@ export default Object.assign({
         console.log(e)
       })
     }
-    this.setData({
+    this._setData({
       list: list
     })
-    // 更新lru cache
-    this.lru.set(this.data.path, this.data)
+    // 更新lru cache, 导致神奇的bug
+    // this.lru.set(this.data.path, this.data)
   },
   /**
    * 事件结束触发视图view变化
@@ -115,13 +117,28 @@ export default Object.assign({
     }
     for (let i = tindex; i < list.length; ++i) {
       this.parser.parse(list[i], "list." + i, "list[" + i + "]")
+      delete(list[i]['_']), delete(list[i]['_$']), delete(list[i]['_#'])
     }
-    this.setData({
+    this._setData({
       list: list
     })
-    // 更新lru cache
-    this.lru.set(this.data.path, this.data)
+    // 更新lru cache, 导致神奇的bug
+    // this.lru.set(this.data.path, this.data)
     env._eventId && this.app.event.emit(env._eventId, e)
+  },
+  /**
+   * 点击item模板
+   */
+  clickItem(e) {
+    this.beforeClick(e)
+    console.log(e)
+  },
+  /**
+   * 长按item模板
+   */
+  longclickItem(e) {
+    this.beforeClick(e)
+    console.log(e)
   },
   /**
    * 点击事件前期处理
@@ -176,7 +193,7 @@ export default Object.assign({
         if (url) {
           wx.previewImage({
             urls: urls,
-            current: urls
+            current: url
           });
         }
         status = true
@@ -195,8 +212,8 @@ export default Object.assign({
    * 打开新页面
    */
   navigateToPath(env) {
-    var path = env._href
     var query = env.query
+    var path = encodeURIComponent(env._href || env._href2)
     var eventId = env._id + ">" + this.parser.hash(path + query)
     this.app.event.on(eventId, this, function(e) {
       console.log(e)
@@ -205,4 +222,4 @@ export default Object.assign({
       url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
     })
   }
-}, interactive, basic, item, form)
+}, interactive, chat, auth, basic, form)

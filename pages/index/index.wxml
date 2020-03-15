@@ -2,12 +2,6 @@
 <wxs src="../../template/page/page.wxs" module="page"></wxs>
 <include src="/template/render/render.wxml" />
 <view class="container bg-{{backgroundColor}}">
-  <!-- <block wx:if="{{!hideNavigation}}">
-    <custom bgColor="bg-gradual-blue" isHome="{{path=='/index'?true:false}}" isBack="{{path!='/index'?true:false}}">
-      <view slot="backText">{{backText||'返回'}}</view>
-      <view slot="content">{{nav.title}}</view>
-    </custom>
-  </block> -->
   <template is="cu-custom" data="{{...nav, Custom:Custom,CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}">
   </template>
   <view class="cu-load pull-down text-gray {{enablePullDownRefresh?'enablePullDownRefresh':''}}"></view>
@@ -18,26 +12,13 @@
     bindtouchcancel="{{page.touchCancel}}"
     change:prop="{{page.propObserver}}"
     prop="{{pageStats}}"
-    data-width="{{ScreenHeight}}">
+    data-width="{{ScreenHeight}}" data-env="{{ {enablePullDownRefresh:enablePullDownRefresh, enablePullUpRefresh: enablePullUpRefresh} }}">
     <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}" mark:route="list[{{index}}]">
       <template is="{{item.type||'page'}}" data="{{...item, tindex: index, route:'list['+index+']', CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
   </view>
   <template is="tabbar" data="{{tabbar:tabbar,PageCur:PageCur,Custom:Custom,CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}">
 </template>
-  <!-- <view wx:if="{{tabbar}}" class="cu-bar tabbar bg-white foot">
-    <block wx:for="{{tabbar}}" wx:key="index">
-      <view class="action" bindtap="NavChange" data-env="{{item._env}}" data-cur="{{item.page}}" data-index="{{index}}" data-path="{{item.path}}">
-        <view class="action">
-          <view class="{{PageCur==item.page?'text-olive text-green cuIcon-'+item.iconSelected:'cuIcon-'+item.icon}}">
-            <view class="cu-tag badge" wx:if="{{item.tag!=0}}">
-              <block wx:if="{{item.tag!=1}}">{{item.tag>99?"99+":item.tag}}</block>
-            </view>
-          </view>
-          <view class="{{PageCur==item.page?'text-green':'text-gray'}}">{{item.title}}</view>
-        </view>
-      </view>
-    </block>
-  </view> -->
-  <view class="cu-load pull-up text-gray {{enablePullUpRefresh?'enablePullUpRefresh':''}}"></view>
+  <view class="cu-load pull-up text-gray {{enablePullUpRefresh?(enablePullUpRefresh.isover==1)?'over':(enablePullUpRefresh.isover && enablePullUpRefresh.isover==0?'':'loading'): ''}} "></view>
+  <view wx:if="{{tabbar}}" class="cu-tabbar-height"></view>
 </view>

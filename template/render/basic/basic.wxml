@@ -91,7 +91,7 @@
 
 <!-- 标签贴 -->
 <template name="label">
-  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" class="cu-list menu" style="margin:0rpx" data-path="{{path}}">
+  <button catchtap="{{!openType?'clickItem':''}}" data-env="{{_env}}" catchlongpress="longclickItem" open-type="{{openType}}" class="cu-list menu clear-btn">
     <view class="cu-item {{path?'arrow':''}} padding-lr" style="margin:0">
       <view class="content">
         <text wx:if="{{icon}}" class="cuIcon-{{icon?icon:'titles'}} text-{{color?color:render.color()}}"></text>
@@ -105,7 +105,7 @@
         <!-- <text class="text-grey text-sm">{{image.length}}</text> -->
       </view>
     </view>
-  </view>
+  </button>
 </template>
 
 <!-- 下拉框 -->
@@ -129,15 +129,13 @@
 <template name="popup">
   <!-- 普通弹框 -->
   <view wx:if="{{!poptype}}" class="popup-{{tindex}} cu-modal show">
-    <view class="cu-dialog">
-      <view class="cu-bar bg-white justify-end">
-        <view class="content">{{title}}</view>
-        <view class="action" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
-          <text class="cuIcon-close text-red"></text>
-        </view>
-      </view>
-      <view class="padding-xl">{{content}}</view>
-    </view>
+    <cover-view class="cu-dialog">
+      <cover-view class="cu-bar bg-white justify-end">
+        <cover-view class="content">{{title}}</cover-view>
+        <cover-view class="action text-red" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{'✖'}}</cover-view>
+      </cover-view>
+      <cover-view class="padding-xl">{{content}}</cover-view>
+    </cover-view>
   </view>
   <!-- 底部弹框 -->
   <view wx:if="{{poptype=='bottom'}}" class="popup-{{tindex}} cu-modal bottom-modal show">
@@ -148,6 +146,38 @@
       </view>
       <view class="padding-xl">{{content}}</view>
     </view>
+  </view>
+  <!-- 对话弹框 -->
+  <view wx:if="{{poptype=='dialog'}}" class="popup-{{tindex}} cu-modal show">
+    <cover-view class="cu-dialog">
+      <cover-view class="cu-bar justify-end">
+        <cover-view class="content">{{title}}</cover-view>
+        <cover-view class="action text-red" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{'✖'}}</cover-view>
+      </cover-view>
+      <cover-view class="padding-xl">{{content}}</cover-view>
+      <cover-view class="flex justify-between cu-bar bg-white">
+        <cover-view wx:if="{icon}" class="action margin-0 {{icon?'flex-sub':''}} text-green" data-type="icon" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
+          <cover-view class="cuIcon-{{icon}}"></cover-view>{{iconText}}
+        </cover-view>
+        <cover-view class="action margin-0 flex-sub text-green solid-left" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}
+        </cover-view>
+        <cover-view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}
+        </cover-view>
+      </cover-view>
+    </cover-view>
+  </view>
+  <!-- 图片弹框 -->
+  <view wx:if="{{poptype=='image'}}" class="popup-{{tindex}} cu-modal show">
+    <cover-view class="cu-dialog">
+      <cover-view class="bg-img" style="background-image: url('{{image}}');height:200px;" catchtap="clickPopImage" data-env="{{_env}}" data-path="{{path}}">
+        <cover-view class="cu-bar justify-end text-white">
+          <cover-view class="action" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{'✖'}}</cover-view>
+        </cover-view>
+      </cover-view>
+      <cover-view class="cu-bar bg-white">
+        <cover-view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{oktilte||'确定'}}</cover-view>
+      </cover-view>
+    </cover-view>
   </view>
   <!-- 侧边弹框 -->
   <view wx:if="{{poptype=='sideL'||poptype=='sideR'}}" class="popup-{{tindex}} cu-modal drawer-modal {{poptype=='sideL'?'justify-start':poptype=='sideR' ? 'justify-end':'justify-start'}} show}}" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
@@ -173,8 +203,6 @@
     </view>
   </view>
   <!-- 多选弹框 -->
-  <!-- <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show" data-env="{{_env}}" catchtap="{{basic.switchPopup}}"> -->
-    <!-- <view class="cu-dialog" data-env="{{_env}}" catchtap="{{basic.switchPopup}}"> -->
   <view wx:if="{{poptype=='checkbox'}}" class="popup-{{tindex}} cu-modal bottom-modal show">
     <view class="cu-dialog">
       <view class="cu-bar bg-white">
@@ -187,42 +215,6 @@
             <view class="cu-tag sm round {{item.checked?'bg-white text-orange':'bg-orange'}}" wx:if="{{item.hot}}">HOT</view>
           </button>
         </view>
-      </view>
-    </view>
-  </view>
-  <!-- 对话弹框 -->
-  <view wx:if="{{poptype=='dialog'}}" class="popup-{{tindex}} cu-modal show">
-    <view class="cu-dialog">
-      <view class="cu-bar bg-white justify-end">
-        <view class="content">{{title}}</view>
-        <view class="action" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
-          <text class="cuIcon-close text-red"></text>
-        </view>
-      </view>
-      <view class="padding-xl">{{content}}</view>
-      <view class="flex justify-between cu-bar bg-white">
-        <view wx:if="{icon}" class="action margin-0 {{icon?'flex-sub':''}} text-green" data-type="icon" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
-          <text class="cuIcon-{{icon}}"></text>{{iconText}}
-        </view>
-        <view class="action margin-0 flex-sub text-green solid-left" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{closeText||'取消'}}
-        </view>
-        <view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{okText||'确定'}}
-        </view>
-      </view>
-    </view>
-  </view>
-  <!-- 图片弹框 -->
-  <view wx:if="{{poptype=='image'}}" class="popup-{{tindex}} cu-modal show">
-    <view class="cu-dialog">
-      <view class="bg-img" style="background-image: url('{{image}}');height:200px;" catchtap="clickPopImage" data-env="{{_env}}" data-path="{{path}}">
-        <view class="cu-bar justify-end text-white">
-          <view class="action" data-type="close" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">
-            <text class="cuIcon-close "></text>
-          </view>
-        </view>
-      </view>
-      <view class="cu-bar bg-white">
-        <view class="action margin-0 flex-sub solid-left" data-type="ok" data-env="{{_env}}" catchtap="{{basic.switchPopup}}">{{oktilte||'确定'}}</view>
       </view>
     </view>
   </view>
@@ -258,11 +250,12 @@
 <!-- 按钮 -->
 <template name="button">
   <block class="margin">
-    <button catchtap="clickItem" data-env="{{_env}}" wx:if="{{lineColor}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+    <button wx:if="{{lineColor}}" catchtap="{{!openType?'clickItem':''}}" open-type="{{openType}}" data-env="{{_env}}" class="margin-sm cu-btn {{shape?shape:''}} {{shadow?'shadow':''}} {{size?size:''}} line-{{lineColor?lineColor:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
       disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
-    <button catchtap="clickItem" data-env="{{_env}}" wx:else class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}" disabled="{{disabled}}">
+    <button wx:else catchtap="{{!openType?'clickItem':''}}" open-type="{{openType}}" data-env="{{_env}}" class="margin-sm cu-btn {{shape?shape:''}} bg-{{color?color:''}} {{shadow?'shadow':''}} {{size?size:''}} {{block==1?'block':''}} {{isIcon?'icon':''}}"
+      disabled="{{disabled}}">
       <text wx:if="{{icon}}" class="cuIcon-{{icon}} {{loading?'iconfont-spin':''}}"></text>{{title}}
     </button>
   </block>

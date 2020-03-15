@@ -14,13 +14,15 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    var path = options.path || "/index"
+    var path = (options.path && decodeURIComponent(options.path)) || "/index"
     var query = options.query
     var body = options.body
-    this.data.path = path
-    this.data.query = query
-    this.data._id = this.parser.hash(path + query)
-    this.request(path, query, null)
+    that.data.path = path
+    that.data.query = query
+    that.data._id = that.parser.hash(path + query)
+    that.request(path, query, null).then(res => {
+      that._setData(res)
+    }).catch((e) => {})
   },
 
   /**
@@ -92,7 +94,6 @@ Page({
     switch (e.direction) {
       case 'down':
       case 'up':
-        that.request(that.data.path, that.data.query, null, true);
         break;
       default:
         break

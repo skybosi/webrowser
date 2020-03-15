@@ -108,4 +108,5 @@ module.exports = {
     text1: '', // icon2: 'roundadd',
   },
   enablePullDownRefresh: true,
+  enablePullUpRefresh: true,
 }

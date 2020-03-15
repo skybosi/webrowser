@@ -25,9 +25,21 @@ App({
         }
       }
     })
+    // 监控网络变化
+    wx.getNetworkType({
+      success: function success(res) {
+        if (res.networkType == 'none') {
+          event.emit("net_status_type", res);
+        }
+      }
+    });
+    wx.onNetworkStatusChange(function(res) {
+      if (!res.isConnected) {
+        event.emit("net_status_change", res);
+      }
+    });
   },
-  globalData: {
-  },
+  globalData: {},
   event: event,
   DEBUG: wx.getStorageSync("debug"),
 });

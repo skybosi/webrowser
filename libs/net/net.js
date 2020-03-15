@@ -42,13 +42,13 @@ function addparams(params) {
   params = params || {}
   params.version = config.VERSION
   var device = deviceInfo(true)
-  params.brand = encodeURI(device.brand)
-  params.model = encodeURI(device.model)
-  params.language = encodeURI(device.language)
-  params.system = encodeURI(device.system)
-  params.platform = encodeURI(device.platform)
+  params.brand = encodeURIComponent(device.brand)
+  params.model = encodeURIComponent(device.model)
+  params.language = encodeURIComponent(device.language)
+  params.system = encodeURIComponent(device.system)
+  params.platform = encodeURIComponent(device.platform)
   params.client_app = config.VERSION
-  params.client_id = encodeURI(device.platform + "_" + device.system +
+  params.client_id = encodeURIComponent(device.platform + "_" + device.system +
     "_" + device.brand + "_" + device.model)
   return params
 }
@@ -65,7 +65,7 @@ function json2args(json) {
 }
 
 function getData(res) {
-  console.log(res)
+  // console.log(res)
   var data = null
   var message = null
   var header = res.header
@@ -101,28 +101,11 @@ const http = (url, method, data) => {
         resolver(getData(res))
       },
       fail: function(e) {
-        wx.getNetworkType({
-          success: function(res) {
-            if (res.networkType == 'none') {
-              wx.showToast({
-                title: '网络似乎不太顺畅',
-              })
-            }
-          },
-        })
-        // 监控网络变化
-        wx.onNetworkStatusChange(function(res) {
-          if (!res.isConnected) {
-            wx.showToast({
-              title: '网络似乎不太顺畅',
-            })
-          }
-        })
         reject(e)
       }
     })
   }).catch((e) => {
-    console.log(e)
+    reject(e)
   });
 }
 

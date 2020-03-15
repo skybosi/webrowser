@@ -19,7 +19,7 @@
         {{location}}
       </view>
     </view>
-    <view wx:if="{{avatar!='' && avatar!=undefined}}" class="cu-avatar round" style="background-image:url({{avatar}});"></view>
+    <view wx:if="{{avatar}}" class="cu-avatar round" style="background-image:url({{avatar}});"></view>
     <view wx:else class="cu-avatar round lg bg-cyan">{{name[0]}}</view>
     <view class="date">{{time}}</view>
   </view>
@@ -27,7 +27,7 @@
 
 <template name="chat-other">
   <view class="cu-item">
-    <view wx:if="{{avatar!='' && avatar!=undefined}} " class="cu-avatar round" style="background-image:url({{avatar}}); "></view>
+    <view wx:if="{{avatar}} " class="cu-avatar round" style="background-image:url({{avatar}}); "></view>
     <view wx:else class="cu-avatar round lg bg-cyan ">{{fromName[0]}}</view>
     <view class="main">
       <view wx:if="{{msg_type=='text' || msg_type==undefined}}" class="content shadow">
@@ -68,24 +68,32 @@
     <view class='flex-direction' style="width:100%">
       <view class="cu-bar">
         <view class="action">
-          <text class="cuIcon-sound text-grey" style="font-size:60rpx"></text>
+          <text class="cuIcon-sound text-grey" style="font-size:60rpx" data-env="{{_env}}" catchtap="bindSound"></text>
         </view>
-        <input class="solid-bottom" bindfocus="{{chat.inputFocus}}" bindblur="{{chat.inputBlur}}" adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" bindinput="commentInput" value="{{inputValue}}"></input>
+        <input class="solid-bottom" bindfocus="{{chat.inputFocus}}" bindblur="{{chat.inputBlur}}" adjust-position="{{false}}" focus="{{false}}" maxlength="300" cursor-spacing="10" value="{{value}}" data-env="{{_env}}" bindinput="commentInput"></input>
         <view class="action">
-          <!-- <text class="cuIcon-emojifill text-grey"></text> -->
-          <text wx:if="{{!inputValue}}" class="cuIcon-roundaddfill text-grey" style="font-size:60rpx" bindtap="switchModal" data-env="{{_env}}"></text>
+          <text class="cuIcon-emojifill text-grey" data-env="{{_env}}" catchtap="bindEmoji"></text>
+          <text wx:if="{{!value}}" class="cuIcon-roundaddfill text-grey" style="font-size:60rpx" data-env="{{_env}}" catchtap="{{chat.switchTool}}"></text>
         </view>
-        <button wx:if="{{inputValue}}" class="cu-btn bg-green shadow-blur" data-id="{{id}}" data-utype="{{utype}}" data-env="{{_env}}" bindtap="sendMessage">发送</button>
+        <button wx:if="{{value}}" class="cu-btn bg-green shadow-blur" data-id="{{id}}" data-env="{{_env}}" catchtap="sendMessage">发送</button>
+      </view>
+      <view class="chat-tool padding" data-env="{{_env}}" catchtap="{{chat.switchTool}}" style="display:none">
+        <view class="cu-list grid col-4 no-border">
+          <view class="cu-item" wx:for="{{tool}}" wx:key="index">
+            <view class="cuIcon-{{item.icon}} text-{{item.color}}" data-env="{{_env}}" catchtap="bindTool">
+            </view>
+          </view>
+        </view>
       </view>
     </view>
   </view>
 </template>
 
 <template name="chat">
-  <view wx:for="{{list}}" wx:key="index" bindtap="hideModal" data-env="{{_env}}" style="background-color:rgba(0,0,0,0.1)">
+  <view wx:for="{{list}}" wx:key="index" catchtap="{{chat.switchTool}}" data-env="{{_env}}" style="background-color:rgba(0,0,0,0.1)">
     <view class="cu-chat">
       <template is="chat-{{item.from_type}}" data="{{...item}}"></template>
     </view>
   </view>
-  <template is="comment-input"></template>
+  <template is="comment-input" data="{{ _env:_env, value:value, tool:tool, stype:stype }}"></template>
 </template>

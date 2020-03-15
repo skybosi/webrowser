@@ -15,7 +15,7 @@ const MAP_KEY = {
  */
 const MAP_OP = {
   '@': _bind,
-  '#': _model,
+  '_#': _model,
   ':': _on,
 }
 
@@ -42,7 +42,7 @@ function parse(data, path, route) {
   let _route = route || ''
   let paths = []
   // 初始化数据
-  paths['_'] = {}, paths['$'] = {}, paths['#'] = {}
+  paths['_'] = {}, paths['_$'] = {}, paths['_#'] = {}
   paths['_on'] = data['methods'] || {}, paths['_bind'] = data['_bind'] || {}, paths['_model'] = data['_model'] || {}
   // 清空老数据
   _init(data, _path, _route)
@@ -61,7 +61,7 @@ function parse(data, path, route) {
  * 初始化数据
  */
 function _init(data, path, route) {
-  data['_'] = {}, data['$'] = {}, data['#'] = {}, data['_on'] = data['_on'] || data['methods'] || {}
+  data['_'] = {}, data['_$'] = {}, data['_#'] = {}, data['_on'] = data['_on'] || data['methods'] || {}
   // data['_bind'] = {}, data['_model'] = {}
   let index = path.split('.') || []
   data['_env'] = {
@@ -113,7 +113,7 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
       data._env._node = data.beforeNode
       data._env._href = (data.path||"").trim()
       data._env.node_ = data.afterNode
-      paths['#'][data._env._id] = data
+      paths['_#'][data._env._id] = data
     }
     for (let key in data) {
       if (data[key] !== undefined && !IGNOREKEY[key]) {
@@ -129,18 +129,18 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
     if (data && MAP_OP[data[0]]) {
       MAP_OP[data[0]](root, parent, paths, index, data)
     }
-    paths['$'][path] = data
+    paths['_$'][path] = data
   }
   // 处理关键字
   if (MAP_KEY[index]) {
     if (!paths['_'][index]) {
-      paths['_'][index] = {}
+      paths['_'][index] = []
     }
-    paths['_'][index][path] = {
-      _data: data,
+    paths['_'][index].push({
+      _href: data,
       _path: path,
       _route: route
-    }
+    })
   }
 }
 
@@ -174,7 +174,7 @@ function modify(path, route, value, obj) {
   // delete(value['list'])
   Object.assign(obj, value)
   Object.assign(obj['_'], value['_'])
-  Object.assign(obj['$'], value['$'])
+  Object.assign(obj['_$'], value['_$'])
 }
 
 /**

@@ -83,7 +83,7 @@ function _handlePullView(e, ins, type) {
   var ret = {}
   switch (type) {
     case 'remove': // 清除属性
-      ins.selectComponent('.pull-up').removeClass("loading")
+      // ins.selectComponent('.pull-up').removeClass("loading")
       ins.selectComponent('.pull-down').removeClass("loading")
       ins.selectComponent('.page-top').setStyle({
         transform: ''
@@ -124,7 +124,7 @@ function touchmove(e, ins) {
     _handleStickyView(e, ins, 'remove')
   }
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知
-  if ((pageStats.scrollTop || 0) > 5 && !pageStats.reachBottom) {
+  if ((pageStats.scrollTop || 0) > 5) {
     return
   }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
@@ -138,8 +138,7 @@ function touchmove(e, ins) {
   if (moveX <= moveY) { // 上下
     if (startmarkY < pageY) {
       e.direction = "down"
-      // console.log("下:" + startmarkY + " " + pageY)
-      // console.log(Math.min(pullDownWidth, newmarkY - startmarkY))
+      // console.log("touchmove 下:" + startmarkY + " " + pageY + JSON.stringify(pageStats))
       // 满足下拉条件，且开启了下拉刷新的使用才触发动画
       if (pullDownWidth > Math.abs(newmarkY - startmarkY) && enablePullDownRefresh) {
         // 下拉清除fixed
@@ -156,10 +155,10 @@ function touchmove(e, ins) {
       // 考虑到布局问题，和下拉清除fixed相关属性有些条件区别，这个是调试后的结果
       _handleFixedView(e, ins, 'remove')
       // console.log("上:" + newmarkY + " " + startmarkY)
-      ins.selectComponent('.page-top').setStyle({
-        transform: 'translateY(-' + Math.min(pullDownWidth, (startmarkY - newmarkY)) + 'px)'
-      })
-      ins.selectComponent('.pull-up').addClass("loading")
+      // ins.selectComponent('.page-top').setStyle({
+      //   transform: 'translateY(-' + Math.min(pullDownWidth, (startmarkY - newmarkY)) + 'px)'
+      // })
+      // ins.selectComponent('.pull-up').addClass("loading")
     }
   } else {
     if (startmarkX < pageX) {
@@ -182,13 +181,14 @@ function touchend(e, ins) {
   var pullRet = _handlePullView(e, ins, 'check')
   var enablePullUpRefresh = pullRet.enablePullUpRefresh
   var enablePullDownRefresh = pullRet.enablePullDownRefresh
+  // console.log("touchend:", JSON.stringify(pageStats))
   // console.log(enablePullUpRefresh, enablePullDownRefresh)
   // 处理 添加 fix
   _handleFixedView(e, ins, 'add')
   // 删除可能存在的动画
   _handlePullView(e, ins, 'remove')
   // 页面没有到达顶部(<5) 或 底部，不做下拉和上拉事件通知    
-  if ((pageStats.scrollTop || 0) > 5 && !pageStats.reachBottom) {
+  if ((pageStats.scrollTop || 0) > 5) {
     return
   }
   var pageX = (e.touches[0] || e.changedTouches[0]).pageX
@@ -200,9 +200,9 @@ function touchend(e, ins) {
   var moveX = Math.abs(pageX - startmarkX)
   var moveY = Math.abs(pageY - startmarkY)
   if (moveX <= moveY) { // 上下
-    if (startmarkY < pageY) {
+    if (startmarkY < pageY && (pageStats.scrollTop || 0) < 5) {
       e.direction = "down"
-      console.log("下:" + startmarkY + " " + pageY) 
+      // console.log("touchend 下:" + startmarkY + " " + pageY)
       if (enablePullDownRefresh) {
         ins.callMethod('onPageEvent', e)
       }
@@ -210,7 +210,7 @@ function touchend(e, ins) {
     if (startmarkY > newmarkY) {
       e.direction = "up"
       console.log("上:" + startmarkY + " " + pageY)
-      if (enablePullUpRefresh) {
+      if (enablePullUpRefresh && pageStats.reachBottom) {
         ins.callMethod('onPageEvent', e)
       }
     }
@@ -244,7 +244,7 @@ function propObserver(newValue, oldValue, ownerInstance, instance) {
  * 获取pagestatas 中的数据
  */
 function getPageStats(key) {
-  console.log(JSON.stringify(pageStats) + " " + key)
+  // console.log(JSON.stringify(pageStats) + " " + key)
   return pageStats[key] || pageStats
 }
 

@@ -15,7 +15,7 @@
     bindtouchcancel="{{page.touchCancel}}"
     change:prop="{{page.propObserver}}"
     prop="{{pageStats}}"
-    data-width="{{ScreenHeight}}">
+    data-width="{{ScreenHeight}}" data-env="{{_env}}">
     <view style="display:inline;overflow:hiden" wx:for="{{list}}" wx:key="index" mark:tindex="{{index}}">
       <template is="{{item.type||'page'}}" data="{{...item, tindex: index, CustomBar:CustomBar, StatusBar:StatusBar,ScreenWidth:ScreenWidth,ScreenHeight:ScreenHeight}}"></template>
     </view>
@@ -25,7 +25,7 @@
 <template name="cu-custom">
   <block wx:if="{{!hideNavigation}}">
     <view class="cu-custom" style="height:{{CustomBar}}px">
-      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}} {{(icon1 && icon2)?'padding-left-sm':''}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" data-env="{{_env}}" bindtap="toTop" bindlongpress="longPressNav">
+      <view class="cu-bar fixfixed {{bgImage!=''?'none-bg bg-img':''}} {{bgColor||'bg-gradual-blue'}} {{(icon1 && icon2)?'padding-left-sm':''}}" style="height:{{CustomBar}}px;padding-top:{{StatusBar}}px;{{bgImage?'background-image:url(' + bgImage +')':''}}" data-env="{{_env}}" bindtap="clickNav" bindlongpress="longPressNav">
         <view class="{{(icon1 && icon2)?'flex border-custom':''}}" style="height:{{Custom.height}}px">
           <view wx:if="{{icon1}}" class="action" catchtap="clickItem" data-env="{{ {..._env, _href: icon1} }}" style="margin-right:0">
             <view class="cuIcon-{{icon1}}"></view>

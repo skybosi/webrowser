@@ -1,5 +1,5 @@
 var inputFocus = function(event, ins) {
-  console.log('inputFocus:', JSON.stringify(event))
+  // console.log('inputFocus:', JSON.stringify(event))
   ins.selectComponent('.input-bottom').addClass('cur').setStyle({
     bottom: event.detail.height + 'px'
   })
@@ -7,12 +7,31 @@ var inputFocus = function(event, ins) {
 }
 
 var inputBlur = function(event, ins) {
-  console.log('inputBlur:', JSON.stringify(event))
+  // console.log('inputBlur:', JSON.stringify(event))
   ins.selectComponent('.input-bottom').removeClass('cur').setStyle({
     bottom: 0
   })
   return false
 }
 
+var switchTool = function(event, ins) {
+  var st = ins.getState()
+  var expand = st.expand || 0
+  if (!expand) {
+    st.expand = expand + 1
+    ins.selectComponent('.chat-tool').addClass('show').setStyle({
+      display: 'block',
+      height: '400rpx'
+    })
+  } else {
+    ins.selectComponent('.chat-tool').removeClass('show').setStyle({
+      display: 'none'
+    })
+    st.expand = 0
+  }
+  return false
+}
+
 module.exports.inputBlur = inputBlur;
 module.exports.inputFocus = inputFocus;
+module.exports.switchTool = switchTool;

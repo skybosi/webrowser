@@ -1,0 +1,59 @@
+<template name="login">
+  <view class="padding-tb-xl bg-gradual-blue" style="height: 3 * {{CustomBar}}rpx;">
+    <view class="flex padding-xl padding-bottom-sm">
+      <block wx:if="{{!hasUserInfo}}">
+        <view class='avatar margin-left'>
+          <text class="cu-avatar xl round cuIcon-safe text-xl text-red"></text>
+        </view>
+        <view class='flex flex-direction justify-center margin-left'>
+          <button class="content text-lg text-left" data-env="{{_env}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+            <text class="text-grey">登录</text>
+          </button>
+        </view>
+      </block>
+      <block wx:else>
+        <view class='avatar margin-left' catchtap="clickItem" data-env="{{ {..._env,_href:'previewImage'} }}" data-url="{{userInfo.avatarUrl}}">
+          <image class="cu-avatar xl round" src="{{userInfo.avatarUrl}}"></image>
+        </view>
+        <view class='flex flex-direction justify-center margin-left'>
+          <text class="padding-xs text-xl">{{userInfo.nickName}}</text>
+          <text class="padding-xs">{{userInfo.summary}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</template>
+
+<template name="head">
+  <view class="flex justify-center flex-direction align-center padding-top {{bgImage?'none-bg text-white bg-img':''}} bg-gradual-{{bgColor||'green'}} shadow" style="z-index:999;{{bgImage?'background-image: url(' + bgImage + ');background-size:cover':''}};height:40vh">
+    <view wx:if="{{userInfo.avatarUrl}}" class="wb-shine cu-avatar round" style="background-image:url({{userInfo.avatarUrl}});width:200rpx;height:200rpx;z-index:999" catchtap="clickItem" data-env="{{ {..._env,_href:'previewImage'} }}" data-url="{{userInfo.avatarUrl}}"></view>
+    <button wx:else class="wb-shine cu-avatar round xl cuIcon-people bg-gradual-{{bgColor||'green'}}" style="font-size:4.5em;width:200rpx;height:200rpx;z-index:999" data-env="{{_env}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
+    </button>
+    <view class="flex text-xl align-center justify-center padding-top-sm">{{userInfo.nickName || title}}
+      <view wx:if="{{tag}}" class="cu-tag radius line-{{tagcolor}} sm margin-xs">{{tag}}</view>
+    </view>
+    <view class="padding-top-xs">
+      <text>{{userInfo.summary||subtitle}}</text>
+    </view>
+  </view>
+</template>
+
+<template name="auth">
+  <view class="cu-modal {{authStatus?'show':''}} auth-display">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white justify-end">
+        <view class="content">{{title||'微信授权'}}</view>
+        <view class="action" data-chose="ignore" data-env="{{_env}}" bindtap="{{render.authDisplay}}">
+          <text class="cuIcon-roundclosefill text-red"></text>
+        </view>
+      </view>
+      <view class="padding-xl">{{content||'是否确认授权？'}}</view>
+      <view class="cu-bar bg-white justify-around">
+        <view class="action">
+          <button class="cu-btn line-blue text-green margin-right" data-chose="cancel" data-env="{{_env}}" bindtap="{{render.authDisplay}}">取消</button>
+          <button class="cu-btn bg-green margin-left" data-env="{{_env}}" bindtap="{{render.authDisplay}}" data-chose="ok" open-type="getUserInfo" bindgetuserinfo="getRegister">确定</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

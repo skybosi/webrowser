@@ -118,8 +118,8 @@
       this._keymap.delete(entry.key);
       return;
     }
-    entry.access++;
     // 更新access
+    entry.access++;
     this._keymap.set(key, entry);
     // As <key> was found in the cache, register it as being requested recently
     this._markEntryAsUsed(entry);
@@ -228,6 +228,12 @@
     this._keymap.clear();
   };
 
+  LRUMap.prototype.reset = function() {
+    this._keymap.forEach(function(value, key) {
+      value.access = 0
+      console.log(value, key);
+    });
+  }
 
   function EntryIterator(oldestEntry) {
     this.entry = oldestEntry;
