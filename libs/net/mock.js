@@ -24,7 +24,7 @@
       // goto inner page
       var goto = parRes['_']['goto'] || []
       for (let key in goto) {
-        parser.modify(key, goto[key]._route, require(this.root + goto[key]._data) || {}, res)
+        parser.modify(goto[key]._path, goto[key]._route, require(this.root + goto[key]._href) || {}, res)
       }
       // 控制类型变量不继承上一页面page
       res.nav = res.nav || {}

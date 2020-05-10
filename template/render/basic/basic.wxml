@@ -226,7 +226,7 @@
     <view class="cu-item" style="margin:0px;border-radius: 6rpx;">
       <view class="image" style="height:375rpx">
         <image src="{{url}}" mode="widthFix"></image>
-        <view class="cu-tag bg-{{tagcolor?tagcolor:'blue'}}">{{tag}}</view>
+        <view wx:if="{{tag}}" class="cu-tag bg-{{tagcolor?tagcolor:'blue'}}">{{tag}}</view>
         <view class="cu-bar bg-shadeBottom">
           <text class="text-cut">{{summary}}</text>
         </view>

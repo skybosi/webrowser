@@ -244,7 +244,7 @@ export default function(context = {}) {
     request(path, query, body, forse) {
       var that = this
       return new Promise((resolver, reject) => {
-        if (app.DEBUG) {
+        if (true) {
           that.mock.get(path, query).then(res => {
             resolver(!res ? NAV : res)
           }).catch((e) => {

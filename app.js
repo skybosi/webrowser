@@ -40,6 +40,5 @@ App({
     });
   },
   globalData: {},
-  event: event,
-  DEBUG: wx.getStorageSync("debug"),
+  event: event
 });
