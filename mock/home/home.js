@@ -1,4 +1,26 @@
-var list = [
+var list = [{
+    "type": "interval",
+    "algin": "text-center"
+  },
+  {
+    "text": "@code",
+    "type": "h1",
+    "algin": "text-center"
+  },
+  // {
+  //   type: "popup",
+  //   poptype: 'dialog',
+  //   title: "微信授权？",
+  //   content: "请为该小程序授权。。。"
+  // }
+  {
+    "title": "获取密钥",
+    "type": "button",
+    "block": 1,
+    "size": "lg",
+    "color": "green",
+    "path": "!/quantum/get_key(code)"
+  },
   {
     id: "2",
     type: "dynamic",
@@ -17,19 +39,12 @@ var list = [
     like_count: 2,
     comment_count: 3,
     path: "/home/detail"
-  }, 
-  {
-    type: "popup",
-    poptype: 'dialog',
-    title: "微信授权？"
-  }
-
+  },
 ]
 
 module.exports = {
   list: list,
   nav: {
-    title: '首页',
-    icon1: 'search',
+    title: '首页'
   }
 }

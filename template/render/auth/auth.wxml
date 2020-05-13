@@ -1,3 +1,5 @@
+<wxs src="./auth.wxs" module="auth"></wxs>
+
 <template name="login">
   <view class="padding-tb-xl bg-gradual-blue" style="height: 3 * {{CustomBar}}rpx;">
     <view class="flex padding-xl padding-bottom-sm">
@@ -25,7 +27,9 @@
 </template>
 
 <template name="head">
-  <view class="flex justify-center flex-direction align-center padding-top {{bgImage?'none-bg text-white bg-img':''}} bg-gradual-{{bgColor||'green'}} shadow" style="z-index:999;{{bgImage?'background-image: url(' + bgImage + ');background-size:cover':''}};height:40vh">
+  <!-- <block>{{auth._init(_env)}}</block> -->
+  <view class="flex justify-center flex-direction align-center padding-top {{bgImage?'none-bg text-white bg-img':''}} bg-gradual-{{bgColor||'green'}} shadow" style="z-index:999;{{bgImage?'background-image: url(' + bgImage + ');background-size:cover':''}};height:40vh"
+    change:prop="{{auth.propObserver}}" prop="{{_env}}">
     <view wx:if="{{userInfo.avatarUrl}}" class="wb-shine cu-avatar round" style="background-image:url({{userInfo.avatarUrl}});width:200rpx;height:200rpx;z-index:999" catchtap="clickItem" data-env="{{ {..._env,_href:'previewImage'} }}" data-url="{{userInfo.avatarUrl}}"></view>
     <button wx:else class="wb-shine cu-avatar round xl cuIcon-people bg-gradual-{{bgColor||'green'}}" style="font-size:4.5em;width:200rpx;height:200rpx;z-index:999" data-env="{{_env}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">
     </button>

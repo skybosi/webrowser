@@ -1,37 +1,30 @@
 var list = [{
-  goto: "/home/home",
-}, {
-  path: "/community/community",
-}, {
-  path: "/tiding/tiding",
-}, {
-  path: "/me/me",
-},]
+    goto: "/home/home",
+  },
+  {
+    path: "/community/community",
+  },
+]
 
 module.exports = {
   list: list,
   title: '综合demo',
   tabbar: [{
-    tag: "",
-    page: "home",
-    title: "首页",
-    icon: "home",
-    path: "/home/home",
-    iconSelected: "homefill",
-  },  {
-    tag: "",
-    page: "tiding",
-    title: "消息",
-    icon: "message",
-    path: "/tiding/tiding",
-    iconSelected: "messagefill",
-  }, {
-    tag: "",
-    page: "me",
-    title: "我的",
-    icon: "my",
-    path: "/me/me",
-    iconSelected: "myfill",
-  }],
+      tag: "",
+      page: "home",
+      title: "首页",
+      icon: "home",
+      path: "/home/home",
+      iconSelected: "homefill",
+    },
+    {
+      tag: "",
+      page: "tiding",
+      title: "设备",
+      icon: "message",
+      path: "/community/community",
+      iconSelected: "messagefill",
+    }
+  ],
   PageCur: 'home'
 }

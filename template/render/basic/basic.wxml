@@ -8,7 +8,7 @@
 
 <!-- 文本 -->
 <template name="text">
-  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" wx:if="{{text}}" data-type="{{name}}" class="{{basic.template(name)}}">
+  <view catchtap="clickItem" data-env="{{_env}}" catchlongpress="longclickItem" wx:if="{{text}}" data-type="{{name}}" class="{{basic.template(name)}} {{algin}}">
     <text selectable='true'>{{text}}</text>
   </view>
 </template>
@@ -27,12 +27,12 @@
 
 <!-- h1标签 -->
 <template name="h1">
-  <template is="text" data='{{ name:"h1", text: text, _env: _env }}'></template>
+  <template is="text" data='{{ name:"h1", algin: algin, text: text, _env: _env }}'></template>
 </template>
 
 <!-- h2标签 -->
 <template name="h2">
-  <template is="text" data='{{ name:"h2", text: text, _env: _env }}'></template>
+  <template is="text" data='{{ name:"h2", algin: algin, text: text, _env: _env }}'></template>
 </template>
 
 <!-- h3标签 -->

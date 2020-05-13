@@ -18,23 +18,15 @@ var list = [{
     icon: 'post',
     color: 'olive',
     badge: 0,
-    text: '我的发布',
-    path: '/demo/me/published',
+    text: '我的小区',
+    path: '',
   },
   {
     type: "label",
     icon: 'favor',
     color: 'green',
     badge: 0,
-    text: '关注收藏',
-    path: '',
-  },
-  {
-    type: "label",
-    icon: 'footprint',
-    color: 'gray',
-    badge: 0,
-    text: '浏览记录',
+    text: '我的设备',
     path: '',
   },
   {
@@ -48,14 +40,6 @@ var list = [{
   {
     type: "interval",
   },
-  {
-    type: "label",
-    icon: 'settings',
-    color: 'black',
-    badge: 0,
-    text: '设置',
-    path: '/demo/me/setting'
-  }
 ]
 
 module.exports = {
@@ -64,6 +48,4 @@ module.exports = {
   nav: {
     hideNavigation: true,
   },
-  enablePullDownRefresh: true,
-  // enablePullUpRefresh: true,
 }

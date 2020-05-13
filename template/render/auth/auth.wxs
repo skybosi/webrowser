@@ -1,0 +1,17 @@
+/**
+ * 处理数据使其返回数组
+ */
+var _init = function(e) {
+  console.log(JSON.stringify(e))
+}
+
+function propObserver(newValue, oldValue, ownerInstance, instance) {
+  // console.log(JSON.stringify(newValue), JSON.stringify(oldValue), JSON.stringify(ownerInstance), JSON.stringify(instance))
+  // 是否需要触发触摸过程中的事件
+  ownerInstance.callMethod('__init', newValue)
+}
+
+module.exports = {
+  _init: _init,
+  propObserver: propObserver
+}

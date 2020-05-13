@@ -26,6 +26,7 @@ export default function(context = {}) {
     diff: diff,
     parser: parser
   })
+
   /**
    * 页面加载函数重写
    */
@@ -47,6 +48,7 @@ export default function(context = {}) {
       that.data["_ctx"] = null
       that.data._eventId = ".>" + that.data._id
     }
+    
     // 网络变化后，缓存将不会记录命中次数
     that.app.event.on("net_status_type", that, function(e) {
       that.lru.reset()
@@ -223,10 +225,24 @@ export default function(context = {}) {
       var id = e.currentTarget.dataset.id
       var index = e.currentTarget.dataset.index
       var query = e.currentTarget.dataset.query
+      var param = e.currentTarget.dataset.param
       that.data.query = query
-      that.request(that.data.path, query, null, false).then(res => {
+      query = query || {}
+      let userInfo = wx.getStorageSync('auth') || {}
+      query.openID = (userInfo.userInfo || {}).openID
+      that.request(that.data.path, query, param, false).then(res => {
         res.PageCur = e.currentTarget.dataset.cur
-        that._setData(res)
+        let nav = res.nav
+        if (nav.url && "" != nav.url) {
+          that.request2(nav.url, query, param, false).then(res2 => {
+            res.list = res2.data.list
+            // console.log(res2)
+            var parRes = that.parser.parse(res) || []
+            that._setData(res)
+          }).catch((e) => {})
+        } else {
+          that._setData(res)
+        }
         // 处理现在一个页面的生命周期
         // that.getCurrComponent().onLoad()
         // that.getCurrComponent().onShow()
@@ -244,29 +260,36 @@ export default function(context = {}) {
     request(path, query, body, forse) {
       var that = this
       return new Promise((resolver, reject) => {
-        if (true) {
-          that.mock.get(path, query).then(res => {
-            resolver(!res ? NAV : res)
-          }).catch((e) => {
-            reject(res)
-          });
-        }
+        // if (0 != path.indexOf("/quantum")) {
+        //   that.mock.get(path, query).then(res => {
+        //     resolver(!res ? NAV : res)
+        //   }).catch((e) => {
+        //     reject(res)
+        //   });
+        // }
         // 优先使用缓存
-        var cache = !forse ? that.lru.get(path) : null
+        var cache = null // !forse ? that.lru.get(path) : null
         if (cache) {
           console.log(path, "use cache")
           resolver(cache)
         } else {
           // 发起网络请求
+          query = query || {}
+          let userInfo = wx.getStorageSync('auth') || {}
+          query.openID = (userInfo.userInfo || {}).openID
           that.net.request(path, query, body).then(res => {
             res = res.data
+            // 非布局类的网络返回
+            if (null == res.list || null != res.nav) {
+              resolver(res)
+            }
             var parRes = that.parser.parse(res) || []
             that.lru.set(that.data.path, res)
             // goto inner page
             var goto = parRes['_']['goto'] || []
             if (goto.length !== 0) {
               var all = goto.map(item => {
-                return that.net.request(item._href, null)
+                return that.net.request(item._href, query)
               })
               Promise.all(all).then(r => {
                 r.map((sub, i) => {
@@ -296,6 +319,27 @@ export default function(context = {}) {
               // }
               resolver((!res || !res.list) ? NAV : res)
             }
+          }).catch((e) => {
+            reject(e)
+          })
+        }
+      }).catch((e) => {});
+    },
+    request2(path, query, body, forse) {
+      var that = this
+      query = query || {}
+      let userInfo = wx.getStorageSync('auth') || {}
+      query.openID = (userInfo.userInfo || {}).openID
+      return new Promise((resolver, reject) => {
+        // 优先使用缓存
+        var cache = !forse ? that.lru.get(path) : null
+        if (cache) {
+          console.log(path, "use cache")
+          resolver(cache)
+        } else {
+          // 发起网络请求
+          that.net.request(path, query, body).then(res => {
+            resolver(res)
           }).catch((e) => {
             reject(e)
           })

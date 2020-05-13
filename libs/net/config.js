@@ -8,7 +8,7 @@ var VERSION = PRODUCT_NAME + V_MAJOR + "." + V_MIMOR + "." + V_PATCH
 
 // server config
 var SERVER_IP = "http://47.98.243.40"
-var SERVER_DOMAIN = "https://www.young-ging.cn/webrowser"
+var SERVER_DOMAIN = "https://www.young-ging.cn/quantum"
 var SERVER_WS_DOMAIN = "wss://www.young-ging.cn"
 var MoYu_PREFIX = SERVER_DOMAIN + "/file/downfile?filename="
 var MoYu_PREFIX_NEW = SERVER_DOMAIN + "/myfs/"

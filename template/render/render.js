@@ -7,7 +7,7 @@ import interactive from './interactive/interactive.js'
 
 export default Object.assign({
   render(ctx) {
-    console.log(this)
+    // console.log(this)
   },
   checkAuth() {
     return new Promise((resolver, reject) => {
@@ -132,6 +132,7 @@ export default Object.assign({
   clickItem(e) {
     this.beforeClick(e)
     console.log(e)
+    this.afterClick(e)
   },
   /**
    * 长按item模板
@@ -165,19 +166,21 @@ export default Object.assign({
   afterClick(e) {
     var env = this.getEnv(e)
     var tindex = env._index
+    this.recoverBindKey(this.data._model)
   },
   /**
    * 封装wx的页面路由
    */
   wxHandle(e) {
+    var that = this
     var status = false
     var env = this.getEnv(e)
+    var query = env._query
+    var param = env._param || (that.data._bind || {})[(env._bind || [])[0]]
     var path = env._href || env._href2
     switch (path) {
       case 'back':
-        wx.navigateBack({
-          delta: 1
-        });
+        that.navigateBack()
         status = true
         break;
       case 'home':
@@ -202,11 +205,32 @@ export default Object.assign({
       default:
         break;
     }
+    if ('wb' == env._schema) {
+      that.request2(path, query, param, false).then(res => {
+        console.log(res)
+        let tmp = env._bind[0]
+        let _bind_route = that.data._model[tmp]._bind_route
+        that._setData({
+          [_bind_route]: res.data.key
+        })
+        that.recoverBindKey(that.data._model)
+        that.navigateBack()
+      }).catch((e) => {})
+      status = true
+    }
     // 非wx系统处理且存在上下文id，处理跳转页面
     if (!status && env._id) {
       this.navigateToPath(env)
     }
     return status
+  },
+  // 恢复页面的数据绑定，方便下次获取绑定关系
+  recoverBindKey(bind_map) {
+    console.log(bind_map)
+    for (var key in bind_map) {
+      this.parser.set(bind_map[key]['_bind_path'], bind_map[key]['_bind_value'], this.data)
+      // bind_ori[bind_map[key]['_bind_route']] = bind_map[key]['_bind_value']
+    }
   },
   /**
    * 打开新页面
@@ -221,5 +245,12 @@ export default Object.assign({
     wx.navigateTo({
       url: '/pages/index/index?path=' + path + '&ctx=' + JSON.stringify(env)
     })
+  },
+  navigateBack() {
+    if (getCurrentPages().length > 1) {
+      wx.navigateBack({
+        delta: 1
+      });
+    }
   }
 }, interactive, chat, auth, basic, form)

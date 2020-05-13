@@ -17,6 +17,7 @@ const MAP_OP = {
   '@': _bind,
   '_#': _model,
   ':': _on,
+  '!': _net
 }
 
 /**
@@ -111,7 +112,7 @@ function _deepParse(index, data, parent, root, curpath, curoute, paths) {
       data._env._index = index
       data._env._method = null
       data._env._node = data.beforeNode
-      data._env._href = (data.path||"").trim()
+      data._env._href = (data.path || "").trim()
       data._env.node_ = data.afterNode
       paths['_#'][data._env._id] = data
     }
@@ -162,7 +163,8 @@ function modify(path, route, value, obj) {
     _route
   } = MAP_KEY[arr[arr.length - 1]](arr, path, route)
   const len = _arr.length - 1
-  parse(value, _path, _route)
+  // parse(value, _path, _route)
+  parse(value)
   _arr.reduce((cur, key, index) => {
     if (!(cur[key]))
       throw `${key} 不存在!`
@@ -221,14 +223,48 @@ function get(path, obj) {
 }
 
 /**
+ * 根据path 修改Object中path对应的value
+ */
+function set(path, value, obj) {
+  let _arr = path.split('.')
+  const len = _arr.length - 1
+  _arr.reduce((cur, key, index) => {
+    if (!(cur[key]) && !(cur.hasOwnProperty(key)))
+      throw `${key} 不存在!`
+    if (index === len) {
+      cur[key] = value
+    }
+    return cur[key]
+  }, obj)
+}
+
+/**
  * 数据绑定
  */
 function _bind(root, parent, paths, index, value) {
-  let _value = value.slice(1)
+  let value_tb = value.slice(1).match(/([^0-9][\w. ]*)=?(.*)/)
+  let _value = value_tb[1].replace(/(^\s*)|(\s*$)/g, "")
+  let _default = value_tb[2].replace(/(^\s*)|(\s*$)/g, "") || ""
   let _arr = _value.split('.')
   let _len = _arr.length - 1
-  _arr.reduce((cur, key, index) => {
-    (index === _len) ? cur[key] = null: cur[key] = {}
+  _arr.reduce((cur, key, i) => {
+    (i === _len) ? cur[key] = null: cur[key] = {}
+    // Object.defineProperty(cur, key, {
+    //   set: function (v) {
+    //     console.log(v)
+    //   },
+    //   get: function () {}
+    // })
+    paths['_model'][key] = paths['_model'][key] || {}
+    paths['_model'][key]['_env'] = parent._env
+    // 用于其他组件设置该数据使用
+    paths['_model'][key]['_bind_route'] = parent._env._route + '.' + index
+    paths['_model'][key]['_bind_path'] = parent._env._path + '.' + index
+    // 用于恢复原来的绑定key
+    paths['_model'][key]['_bind_value'] = value
+    if (i === _len) {
+      paths['_model'][key]['_default'] = _default
+    }
     return cur[key]
   }, paths['_bind'])
   Object.defineProperty(parent, index, {
@@ -251,6 +287,7 @@ function _bind(root, parent, paths, index, value) {
       return data
     }
   })
+  parent[index] = _default
 }
 
 /**
@@ -300,6 +337,19 @@ function _on(root, parent, paths, index, value) {
 }
 
 /**
+ * 函数绑定
+ */
+function _net(root, parent, paths, index, value) {
+  let {
+    _href,
+    param
+  } = _onCheckAPi(value, paths)
+  parent._env._schema = 'wb'
+  parent._env._href = _href
+  parent._env._bind = param
+}
+
+/**
  * 处理函数绑定
  */
 function _onCheck(value, paths) {
@@ -311,9 +361,23 @@ function _onCheck(value, paths) {
   }
 }
 
+/**
+ * 处理接口与数据绑定
+ */
+function _onCheckAPi(value, paths) {
+  let _hrefApi = value.slice(1)
+  let param_tb = _hrefApi.match(/(.*)\((.*)\)/) || (_hrefApi + "()").match(/(.*)\((.*)\)/)
+  let param = param_tb[2].match(/(?!,)[a-zA-Z0-9]+/g) || [];
+  return {
+    _href: param_tb[1],
+    param: param
+  }
+}
+
 
 module.exports = {
   get: get,
+  set: set,
   type: type,
   parse: parse,
   modify: modify,

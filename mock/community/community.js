@@ -1,100 +1,60 @@
 var list = [{
+    type: "head",
+    // icon: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg',
+    title: '登录',
+    // tag: 'v0.0.4',
+    tagcolor: 'red',
+    subtitle: '欢迎光临',
+    bgColor: 'blue',
+    // bgImage: "https://ossweb-img.qq.com/images/lol/web201310/skin/big10002.jpg"
+  },
+  {
     type: "label",
     icon: 'titles',
     color: 'red',
     badge: 0,
-    text: '小工具',
+    text: '你的设备',
     path: '',
-  }, {
+  },
+  {
     title: '小工具',
     type: "grid",
-    gridCol: 4,
+    gridCol: 3,
     list: [{
-      icon: 'calendar',
-      color: 'blue',
-      badge: 120,
-      text: '公告栏',
-      type: 'grid-icon',
-      path: '/pages/community/tool/announce/announce',
-    }, {
-      icon: 'present',
-      color: 'blue',
-      badge: 1,
-      text: '礼帮帮',
-      type: 'grid-icon',
-      path: '/pages/community/tool/gifts/gifts',
-    }, {
-      icon: 'light',
-      color: 'blue',
-      badge: 1,
-      text: '天气中心',
-      type: 'grid-icon',
-      path: '',
-    }, {
-      icon: 'rank',
-      color: 'blue',
-      badge: 0,
-      text: '访问统计',
-      type: 'grid-icon',
-      path: '',
-    }, ]
+        icon: 'mobilefill',
+        color: 'blue',
+        badge: 2,
+        text: '手机',
+        type: 'grid-icon',
+      }, {
+        icon: 'discover',
+        color: 'blue',
+        badge: 2,
+        text: '电脑',
+        type: 'grid-icon',
+      }, {
+        icon: 'light',
+        color: 'blue',
+        badge: 1,
+        text: '路由器',
+        type: 'grid-icon',
+      },
+      {
+        icon: 'roundadd',
+        color: 'blue',
+        text: '添加',
+        type: 'grid-icon',
+        path: '/community/add'
+      },
+    ]
   },
-  {
-    type: "interval",
-  },
-  {
-    type: "label",
-    icon: 'titles',
-    color: 'green',
-    badge: 0,
-    text: '资讯指南',
-    path: '',
-  }, {
-    title: '资讯指南',
-    type: "grid",
-    gridCol: 4,
-    list: [{
-      icon: 'evaluate',
-      color: 'blue',
-      badge: 120,
-      text: '种植养殖',
-      type: 'grid-icon',
-      path: '/pages/community/guide/common/common?title=种植养殖&isSearchBar=0',
-    }, {
-      icon: 'discover',
-      color: 'blue',
-      badge: 1,
-      text: '风土人情',
-      type: 'grid-icon',
-      path: '/pages/community/guide/common/common?title=风土人情&type=comment',
-    }, {
-      icon: 'goodsfavor',
-      color: 'blue',
-      badge: 0,
-      text: '土特产',
-      type: 'grid-icon',
-      path: '/pages/community/guide/common/common?title=土特产&type=article',
-    }, {
-      icon: 'service',
-      color: 'blue',
-      badge: 22,
-      text: '生活小助手',
-      type: 'grid-icon',
-      path: '/pages/community/guide/common/common?title=生活小助手&type=dynamic',
-    }]
-  }
 ]
 
 module.exports = {
   list: list,
   nav: {
-    title: '首页',
-    icon1: 'homefill',
-    type: "search-bar",
-    placeholder: ["webrowser", "weapp browser", "小程序"],
-    path: "/search"
+    title: '设备',
+    hideNavigation: true,
+    url: '/quantum/get_device_list'
   }
-  // icon2: 'roundadd',
-  // enablePullDownRefresh: true,
-  // enablePullUpRefresh: true,
 }
